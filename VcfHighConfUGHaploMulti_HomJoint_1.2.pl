@@ -12,10 +12,7 @@
 # Version 1.0.0 - Jan 10, 2013
 # Version 1.1 - Feb 17, 2013 - if there are multiple lines in the vcf at one position, then find the most probable and discard the others
 # Ver 1.2 - Apr 8, 2013 - Don't use dups call if haplotypecaller makes a call since dup call would override HomRef haplotypecaller calls.
-#			8/26/13 - require that a haplotypecaller reference base be used in >20% of the datasets since otherwise we sometimes have a 454 or Ion homopolymer indel override a real snp in other platforms
-#			8/28/13 - add export of single alt variants to csv for machine learning
-#			11/8/13 - add one to $HapRefCall if $info[$kk] =~ /UGHap=HapRefUGVar/ to avoid calling incorrect variants near complex variants 
-#			2/9/14	- look for HapCall==both or ==Both
+
 use strict;
 use warnings;
 use List::Util qw[min max];
@@ -23,8 +20,6 @@ use List::Util qw[min max];
 my $xx=0; #debug counter
 my $line;
 my @ALTPL=(3,6,10,15); #number of PLs for each number of ALT alleles
-    #HSWG ILLWG XIll 454WG ILLCLIA IllPCRFree XPSolWGLS IonEx HSWEx ILLWEx CG PlatGen ILL250
-    my @exp = (3,4,6,10,11,12); #datasets to export as csv
 
 #F(j/k) = (k*(k+1)/2)+j -> formula for determining PL order from genotype
 my @GTs=("0/0","0/1","1/1","0/2","1/2","2/2","0/3","1/3","2/3","3/3","0/4","1/4","2/4","3/4","4/4");
@@ -93,20 +88,6 @@ unless ( open(OUTHOMVAR, ">${infilestart}allcall_UGHapMerge_HomVar_${chrom}.vcf"
     print "\nCannot open the file: ${infilestart}allcall_UGHapMerge_HomVar_${chrom}.vcf to write to! \n\n";
     exit;
 }
-unless ( open(EXPCSV, ">${infilestart}allcall_UGHapMerge_${chrom}.csv")) {
-    print "\nCannot open the file: ${infilestart}allcall_UGHapMerge_${chrom}.csv to write to! \n\n";
-    exit;
-}
-
-#print header for CSV
-if ($chrom eq "1a") {
-print EXPCSV "chrompos,ref,alt,genotypeClass";
-for (my $i=0; $i<=$#exp; $i++) {
-	print EXPCSV ",${infiles[$exp[$i]]}_PL0,${infiles[$exp[$i]]}_PL1,${infiles[$exp[$i]]}_PL2,${infiles[$exp[$i]]}_PLbyDP,${infiles[$exp[$i]]}_DP,${infiles[$exp[$i]]}_FS,${infiles[$exp[$i]]}_MQ,${infiles[$exp[$i]]}_NBQ,${infiles[$exp[$i]]}_OND,${infiles[$exp[$i]]}_ReadPosEndDist,${infiles[$exp[$i]]}_HaplotypeScore,${infiles[$exp[$i]]}_BaseQRankSum";    		
-}
-print EXPCSV "\n";
-}
-
 #skip header lines in individual files and write first one to output
 my $fhn = 0;
 foreach my $fh (@infilehandlesDist) {
@@ -159,7 +140,6 @@ my @char=((0) x ($#infilehandlesDist+1));
 my @gt=((0) x ($#infilehandlesDist+1));
 my @PLtext=((0) x ($#infilehandlesDist+1));
 my @varType=((0) x ($#infilehandlesDist+1));
-    my @hapCall=((0) x ($#infilehandlesDist+1));
 
 my @linedups=((0) x ($#infilehandlesDist+1));
 my @chromposdups=((0) x ($#infilehandlesDist+1));
@@ -193,6 +173,7 @@ while($endlineall==1) {
     my @PLTot=((0) x 15);    #allows up to 4 ALT alleles
     my @NoPLTot=((0) x 15);
     my @YesPLTot=((0) x 15);
+    my @hapCall=((0) x ($#infilehandlesDist+1));
     my $MQ0=0; my $DPTot=0; my $PLno=0;
     
     my $dataset=-1;
@@ -244,15 +225,8 @@ while($endlineall==1) {
                     else { $PLtext[$dataset]=$chars[$i];}
                 }
             }
-            if (($qual[$dataset]==0 || $qual[$dataset]>40) && ($info[$dataset] =~ /UGHap=HapnoUG/ ||  $info[$dataset] =~ /UGHap=HapVarUGdiff/ || $info[$dataset] =~ /UGHap=both/ || $info[$i] =~ /UGHap=Both/)) { $hapCall[$dataset]=1;
+            if (($qual[$dataset]==0 || $qual[$dataset]>40) && ($info[$dataset] =~ /UGHap=HapnoUG/ ||  $info[$dataset] =~ /UGHap=HapVarUGdiff/ || $info[$dataset] =~ /UGHap=both/)) { $hapCall[$dataset]=1;
             } else { $hapCall[$dataset]=0;}
-            
-            #if ($chrompos[$dataset]==1020179655) {
-            #	print "$line[$dataset]";
-            #	print "$qual[$dataset],$hapCall[$dataset],$info[$dataset]\n";
-            #	if ($info[$dataset] =~ /UGHap=HapVarUGdiff/) { print "HapVarUGdiff\n\n"; }
-            #}
-            
 
 		}
     }
@@ -335,11 +309,7 @@ while($endlineall==1) {
             my @alts = split( ",", $alt[$kk]);
             if (length($ref[$kk])>1 && length($alts[0])>1) { $hapCallRef++; }
         }
-        if ($info[$kk] =~ /UGHap=HapRefUGVar/) {
-            $hapCallRef++;
-            next;
-        }
-        if ($chrompos[$kk]==$minchrompos && !($qual[$kk] eq ".") && $qual[$kk]>10) {
+        if ($chrompos[$kk]==$minchrompos && !($qual[$kk] eq ".") && $qual[$kk]>20) {
             my @alts = split( ",", $alt[$kk]);
             
             if ($ref[$kk] eq $ref1) {
@@ -376,29 +346,27 @@ while($endlineall==1) {
         }
     }
     
-    if ($minchrompos==1020179655) {
+    if ($minchrompos==2121995151) {
         print "$ref1hapcnt,$ref2hapcnt,$ref3hapcnt,$hapCallRef\n";
-        print "$ref1cnt,$ref2cnt,$ref3cnt,$ref1,$ref2,$ref2\n";
-        print "$hapCall[0],$hapCall[1],$hapCall[2],$hapCall[3],$hapCall[4],$hapCall[5],$hapCall[6],$hapCall[7],$hapCall[8],$hapCall[9],$hapCall[10],$hapCall[11],$hapCall[12],$hapCall[13]\n";
-        print "$gt[0],$gt[1],$gt[2],$gt[3],$gt[4],$gt[5],$gt[6],$gt[7],$gt[8],$gt[9],$gt[10],$gt[11],$gt[12],$gt[13]\n";
-        print "$ref[0],$ref[1],$ref[2],$ref[3],$ref[4],$ref[5],$ref[6],$ref[7],$ref[8],$ref[9],$ref[10],$ref[11],$ref[12],$ref[13]\n";
-        print "$alt[0];$alt[1];$alt[2];$alt[3];$alt[4];$alt[5];$alt[6];$alt[7];$alt[8];$alt[9];$alt[10];$alt[11];$alt[12];$alt[13]\n";
-        print "$refdups[0],$refdups[1],$refdups[2],$refdups[3],$refdups[4],$refdups[5],$refdups[6],$refdups[7],$refdups[8],$refdups[9],$refdups[10],$refdups[11],$refdups[12],$refdups[13]\n";
+        print "$hapCall[0],$hapCall[1],$hapCall[2],$hapCall[3],$hapCall[4],$hapCall[5],$hapCall[6],$hapCall[7],$hapCall[8],$hapCall[9],$hapCall[10]\n";
+        print "$gt[0],$gt[1],$gt[2],$gt[3],$gt[4],$gt[5],$gt[6],$gt[7],$gt[8],$gt[9],$gt[10]\n";
+        print "$ref[0],$ref[1],$ref[2],$ref[3],$ref[4],$ref[5],$ref[6],$ref[7],$ref[8],$ref[9],$ref[10]\n";
+        print "$alt[0];$alt[1];$alt[2];$alt[3];$alt[4];$alt[5];$alt[6];$alt[7];$alt[8];$alt[9];$alt[10]\n";
+        print "$refdups[0],$refdups[1],$refdups[2],$refdups[3],$refdups[4],$refdups[5],$refdups[6],$refdups[7],$refdups[8],$refdups[9],$refdups[10]\n";
         print "Chrompos:@chrompos\n";
     }
-    my $HapCallVar=0;
-    if (($ref3hapcnt+$ref2hapcnt+$ref1hapcnt<$hapCallRef) && ($hapCallRef>2 || $ref1cnt+$ref2cnt+$ref3cnt<4)) {
-#        if ($minchrompos==1226460240) {
+    if ($ref3hapcnt+$ref2hapcnt+$ref1hapcnt<$hapCallRef) {
+#        if ($minchrompos==2121995151) {
 #            print "1next\n";
 #        }
         #print "$minchrompos,";
         next; #skip this record if the HaplotypeCaller is HomRef and most records have no genotype call (except dups)
-    } elsif ($ref3hapcnt>$ref2hapcnt && $ref3hapcnt>$ref1hapcnt && $ref3hapcnt>0.5*($ref1cnt+$ref2cnt+$ref3cnt)) {
-        $refmax=$ref3; $altVarLong=$altVarLong3; $altno=$altno3; $HapCallVar=$ref3hapcnt;
-    } elsif ($ref2hapcnt>$ref1hapcnt && $ref2hapcnt>0.5*($ref1cnt+$ref2cnt+$ref3cnt)) {
-        $refmax=$ref2; $altVarLong=$altVarLong2; $altno=$altno2; $HapCallVar=$ref2hapcnt;
-    } elsif ($ref1hapcnt>0.5*($ref1cnt+$ref2cnt+$ref3cnt)) {
-        $refmax=$ref1; $altVarLong=$altVarLong1; $altno=$altno1; $HapCallVar=$ref1hapcnt;
+    } elsif ($ref3hapcnt>$ref2hapcnt && $ref3hapcnt>$ref1hapcnt) {
+        $refmax=$ref3; $altVarLong=$altVarLong3; $altno=$altno3;
+    } elsif ($ref2hapcnt>$ref1hapcnt) {
+        $refmax=$ref2; $altVarLong=$altVarLong2; $altno=$altno2;
+    } elsif ($ref1hapcnt>0) {
+        $refmax=$ref1; $altVarLong=$altVarLong1; $altno=$altno1;
     } elsif ($ref3cnt>$ref2cnt && $ref3cnt>$ref1cnt) {
         $refmax=$ref3; $altVarLong=$altVarLong3; $altno=$altno3;
     } elsif ($ref2cnt>$ref1cnt) {
@@ -407,7 +375,7 @@ while($endlineall==1) {
         $refmax=$ref1; $altVarLong=$altVarLong1; $altno=$altno1;
     }
     
-#    if ($minchrompos==1020179655) {
+#    if ($minchrompos==2121995151) {
 #        print "1\n";
 #    }
     
@@ -461,7 +429,7 @@ while($endlineall==1) {
     if ($altno>4) {$altno=4;} # only allow 4 ALT alleles
     $PLno=$ALTPL[$altno-1];
     
-    if ($minchrompos==1020179655) {
+    if ($minchrompos==2121995151) {
         print "allalts:";
         foreach my $alt (@allalts) {
             print "$alt;";
@@ -469,7 +437,7 @@ while($endlineall==1) {
         print "\n";
     }
 
-#    if ($minchrompos==1020179655) {
+#    if ($minchrompos==2121995151) {
 #        print "2\n";
 #    }
     #store best call from dups and non-dups
@@ -490,7 +458,7 @@ while($endlineall==1) {
     my @minorRef=((0) x ($#infilehandlesDist+1));
     #Correct PLs if alt alleles don't match - currently doesn't correct all combinations, but fixes most
     for (my $kk=0; $kk<=$#infilehandlesDist; $kk++) {
-        if ($minchrompos==1020179655) {
+        if ($minchrompos==2121995151) {
             print "$chrompos[$kk],$chromposdups[$kk],$refdups[$kk],$refmax,$qual[$kk],$qualdups[$kk],$hapCall[$kk]\n";
         }
         if ($chrompos[$kk]!=$minchrompos || ($chromposdups[$kk]==$minchrompos && $refdups[$kk] eq $refmax && $qual[$kk]<=$qualdups[$kk] && $hapCall[$kk]==0)) {next;}
@@ -586,7 +554,7 @@ while($endlineall==1) {
         $gtbest[$kk]=$gt[$kk];
     }
 
-#    if ($minchrompos==1020179655) {
+#    if ($minchrompos==2121995151) {
 #        print "3\n";
 #    }
     #Correct PLs if alt alleles don't match - currently doesn't correct all combinations, but fixes most
@@ -686,19 +654,18 @@ while($endlineall==1) {
 
     }
     
-#    if ($minchrompos==1020179655) {
+#    if ($minchrompos==2121995151) {
 #        print "4\n";
 #    }
   
     my $HapNoVar=0; #number of datasets with haplotypecaller variant call within 20 bases but no variant at this position
     my $allPLannot=""; #PLs for each dataset at this position for allcall.vcf
     my @DP=((0) x ($#infilehandlesDist+1));
-    my @PLminbest=((0) x ($#infilehandlesDist+1));
     
     for (my $i=0;$i<=$#infilehandlesDist;$i++) {
 		if ($chrompos[$i]!=$minchrompos) {
             if ($chrompos[$i]<=$minchrompos+20) {
-                if (!($qual[$i] eq ".") && $qual[$i]>40 && ($info[$i] =~ /UGHap=HapnoUG/ ||  $info[$i] =~ /UGHap=HapVarUGdiff/ || $info[$i] =~ /UGHap=Both/ || $info[$i] =~ /UGHap=both/)) { $HapNoVar++;}
+                if (!($qual[$i] eq ".") && $qual[$i]>40 && ($info[$i] =~ /UGHap=HapnoUG/ ||  $info[$i] =~ /UGHap=HapVarUGdiff/ || $info[$i] =~ /UGHap=Both/)) { $HapNoVar++;}
             }
 		} else {
         
@@ -724,7 +691,6 @@ while($endlineall==1) {
                     $j++;
                 }
                 if ($PLmin>20) { $YesPLTot[$PL0]++; }
-                $PLminbest[$i]=$PLmin;
                 
             
                 if ($infobest[$i] =~ /DP=(.*?);/) {
@@ -763,7 +729,7 @@ while($endlineall==1) {
     }
     #find dataset with strongest genotype call to use its info in output
     my $maxdataset = 0; my $maxothPL=0;
-    for (my $i=0;$i<=$#infilehandlesDist;$i++) {
+    for (my $i=0;$i<$#infilehandlesDist;$i++) {
 		if ($chromposbest[$i]!=$minchrompos) {
             next;
 		}
@@ -787,15 +753,9 @@ while($endlineall==1) {
                 }
             
             }
-         }
-            if ($minchrompos==2137104098) {
-            	print "$maxdataset,$i,$infiles[$i]\n";
-            	print "PLs:$PLtextbest[$i]\n";
-            	print "$maxdataset,$maxothPL\n\n";
-            }
-            
+        }
     }
-#    if ($minchrompos==1020179655) {
+#    if ($minchrompos==2121995151) {
 #        print "5\n";
 #    }
 
@@ -805,42 +765,42 @@ while($endlineall==1) {
     if ($DPTot==0) {$DPTot=1;} #prevent divide by zero error
     my $PLbyDP=(int($PLmin/$DPTot*100+0.499)/100);
     $genoLowConf = $geno;
-    if ($minchrompos>1020179655) {
-        #exit;
-    }
+#    if ($minchrompos>2121995151) {
+#        exit;
+#    }
 
-    if ($minchrompos==1226460240) {
-        print "$chrombest[$maxdataset]\t$posbest[$maxdataset]\t$idbest[$maxdataset]\t$refmax\t$altVarLong\t$PLmin\tPASS\t$infobest[$maxdataset];geno=$geno;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;HapCallVar=$HapCallVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]\tGT:DP:PL\t$GTs[$geno-1]:$DP[$j]:$PLtextbest[$j]\n";
+    if ($minchrompos==2121995151) {
+        print "$chrombest[$maxdataset]\t$posbest[$maxdataset]\t$idbest[$maxdataset]\t$refmax\t$altVarLong\t$PLmin\tPASS\t$infobest[$maxdataset];geno=$geno;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]\tGT:DP:PL\t$GTs[$geno-1]:$DP[$j]:$PLtextbest[$j]\n";
     }
     
     if (!defined($NoPL)) {
         print "$chrompos[$j],$chromposprev[$j],$minchrompos,$PLno\n";
-        print "${infiles[$j]}\t$fields[0]\t$fields[1]\t$fields[2]\t$refmax\t$altVarLong\t$fields[5]\tPASS\t$fields[7];geno=$geno;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;HapCallVar=$HapCallVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]\tGT:DP:PL\t$GTs[$geno-1]:$DP[$j]:$PLtextbest[$j]\n";
+        print "${infiles[$j]}\t$fields[0]\t$fields[1]\t$fields[2]\t$refmax\t$altVarLong\t$fields[5]\tPASS\t$fields[7];geno=$geno;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]\tGT:DP:PL\t$GTs[$geno-1]:$DP[$j]:$PLtextbest[$j]\n";
         $xx++;
         if ($xx>10) {exit;}
     }
     if ((($geno==1 || ($HapNoVar<2 && ($geno==3 || $geno==6 || $geno==10 || $geno==15))) && $PLmin > 80 && $PLbyDP > 0.8 && $YesPL>1 && $NoPL/$#infilehandlesDist<0.25)) {
 	    my $j = 0; #number of vcf file
-        if ($chromposbest[$j]==1226460240) {
+        if ($chromposbest[$j]==2121995151) {
             print "Hom:@chrompos\n";
         }
 		if ($geno==1) {
-            print OUTHOMREF "$chrombest[$maxdataset]\t$posbest[$maxdataset]\t$idbest[$maxdataset]\t$refmax\t$altVarLong\t$PLmin\tPASS\t$infobest[$maxdataset];geno=$geno;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;HapCallVar=$HapCallVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]$allPLannot\tGT:DP:PL\t$GTs[$geno-1]:$DPTot:$PLTottxt\n";
+            print OUTHOMREF "$chrombest[$maxdataset]\t$posbest[$maxdataset]\t$idbest[$maxdataset]\t$refmax\t$altVarLong\t$PLmin\tPASS\t$infobest[$maxdataset];geno=$geno;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]$allPLannot\tGT:DP:PL\t$GTs[$geno-1]:$DPTot:$PLTottxt\n";
 #            foreach my $fh (@outfilehandlesHomRefUncert) {
 #                if ($chromposbest[$j]==$chrompos[$maxdataset] && $refbest[$j] eq $refmax) {
 #                    # Split up the line into an array
 #                    @fields = split( "\t", $linebest[$j]);
-#                    print $fh "$fields[0]\t$fields[1]\t$fields[2]\t$refmax\t$altVarLong\t$fields[5]\tPASS\t$fields[7];geno=$geno;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;HapCallVar=$HapCallVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]\tGT:DP:PL\t$GTs[$geno-1]:$DP[$j]:$PLtextbest[$j]\n";
+#                    print $fh "$fields[0]\t$fields[1]\t$fields[2]\t$refmax\t$altVarLong\t$fields[5]\tPASS\t$fields[7];geno=$geno;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]\tGT:DP:PL\t$GTs[$geno-1]:$DP[$j]:$PLtextbest[$j]\n";
 #                }
 #                $j++;
 #            }
 		} else {
-            print OUTHOMVAR "$chrom[$maxdataset]\t$pos[$maxdataset]\t$id[$maxdataset]\t$refmax\t$altVarLong\t$PLmin\tPASS\t$info[$maxdataset];geno=$geno;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;HapCallVar=$HapCallVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]$allPLannot\tGT:DP:PL\t$GTs[$geno-1]:$DPTot:$PLTottxt\n";
+            print OUTHOMVAR "$chrom[$maxdataset]\t$pos[$maxdataset]\t$id[$maxdataset]\t$refmax\t$altVarLong\t$PLmin\tPASS\t$info[$maxdataset];geno=$geno;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]$allPLannot\tGT:DP:PL\t$GTs[$geno-1]:$DPTot:$PLTottxt\n";
 #            foreach my $fh (@outfilehandlesHomVarUncert) {
 #                if ($chromposbest[$j]==$chrompos[$maxdataset] && $refbest[$j] eq $refmax) {
 #                    # Split up the line into an array
 #                    @fields = split( "\t", $linebest[$j]);
-#                    print $fh "$fields[0]\t$fields[1]\t$fields[2]\t$refmax\t$altVarLong\t$fields[5]\tPASS\t$fields[7];geno=$geno;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;HapCallVar=$HapCallVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]\tGT:DP:PL\t$GTs[$geno-1]:$DP[$j]:$PLtextbest[$j]\n";
+#                    print $fh "$fields[0]\t$fields[1]\t$fields[2]\t$refmax\t$altVarLong\t$fields[5]\tPASS\t$fields[7];geno=$geno;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]\tGT:DP:PL\t$GTs[$geno-1]:$DP[$j]:$PLtextbest[$j]\n";
 #                }
 #                $j++;
 #            }
@@ -849,13 +809,13 @@ while($endlineall==1) {
             if ($chromposbest[$j]==$chrompos[$maxdataset] && $refbest[$j] eq $refmax) {
                 # Split up the line into an array
                 @fields = split( "\t", $linebest[$j]);
-                print $fh "$fields[0]\t$fields[1]\t$fields[2]\t$refmax\t$altVarLong\t$fields[5]\tPASS\t$fields[7];geno=$geno;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;HapCallVar=$HapCallVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]\tGT:DP:PL\t$GTs[$geno-1]:$DP[$j]:$PLtextbest[$j]\n";
+                print $fh "$fields[0]\t$fields[1]\t$fields[2]\t$refmax\t$altVarLong\t$fields[5]\tPASS\t$fields[7];geno=$geno;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]\tGT:DP:PL\t$GTs[$geno-1]:$DP[$j]:$PLtextbest[$j]\n";
             }
             $j++;
         }
         
     } elsif (($geno!=1 && $geno!=3 && $geno!=6 && $geno!=10 && $geno!=15) && $MQ0/$#infilehandlesDist<0.3 && $PLmin > 100 && $PLmin/$DPTot > 3.4 && $YesPL>1 && $NoPL/$#infilehandlesDist<0.15 && $HapNoVar<2) {
-        if ($chromposbest[$j]==1226460240) {
+        if ($chromposbest[$j]==2121995151) {
             print "Het:@chrompos\n";
         }
         my $j = 0; #number of vcf file
@@ -864,28 +824,21 @@ while($endlineall==1) {
                 # Split up the line into an array
                 @fields = split( "\t", $linebest[$j]);
 #                if ($chromposbest[$j]==1016359050) {
-                if ($chrombest[$maxdataset] eq "0") {
-                    print "@chrompos\n";
-                    print "$chrompos[$maxdataset]:@chromposbest\n";
-                    print "$refmax:@refbest; altvarlong:$altVarLong\n";
-                    print "$chrompos[$j],$chromposprev[$j],$minchrompos,$PLno\n";
-                    print "${infiles[$j]}\t$fields[0]\t$fields[1]\t$fields[2]\t$refmax\t$altVarLong\t$fields[5]\tPASS\t$fields[7];geno=$geno;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;HapCallVar=$HapCallVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]\tGT:DP:PL\t$GTs[$genoLowConf-1]:$DP[$j]:$PLtextbest[$j]\n";
-                }
-                print $fh "$fields[0]\t$fields[1]\t$fields[2]\t$refmax\t$altVarLong\t$fields[5]\tPASS\t$fields[7];geno=$geno;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;HapCallVar=$HapCallVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]\tGT:DP:PL\t$GTs[$geno-1]:$DP[$j]:$PLtextbest[$j]\n";
+#                    print "@chrompos\n";
+#                    print "$chrompos[$maxdataset]:@chromposbest\n";
+#                    print "$refmax:@refbest\n";
+#                    print "$chrompos[$j],$chromposprev[$j],$minchrompos,$PLno\n";
+#                    print "${infiles[$j]}\t$fields[0]\t$fields[1]\t$fields[2]\t$refmax\t$altVarLong\t$fields[5]\tPASS\t$fields[7];geno=$geno;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]\tGT:DP:PL\t$GTs[$genoLowConf-1]:$DP[$j]:$PLtextbest[$j]\n";
+#                }
+                print $fh "$fields[0]\t$fields[1]\t$fields[2]\t$refmax\t$altVarLong\t$fields[5]\tPASS\t$fields[7];geno=$geno;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]\tGT:DP:PL\t$GTs[$geno-1]:$DP[$j]:$PLtextbest[$j]\n";
             }
             
 			$j++;
 		}
-                if (($chrombest[$maxdataset] eq "0")) {
-                    print "@chrompos\n";
-                    print "$chrompos[$maxdataset]:@chromposbest\n";
-                    print "$refmax:@refbest; altvarlong:$altVarLong\n";
-					print  "$chrombest[$maxdataset]\t$posbest[$maxdataset]\t$idbest[$maxdataset]\t$refmax\t$altVarLong\t$PLmin\tPASS\t$infobest[$maxdataset];geno=$geno;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;HapCallVar=$HapCallVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]$allPLannot\tGT:DP:PL\t$GTs[$geno-1]:$DPTot:$PLTottxt\n\n";
-                }
-		print OUTHET "$chrombest[$maxdataset]\t$posbest[$maxdataset]\t$idbest[$maxdataset]\t$refmax\t$altVarLong\t$PLmin\tPASS\t$infobest[$maxdataset];geno=$geno;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;HapCallVar=$HapCallVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]$allPLannot\tGT:DP:PL\t$GTs[$geno-1]:$DPTot:$PLTottxt\n";
+		print OUTHET "$chrombest[$maxdataset]\t$posbest[$maxdataset]\t$idbest[$maxdataset]\t$refmax\t$altVarLong\t$PLmin\tPASS\t$infobest[$maxdataset];geno=$geno;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]$allPLannot\tGT:DP:PL\t$GTs[$geno-1]:$DPTot:$PLTottxt\n";
         
     } else {
-        if ($chromposbest[$j]==1226460240) {
+        if ($chromposbest[$j]==2121995151) {
             print "Uncert:@chrompos\n";
         }
         $genoLowConf = $geno;
@@ -896,7 +849,7 @@ while($endlineall==1) {
 #            if ($chromposbest[$j]==$chrompos[$maxdataset] && $refbest[$j] eq $refmax) {
 #                # Split up the line into an array
 #                @fields = split( "\t", $linebest[$j]);
-#                print $fh "$fields[0]\t$fields[1]\t$fields[2]\t$refmax\t$altVarLong\t$fields[5]\tPASS\t$fields[7];geno=$geno;genoLowConf=$genoLowConf;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;HapCallVar=$HapCallVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]\tGT:DP:PL\t$GTs[$genoLowConf-1]:$DP[$j]:$PLtextbest[$j]\n";
+#                print $fh "$fields[0]\t$fields[1]\t$fields[2]\t$refmax\t$altVarLong\t$fields[5]\tPASS\t$fields[7];geno=$geno;genoLowConf=$genoLowConf;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]\tGT:DP:PL\t$GTs[$genoLowConf-1]:$DP[$j]:$PLtextbest[$j]\n";
 #            }
 #            
 #            $j++;
@@ -908,7 +861,7 @@ while($endlineall==1) {
 #            if ($chromposbest[$j]==$chrompos[$maxdataset] && $refbest[$j] eq $refmax) {
 #                # Split up the line into an array
 #                @fields = split( "\t", $linebest[$j]);
-#                print $fh "$fields[0]\t$fields[1]\t$fields[2]\t$refmax\t$altVarLong\t$fields[5]\tPASS\t$fields[7];geno=$geno;genoLowConf=$genoLowConf;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;HapCallVar=$HapCallVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]\tGT:DP:PL\t$GTs[$genoLowConf-1]:$DP[$j]:$PLtextbest[$j]\n";
+#                print $fh "$fields[0]\t$fields[1]\t$fields[2]\t$refmax\t$altVarLong\t$fields[5]\tPASS\t$fields[7];geno=$geno;genoLowConf=$genoLowConf;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]\tGT:DP:PL\t$GTs[$genoLowConf-1]:$DP[$j]:$PLtextbest[$j]\n";
 #            }
 #            
 #            $j++;
@@ -920,7 +873,7 @@ while($endlineall==1) {
             if ($chromposbest[$j]==$chrompos[$maxdataset] && $refbest[$j] eq $refmax) {
                 # Split up the line into an array
                 @fields = split( "\t", $linebest[$j]);
-                print $fh "$fields[0]\t$fields[1]\t$fields[2]\t$refmax\t$altVarLong\t$fields[5]\tPASS\t$fields[7];geno=$geno;genoLowConf=$genoLowConf;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;HapCallVar=$HapCallVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]\tGT:DP:PL\t$GTs[$genoLowConf-1]:$DP[$j]:$PLtextbest[$j]\n";
+                print $fh "$fields[0]\t$fields[1]\t$fields[2]\t$refmax\t$altVarLong\t$fields[5]\tPASS\t$fields[7];geno=$geno;genoLowConf=$genoLowConf;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]\tGT:DP:PL\t$GTs[$genoLowConf-1]:$DP[$j]:$PLtextbest[$j]\n";
             }
             $j++;
         }
@@ -936,9 +889,9 @@ while($endlineall==1) {
 #                    print "$chrompos[$maxdataset]:@chromposbest\n";
 #                    print "$refmax:@refbest\n";
 #                    print "$chrompos[$j],$chromposprev[$j],$minchrompos,$PLno\n";
-#                    print "${infiles[$j]}\t$fields[0]\t$fields[1]\t$fields[2]\t$refmax\t$altVarLong\t$fields[5]\tPASS\t$fields[7];geno=$geno;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;HapCallVar=$HapCallVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]\tGT:DP:PL\t$GTs[$genoLowConf-1]:$DP[$j]:$PLtextbest[$j]\n";
+#                    print "${infiles[$j]}\t$fields[0]\t$fields[1]\t$fields[2]\t$refmax\t$altVarLong\t$fields[5]\tPASS\t$fields[7];geno=$geno;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]\tGT:DP:PL\t$GTs[$genoLowConf-1]:$DP[$j]:$PLtextbest[$j]\n";
 #                }
-                print $fh "$fields[0]\t$fields[1]\t$fields[2]\t$refmax\t$altVarLong\t$fields[5]\tPASS\t$fields[7];geno=$geno;genoLowConf=$genoLowConf;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;HapCallVar=$HapCallVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]\tGT:DP:PL\t$GTs[$genoLowConf-1]:$DP[$j]:$PLtextbest[$j]\n";
+                print $fh "$fields[0]\t$fields[1]\t$fields[2]\t$refmax\t$altVarLong\t$fields[5]\tPASS\t$fields[7];geno=$geno;genoLowConf=$genoLowConf;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]\tGT:DP:PL\t$GTs[$genoLowConf-1]:$DP[$j]:$PLtextbest[$j]\n";
             }
             
             $j++;
@@ -947,56 +900,7 @@ while($endlineall==1) {
     
     my $filtered="PASS";
     if ($geno==0) {$filtered="uncertain";}
-    print OUTPUT "$chrombest[$maxdataset]\t$posbest[$maxdataset]\t$idbest[$maxdataset]\t$refmax\t$altVarLong\t$PLmin\tPASS\t$infobest[$maxdataset];geno=$geno;genoLowConf=$genoLowConf;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;HapCallVar=$HapCallVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]$allPLannot\tGT:DP:PL\t$GTs[$genoLowConf-1]:$DPTot:$PLTottxt\n";
-
-	#output comma-delimited annotations for sites with data in all datasets
-    my $dcnt=0;
-    for (my $i=0; $i<=$#exp; $i++) { #first check that each dataset has info here
-    	if ($chromposbest[$exp[$i]]==$chrompos[$maxdataset] && $refbest[$exp[$i]] eq $refmax && !($gtbest[$exp[$i]] eq "./.") && !($PLtextbest[$exp[$i]] eq "") && ($PLtextbest[$exp[$i]] =~ /.*,.*,/)) { $dcnt++; }
-    }
-    if ($altno==1 && $dcnt==$#exp+1) { #if all datasets have info, then export
-			my $genoconf=0;
-    		if ((($geno==1 || ($HapNoVar<2 && ($geno==3 || $geno==6 || $geno==10 || $geno==15))) && $PLmin > 80 && $PLbyDP > 0.8 && $YesPL>1 && $NoPL/$#infilehandlesDist<0.25)) {
-    			if ($geno==1) { 
-    				$genoconf=1;
-    			} else {
-    				$genoconf=3;
-    			}
-    		} elsif (($geno!=1 && $geno!=3 && $geno!=6 && $geno!=10 && $geno!=15) && $MQ0/$#infilehandlesDist<0.3 && $PLmin > 100 && $PLmin/$DPTot > 3.4 && $YesPL>1 && $NoPL/$#infilehandlesDist<0.15 && $HapNoVar<2) {
-    			$genoconf=2;
-    		}
-		print EXPCSV "$chrompos[$maxdataset],$refmax,$altVarLong,$genoconf";    		
-
-    	for (my $i=0; $i<=$#exp; $i++) {
-            @fields = split( "\t", $linebest[$exp[$i]]);
-			my $DP=0;
-            if ($fields[7] =~ /DP=(.*?);/) { $DP=$1; }
-			my $AB=1;
-            if ($fields[7] =~ /ABH..=(.*?);/) { $AB=$1; }
-			my $QD=0;
-            if ($fields[7] =~ /QD=(.*?);/) { $QD=$1; }
-			my $FS=0;
-            if ($fields[7] =~ /FS=(.*?);/) { $FS=$1; }
-			my $MQ=0;
-            if ($fields[7] =~ /MQ=(.*?);/) { $MQ=$1; }
-			my $NBQ=0;
-            if ($fields[7] =~ /NBQ=(.*?);/) { $NBQ=$1; }
-			my $ReadPosEndDist=0;
-            if ($fields[7] =~ /ReadPosEndDist=(.*?);/) { $ReadPosEndDist=$1; }
-			my $HaplotypeScore=0;
-            if ($fields[7] =~ /HaplotypeScore=(.*?);/) { $HaplotypeScore=$1; }
-			my $BaseQRankSum=0;
-            if ($fields[7] =~ /BaseQRankSum=(.*?);/) { $BaseQRankSum=$1; }
-			my $OND=0;
-            if ($fields[7] =~ /OND=(.*?);/) { $OND=$1; }
-
-            my $PLbyDP=0;
-            if ($DP>0) { $PLbyDP=$PLminbest[$exp[$i]]/($DP+0.0); }
-            my @PLs = split( ",", $PLtextbest[$exp[$i]]);
-    		print EXPCSV ",$PLs[0],$PLs[1],$PLs[2],$PLbyDP,$DP,$FS,$MQ,$NBQ,$OND,$ReadPosEndDist,$HaplotypeScore,$BaseQRankSum";
-		}
-		print EXPCSV "\n";
-	}    		
+    print OUTPUT "$chrombest[$maxdataset]\t$posbest[$maxdataset]\t$idbest[$maxdataset]\t$refmax\t$altVarLong\t$PLmin\tPASS\t$infobest[$maxdataset];geno=$geno;genoLowConf=$genoLowConf;PLtot=$PLmin;NoPLnum=$NoPL;DPTot=$DPTot;PLbyDP=$PLbyDP;HapNoVar=$HapNoVar;LowMQ0Fraction=$MQ0;maxdataset=$infiles[$maxdataset]$allPLannot\tGT:DP:PL\t$GTs[$genoLowConf-1]:$DPTot:$PLTottxt\n";
     
     #last;
 }
@@ -1006,7 +910,6 @@ close OUTPUT;
 close OUTHOMREF;
 close OUTHET;
 close OUTHOMVAR;
-close EXPCSV;
 foreach my $fh (@infilehandlesDist) {
     close $fh;
 }

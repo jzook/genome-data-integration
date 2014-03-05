@@ -10,6 +10,7 @@
 BASE=/home/justin.zook
 GATK=$BASE/GATK/GenomeAnalysisTK-2.5-2-gf57256b
 
+
 TEMP_LIST=$BASE/GATK/runs/ChromSizes.txt
 TEMP_LIST1=$BASE/GATK/runs/ChromNames.txt
 
