@@ -1,0 +1,224 @@
+{
+  "name": "samtools_import_splitchrom_addrg_6to12_withchr",
+  "title": "SAMtools Imported Mappings Chromosome Splitter with Picard AddOrReplaceReadGroups",
+  "summary": "Creates bam and index files for every chromosome individually, adding read group IDs, keeping chr prefix",
+  "tags": [
+    "Mappings Manipulation"
+  ],
+  "dxapi": "1.0.0",
+  "inputSpec": [
+    {
+      "name": "urlbam",
+      "label": "URL of BAM",
+      "class": "string",
+      "help": "The URL to fetch data from for a coordinate-sorted BAM file with the mappings to be split by chromosome."
+    },
+    {
+      "name": "urlbai",
+      "label": "URL of BAI",
+      "class": "string",
+      "help": "The URL to fetch data from for a coordinate-sorted BAI file with the mappings to be split by chromosome."
+    },
+    {
+      "name": "prefix",
+      "label": "prefix name of output bam files",
+      "class": "string",
+      "help": "prefix name of output bam files."
+    },
+    {
+      "label": "Read group ID",
+      "help": "Read group ID",
+      "name": "rgid",
+      "class": "string"
+    },
+    {
+      "label": "Read group LB",
+      "help": "Read group library",
+      "name": "rglb",
+      "class": "string"
+    },
+    {
+      "label": "Read group PL",
+      "help": "Read group platform",
+      "name": "rgpl",
+      "class": "string"
+    },
+    {
+      "label": "Read group PU",
+      "help": "Read group platform unit (e.g., run barcode)",
+      "name": "rgpu",
+      "class": "string"
+    },
+    {
+      "label": "Read group SM",
+      "help": "Read group sample name",
+      "name": "rgsm",
+      "class": "string"
+    },
+    {
+      "group": "Common",
+      "help": "Picard validates certain aspects of the input BAM file. This parameter controls how Picard behaves with respect to input validation. Choose STRICT to generate a fatal error when validation fails; choose LENIENT to generate a nonfatal warning when validation fails; choose SILENT to suppress validation messages altogether (which can increase performance). This will supply the 'VALIDATION_STRINGENCY=' option to Picard.",
+      "default": "LENIENT",
+      "label": "Validation stringency",
+      "choices": [
+        "STRICT",
+        "LENIENT",
+        "SILENT"
+      ],
+      "class": "string",
+      "name": "validation_stringency"
+    }
+  ],
+  "outputSpec": [
+    {
+      "patterns": [
+        "*.bam"
+      ],
+      "label": "Bam6",
+      "help": "A BAM file for chromosome 6.",
+      "name": "bam6",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bai"
+      ],
+      "label": "Index6",
+      "help": "A BAI file for chromosome 6.",
+      "name": "bai6",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bam"
+      ],
+      "label": "Bam7",
+      "help": "A BAM file for chromosome 7.",
+      "name": "bam7",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bai"
+      ],
+      "label": "Index7",
+      "help": "A BAI file for chromosome 7.",
+      "name": "bai7",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bam"
+      ],
+      "label": "Bam8",
+      "help": "A BAM file for chromosome 8.",
+      "name": "bam8",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bai"
+      ],
+      "label": "Index8",
+      "help": "A BAI file for chromosome 8.",
+      "name": "bai8",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bam"
+      ],
+      "label": "Bam9",
+      "help": "A BAM file for chromosome 9.",
+      "name": "bam9",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bai"
+      ],
+      "label": "Index9",
+      "help": "A BAI file for chromosome 9.",
+      "name": "bai9",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bam"
+      ],
+      "label": "Bam10",
+      "help": "A BAM file for chromosome 10.",
+      "name": "bam10",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bai"
+      ],
+      "label": "Index10",
+      "help": "A BAI file for chromosome 10.",
+      "name": "bai10",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bam"
+      ],
+      "label": "Bam11",
+      "help": "A BAM file for chromosome 11.",
+      "name": "bam11",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bai"
+      ],
+      "label": "Index11",
+      "help": "A BAI file for chromosome 11.",
+      "name": "bai11",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bam"
+      ],
+      "label": "Bam12",
+      "help": "A BAM file for chromosome 12.",
+      "name": "bam12",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bai"
+      ],
+      "label": "Index12",
+      "help": "A BAI file for chromosome 12.",
+      "name": "bai12",
+      "class": "file"
+    }
+  ],
+  "runSpec": {
+    "execDepends": [
+      {
+        "name": "openjdk-6-jre-headless"
+      }
+    ],
+    "systemRequirements": {
+      "main": {
+        "instanceType": "mem2_hdd2_x2"
+      }
+    },
+    "file": "src/code.sh",
+    "interpreter": "bash"
+  },
+  "categories": ["Import"],
+  "access": {"network": ["*"]},
+  "details": {
+    "upstreamUrl": "http://samtools.sourceforge.net/",
+    "upstreamVersion": "0.1.19",
+    "upstreamAuthor": "Heng Li",
+    "upstreamLicenses": [
+      "MIT License"
+    ]
+  }
+}

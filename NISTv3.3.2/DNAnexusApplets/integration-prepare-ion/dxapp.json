@@ -1,0 +1,92 @@
+{
+  "name": "integration-prepare-ion",
+  "title": "integration-prepare-ion",
+  "dxapi": "1.0.0",
+  "inputSpec": [
+    {
+      "patterns": [
+        "*.vcf"
+      ],
+      "label": "targeted vcf",
+      "help": "exome vcf from Ion",
+      "name": "vcf_in",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bed"
+      ],
+      "label": "exome targets bed",
+      "help": "exome bed targets from Ion",
+      "name": "targetsbed",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bed"
+      ],
+      "label": "callable loci bed",
+      "help": "bed from callable loci",
+      "name": "callablelocibed",
+      "class": "file"
+    },
+    {
+      "label": "Chromosome",
+      "help": "The chromosome to output vcf and bed files for.",
+      "name": "chrom",
+      "class": "string"
+    }
+  ],
+  "outputSpec": [
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "Variants",
+      "help": "The genotyped variants in VCF format.",
+      "name": "outvcfgz",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "Variants index",
+      "help": "The associated TBI file",
+      "name": "outvcftbi",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bed"
+      ],
+      "label": "Not callable BED",
+      "help": "BED file containing not callable regions",
+      "name": "outnotcallablebed",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bed"
+      ],
+      "label": "Callable BED",
+      "help": "BED file containing callable regions",
+      "name": "outcallablebed",
+      "class": "file"
+    }
+  ],
+  "runSpec": {
+    "execDepends": [
+      {
+        "name": "bedtools"
+      }
+    ],
+    "systemRequirements": {
+      "main": {
+        "instanceType": "mem2_hdd2_x1"
+      }
+    },
+    "file": "src/code.sh",
+    "interpreter": "bash"
+  }
+}

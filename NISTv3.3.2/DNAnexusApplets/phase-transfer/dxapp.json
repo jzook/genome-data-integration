@@ -1,0 +1,110 @@
+{
+  "name": "phase-transfer",
+  "title": "phase-transfer",
+  "dxapi": "1.0.0",
+  "inputSpec": [
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "High-confidence Integrated Variants to transfer phase onto",
+      "help": "High-confidence integrated variants to transfer phase onto.",
+      "name": "vcfhighconfgz",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "High-confidence Integrated Variants index",
+      "help": "Index for High-confidence integrated variants",
+      "name": "vcfhighconftbi",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "Phased VCF.gz file",
+      "help": "Phased callset",
+      "name": "vcfphasedgz",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "Phased VCF.gz.tbi file",
+      "help": "Phased callset index",
+      "name": "vcfphasedtbi",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.tar.gz"
+      ],
+      "label": "RTG Reference sdf tar.gz with rtgsdf subdir",
+      "help": "RTG Reference genome sdf in tar.gz with rtgsdf subdir",
+      "name": "rtgsdf",
+      "class": "file"
+    },
+    {
+      "label": "High Conf vcf sample",
+      "help": "Sample name in 10th column of vcf header",
+      "name": "HighConfSample",
+      "class": "string"
+    },
+    {
+      "label": "Phased vcf sample",
+      "help": "Sample name in 10th column of vcf header",
+      "name": "PhasedSample",
+      "class": "string"
+    },
+    {
+      "label": "Remove phasing (yes if input is only locally phased)",
+      "help": "Remove phasing (yes if input is only locally phased)",
+      "name": "removephasing",
+      "class": "string"
+    },
+    {
+      "label": "Output prefix",
+      "help": "The prefix to use when naming the output file (it will be called prefix.tar.gz).",
+      "name": "prefix",
+      "class": "string"
+    }
+  ],
+  "outputSpec": [
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "Output VCF.gz ",
+      "help": "Output VCF.gz ",
+      "name": "outputorigannotvcf",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "Output VCF.gz.tbi ",
+      "help": "Output VCF.gz.tbi ",
+      "name": "outputorigannotvcftbi",
+      "class": "file"
+    }
+  ],
+  "runSpec": {
+    "execDepends": [
+      {
+        "name": "openjdk-8-jre-headless"
+      }
+    ],
+    "systemRequirements": {
+      "main": {
+        "instanceType": "mem2_hdd2_x2"
+      }
+    },
+    "file": "src/code.sh",
+    "interpreter": "bash"
+  }
+}

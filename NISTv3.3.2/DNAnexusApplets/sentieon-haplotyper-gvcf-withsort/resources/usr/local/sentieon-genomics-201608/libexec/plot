@@ -1,0 +1,33 @@
+#!/bin/sh
+if [ ! ${0%%/*} ]; then
+    my_dir=$(dirname "$0")
+else
+    my_dir=$(dirname "$(pwd)/$0")
+fi
+plot_py=$my_dir/plot.py
+
+if [ -z "$SENTIEON_PYTHON" ]; then
+    minor=-1
+    for prog in python2 python; do
+        v=$($prog --version 2>&1)
+        [ $? -ne 0 ] && continue
+        m=$(expr "$v" : 'Python 2.\([0-9]*\)')
+        [ $? -ne 0 ] && continue
+        if [ $minor -lt $m ]; then
+            best=$prog
+            version=$v
+            minor=$m
+        fi
+    done
+    if [ $minor -le 0 ]; then
+        echo "No python 2.x installation detected." 2>&1
+        exit 1
+    elif [ $minor -lt 6 ]; then
+        echo "$version detected, but version >= 2.6 is required" 2>&1
+        exit 1
+    else
+        SENTIEON_PYTHON=$best
+    fi
+fi
+
+$SENTIEON_PYTHON $plot_py "$@"

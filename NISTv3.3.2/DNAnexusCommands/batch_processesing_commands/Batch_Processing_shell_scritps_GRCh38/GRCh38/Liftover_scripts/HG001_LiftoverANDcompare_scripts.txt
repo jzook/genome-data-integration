@@ -1,0 +1,62 @@
+# 10/28/16 compare highconf v3.3.1 HG1 
+1) lift over GRCh37 high confidence calls
+2) compare with GRCh38 high confidence calls
+
+# need to convert CHROM number for GRCh37 highconf files
+# Parse out vcf header
+grep ^# HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.1_highconf_phased.vcf > HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.1_highconf_phased_header.vcf
+
+#create no header file
+sed '/^#/ d' HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.1_highconf_phased.vcf > HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.1_highconf_phased_NOheader.vcf
+
+# replace chrom # with chr# at start of every row in no header file
+sed 's/^/chr/' HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.1_highconf_phased_NOheader.vcf > HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.1_highconf_phased_header.vcf > HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.1_highconf_phased_NOheaderCHROMfixed.vcf
+
+# replace chrom # with chr# at start of every row in bed
+sed 's/^/chr/' HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.1_highconf.bed > HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.1_highconf_CHROMfixed.bed
+# add header back in 
+cat HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.1_highconf_phased_header.vcf HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.1_highconf_phased_NOheaderCHROMfixed.vcf > HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.1_highconf_phased_CHROMfixed.vcf
+
+#11/1/16 liftover (note fasta's cannot be zipped)
+#w/unzipped fasta and need to increase memory to 10g (initially tried 4, 6 and 8 and failed incrementally in the process)
+java -jar -Xmx10g /Applications/bfx_tools/genomewarp-master/target/verilylifesciences-genomewarp-1.0.0-runnable.jar --lift_over_chain_path /Users/jmcdani/Documents/GiaB/GiAB_informatics_work/Liftover-GRCh37toGRCh38/hg19ToHg38.over.chain --raw_query_vcf HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.1_highconf_phased_CHROMfixed.vcf --raw_query_bed HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.1_highconf_CHROMfixed.bed --ref_query_fasta /Volumes/Boron/reference\ files/ucsc.hg19.fasta --ref_target_fasta /Volumes/Boron/reference\ files/GCA_000001405.15_GRCh38_no_alt_plus_hs38d1_analysis_set.fna --work_dir /Users/jmcdani/Documents/GiaB/GiAB_informatics_work/Liftover-GRCh37toGRCh38/HG1_h37_to_h38/genomewarp_output/ --output_variants_file HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.1_highconf_phased_LIFTOVER_to_h38.vcf --output_regions_file HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.1_highconf_LIFTOVER_to_h38.bed
+
+#11/1/16 zip and index vcf
+/Applications/bfx_tools/tabix-0.2.6/bgzip HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.1_highconf_phased_LIFTOVER_to_h38.vcf > HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.1_highconf_phased_LIFTOVER_to_h38.vcf.gz
+/Applications/bfx_tools/tabix-0.2.6/tabix HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.1_highconf_phased_LIFTOVER_to_h38.vcf.gz
+
+#11/1/16 compare b38 v3.3.1 HC to b37-->b38 lifted over v3.3.1 test
+dx run -y GIAB:/Workflow/compare-callsets-anyref -ivcfhighconfgz=/HG001/GRCh38/Integration_v.3.3.1_output/161004_CG-IllFB-IllGATKHC-Ion-10X-SOLID_v.3.3.1/HG001_GRCh38_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.1_highconf.vcf.gz -ivcfhighconftbi=/HG001/GRCh38/Integration_v.3.3.1_output/161004_CG-IllFB-IllGATKHC-Ion-10X-SOLID_v.3.3.1/HG001_GRCh38_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.1_highconf.vcf.gz.tbi -ibedhighconf=/HG001/GRCh38/Integration_v.3.3.1_output/161004_CG-IllFB-IllGATKHC-Ion-10X-SOLID_v.3.3.1/HG001_GRCh38_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.1_highconf.bed -ivcftestgz=/HG001/GRCh38/Integration_v.3.3.1_output/161004_CG-IllFB-IllGATKHC-Ion-10X-SOLID_v.3.3.1/comp3.3.1_b38_TO_b37tob38_liftover_highconfidenceV3.3.1/HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.1_highconf_phased_LIFTOVER_to_h38.vcf.gz -ivcftesttbi=/HG001/GRCh38/Integration_v.3.3.1_output/161004_CG-IllFB-IllGATKHC-Ion-10X-SOLID_v.3.3.1/comp3.3.1_b38_TO_b37tob38_liftover_highconfidenceV3.3.1/HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.1_highconf_phased_LIFTOVER_to_h38.vcf.gz.tbi -ibedtest=/HG001/GRCh38/Integration_v.3.3.1_output/161004_CG-IllFB-IllGATKHC-Ion-10X-SOLID_v.3.3.1/comp3.3.1_b38_TO_b37tob38_liftover_highconfidenceV3.3.1/HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.1_highconf_LIFTOVER_to_h38.bed -isvbed=/HG001/GRCh38/remapped_PacBio_MetaSV_svclassify_mergedSVs.bed -iprefix=HG001_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_1_v.3.3.1_b38_compare_b37tob38_liftover_highconfidence_calls -irtgsdf=/assets/rtgsdf38.tar.gz --destination=/HG001/GRCh38/Integration_v.3.3.1_output/161004_CG-IllFB-IllGATKHC-Ion-10X-SOLID_v.3.3.1/comp3.3.1_b38_TO_b37tob38_liftover_highconfidenceV3.3.1/
+
+
+#########################################################
+# 11/14/16 compare highconf v3.3.2 HG1 
+1) lift over GRCh37 high confidence calls
+2) compare with GRCh38 high confidence calls
+
+# need to convert CHROM number for GRCh37 highconf files
+# Parse out vcf header
+grep ^# HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf.vcf > HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_header.vcf
+
+#create no header file
+sed '/^#/ d' HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf.vcf > HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_NOheader.vcf
+
+# replace chrom # with chr# at start of every row in no header file
+sed 's/^/chr/' HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_NOheader.vcf  > HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_NOheaderCHROMfixed.vcf
+
+# replace chrom # with chr# at start of every row in bed
+sed 's/^/chr/' HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf.bed > HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_CHROMfixed.bed
+
+# add header back in 
+cat HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_header.vcf HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_NOheaderCHROMfixed.vcf > HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_CHROMfixed.vcf
+
+liftover (note: fasta's cannot be zipped)
+#w/unzipped fasta and need to increase memory to 10g 
+java -jar -Xmx10g /Applications/bfx_tools/genomewarp-master/target/verilylifesciences-genomewarp-1.0.0-runnable.jar --lift_over_chain_path /Users/jmcdani/Documents/GiaB/GiAB_informatics_work/Liftover-GRCh37toGRCh38/hg19ToHg38.over.chain --raw_query_vcf HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_CHROMfixed.vcf --raw_query_bed HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_CHROMfixed.bed --ref_query_fasta /Volumes/Boron/reference\ files/ucsc.hg19.fasta --ref_target_fasta /Volumes/Boron/reference\ files/GCA_000001405.15_GRCh38_no_alt_plus_hs38d1_analysis_set.fna --work_dir /Users/jmcdani/Documents/GiaB/GiAB_informatics_work/Liftover-GRCh37toGRCh38/HG1_b37_highconfV3.3.2_to_b38/genomewarp_output/ --output_variants_file HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_LIFTOVER_to_h38.vcf --output_regions_file HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_LIFTOVER_to_h38.bed
+
+#zip and index vcf
+/Applications/bfx_tools/tabix-0.2.6/bgzip HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_LIFTOVER_to_h38.vcf > HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_LIFTOVER_to_h38.vcf.gz
+/Applications/bfx_tools/tabix-0.2.6/tabix HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_LIFTOVER_to_h38.vcf.gz
+
+#compare b38 v3.3.2 HC to b37-->b38 lifted over v3.3.2 test
+dx run -y GIAB:/Workflow/compare-callsets-anyref -ivcfhighconfgz=/HG001/GRCh38/Integration_v.3.3.2_output/161107_CG-IllFB-IllGATKHC-Ion-10X-SOLID_v.3.3.2/HG001_GRCh38_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf.vcf.gz -ivcfhighconftbi=/HG001/GRCh38/Integration_v.3.3.2_output/161107_CG-IllFB-IllGATKHC-Ion-10X-SOLID_v.3.3.2/HG001_GRCh38_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf.vcf.gz.tbi -ibedhighconf=/HG001/GRCh38/Integration_v.3.3.2_output/161107_CG-IllFB-IllGATKHC-Ion-10X-SOLID_v.3.3.2/HG001_GRCh38_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf.bed -ivcftestgz=/HG001/GRCh38/Integration_v.3.3.2_output/161107_CG-IllFB-IllGATKHC-Ion-10X-SOLID_v.3.3.2/comp3.3.2_b38_TO_b37tob38_liftover_highconfidenceV3.3.2/HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_LIFTOVER_to_h38.vcf.gz -ivcftesttbi=/HG001/GRCh38/Integration_v.3.3.2_output/161107_CG-IllFB-IllGATKHC-Ion-10X-SOLID_v.3.3.2/comp3.3.2_b38_TO_b37tob38_liftover_highconfidenceV3.3.2/HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_LIFTOVER_to_h38.vcf.gz.tbi -ibedtest=/HG001/GRCh38/Integration_v.3.3.2_output/161107_CG-IllFB-IllGATKHC-Ion-10X-SOLID_v.3.3.2/comp3.3.2_b38_TO_b37tob38_liftover_highconfidenceV3.3.2/HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_LIFTOVER_to_h38.bed -isvbed=/HG001/GRCh38/remapped_PacBio_MetaSV_svclassify_mergedSVs.bed -iprefix=HG001_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_1_v.3.3.1_b38_compare_b37tob38_liftover_highconfidence_calls -irtgsdf=/assets/rtgsdf38.tar.gz --destination=/HG001/GRCh38/Integration_v.3.3.2_output/161107_CG-IllFB-IllGATKHC-Ion-10X-SOLID_v.3.3.2/comp3.3.2_b38_TO_b37tob38_liftover_highconfidenceV3.3.2/

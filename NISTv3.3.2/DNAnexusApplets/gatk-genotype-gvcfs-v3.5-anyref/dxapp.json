@@ -1,0 +1,76 @@
+{
+  "name": "gatk-genotype-gvcfs-v3.5-anyref",
+  "title": "GATK GenotypeGVCFs-v3.5",
+  "dxapi": "1.0.0",
+  "inputSpec": [
+    {
+      "patterns": [
+        "*.gvcf.gz",
+        "*.vcf.gz",
+        "*.gvcf.gz.tbi",
+        "*.vcf.gz.tbi"
+      ],
+      "label": "GVCFs+TBIs",
+      "help": "One or more GVCFs and their TBIs",
+      "name": "vcfs",
+      "class": "array:file"
+    },
+    {
+      "patterns": [
+        "*.tar.gz"
+      ],
+      "label": "Reference tar.gz with genome.fa,genome.fa.fai, and genome.dict",
+      "help": "Reference genome fasta, index, and dict in tar.gz",
+      "name": "ref",
+      "class": "file"
+    },
+    {
+      "label": "Output prefix",
+      "help": "The prefix to use when naming the output files (they will be called prefix.vcf.gz, prefix.vcf.gz.tbi).",
+      "name": "prefix",
+      "class": "string"
+    },
+    {
+      "group": "Advanced",
+      "help": "Extra command line options that will be supplied directly to the GATK execution.",
+      "label": "Extra command line options",
+      "optional": true,
+      "class": "string",
+      "name": "extra_options"
+    }
+  ],
+  "outputSpec": [
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "Variants",
+      "help": "The genotyped variants in VCF format.",
+      "name": "vcfgz",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "Variants index",
+      "help": "The associated TBI file",
+      "name": "tbi",
+      "class": "file"
+    }
+  ],
+  "runSpec": {
+    "execDepends": [
+      {
+        "name": "openjdk-7-jre-headless"
+      }
+    ],
+    "systemRequirements": {
+      "main": {
+        "instanceType": "mem1_ssd1_x4"
+      }
+    },
+    "file": "src/code.sh",
+    "interpreter": "bash"
+  }
+}

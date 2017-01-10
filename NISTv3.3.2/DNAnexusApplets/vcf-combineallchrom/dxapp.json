@@ -1,0 +1,51 @@
+{
+  "name": "vcf-combineallchrom",
+  "title": "vcf-combineallchrom",
+  "dxapi": "1.0.0",
+  "inputSpec": [
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "VCFs",
+      "help": "Two or more gzipped VCFs  to combine",
+      "name": "vcfs",
+      "class": "array:file"
+    },
+    {
+      "label": "Output prefix",
+      "help": "The prefix to use when naming the output files (they will be called prefix_xxx.vcf.gz, prefix_xxx.vcf.gz.tbi, prefix_xxx.bed).",
+      "name": "prefix",
+      "class": "string"
+    }
+  ],
+  "outputSpec": [
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "All Variants",
+      "help": "All variants.",
+      "name": "vcfout",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "All variants index",
+      "help": "Index for All variants",
+      "name": "vcfouttbi",
+      "class": "file"
+    }
+  ],
+  "runSpec": {
+    "systemRequirements": {
+      "main": {
+        "instanceType": "mem2_hdd2_x1"
+      }
+    },
+    "file": "src/code.sh",
+    "interpreter": "bash"
+  }
+}

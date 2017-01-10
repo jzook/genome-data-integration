@@ -1,0 +1,77 @@
+{
+  "name": "integration-prepare-gatkhc-v3.3.2-anyref",
+  "title": "integration-prepare-gatkhc-v3.3.2-anyref",
+  "dxapi": "1.0.0",
+  "inputSpec": [
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "GATK HC gvcf",
+      "help": "gvcf from GATK-HC",
+      "name": "gvcf",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "GATK HC gvcf tbi",
+      "help": "gvcf from GATK-HC tbi",
+      "name": "gvcftbi",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.tar.gz"
+      ],
+      "label": "Reference tar.gz with genome.fa,genome.fa.fai, and genome.dict",
+      "help": "Reference genome fasta, index, and dict in tar.gz",
+      "name": "ref",
+      "class": "file"
+    },
+    {
+      "label": "Chromosome",
+      "help": "The chromosome to output bed files for.",
+      "name": "chrom",
+      "class": "string"
+    }
+  ],
+  "outputSpec": [
+    {
+      "patterns": [
+        "*.bed"
+      ],
+      "label": "Not callable BED",
+      "help": "BED file containing not callable regions",
+      "name": "outnotcallablebed",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bed"
+      ],
+      "label": "Callable BED",
+      "help": "BED file containing callable regions",
+      "name": "outcallablebed",
+      "class": "file"
+    }
+  ],
+  "runSpec": {
+    "execDepends": [
+      {
+        "name": "bedtools"
+      },
+      {
+        "name": "openjdk-7-jre-headless"
+      }
+    ],
+    "systemRequirements": {
+      "main": {
+        "instanceType": "mem2_hdd2_x1"
+      }
+    },
+    "file": "src/code.sh",
+    "interpreter": "bash"
+  }
+}

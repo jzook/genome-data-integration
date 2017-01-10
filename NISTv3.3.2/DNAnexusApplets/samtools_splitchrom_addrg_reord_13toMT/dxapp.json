@@ -1,0 +1,312 @@
+{
+  "name": "samtools_splitchrom_addrg_reord_13toMT",
+  "title": "SAMtools Mappings Chromosome Splitter with Picard AddOrReplaceReadGroups and ReorderSam",
+  "summary": "Creates bam and index files for every chromosome individually, adding read group IDs",
+  "tags": [
+    "Mappings Manipulation"
+  ],
+  "dxapi": "1.0.0",
+  "inputSpec": [
+    {
+      "patterns": [
+        "*.bam"
+      ],
+      "label": "Sorted mappings",
+      "help": "A coordinate-sorted BAM file with the mappings to be split by chromosome.",
+      "name": "sorted_bam",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bai"
+      ],
+      "label": "Sorted mappings index",
+      "help": "An index for the input bam file.",
+      "name": "index_bai",
+      "class": "file"
+    },
+    {
+      "label": "Read group ID",
+      "help": "Read group ID",
+      "name": "rgid",
+      "class": "string"
+    },
+    {
+      "label": "Read group LB",
+      "help": "Read group library",
+      "name": "rglb",
+      "class": "string"
+    },
+    {
+      "label": "Read group PL",
+      "help": "Read group platform",
+      "name": "rgpl",
+      "class": "string"
+    },
+    {
+      "label": "Read group PU",
+      "help": "Read group platform unit (e.g., run barcode)",
+      "name": "rgpu",
+      "class": "string"
+    },
+    {
+      "label": "Read group SM",
+      "help": "Read group sample name",
+      "name": "rgsm",
+      "class": "string"
+    },
+    {
+      "group": "Common",
+      "help": "Picard validates certain aspects of the input BAM file. This parameter controls how Picard behaves with respect to input validation. Choose STRICT to generate a fatal error when validation fails; choose LENIENT to generate a nonfatal warning when validation fails; choose SILENT to suppress validation messages altogether (which can increase performance). This will supply the 'VALIDATION_STRINGENCY=' option to Picard.",
+      "default": "LENIENT",
+      "label": "Validation stringency",
+      "choices": [
+        "STRICT",
+        "LENIENT",
+        "SILENT"
+      ],
+      "class": "string",
+      "name": "validation_stringency"
+    }
+  ],
+  "outputSpec": [
+    {
+      "patterns": [
+        "*.bam"
+      ],
+      "label": "Bam13",
+      "help": "A BAM file for chromosome 13.",
+      "name": "bam13",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bai"
+      ],
+      "label": "Index13",
+      "help": "A BAI file for chromosome 13.",
+      "name": "bai13",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bam"
+      ],
+      "label": "Bam14",
+      "help": "A BAM file for chromosome 14.",
+      "name": "bam14",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bai"
+      ],
+      "label": "Index14",
+      "help": "A BAI file for chromosome 14.",
+      "name": "bai14",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bam"
+      ],
+      "label": "Bam15",
+      "help": "A BAM file for chromosome 15.",
+      "name": "bam15",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bai"
+      ],
+      "label": "Index15",
+      "help": "A BAI file for chromosome 15.",
+      "name": "bai15",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bam"
+      ],
+      "label": "Bam16",
+      "help": "A BAM file for chromosome 16.",
+      "name": "bam16",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bai"
+      ],
+      "label": "Index16",
+      "help": "A BAI file for chromosome 16.",
+      "name": "bai16",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bam"
+      ],
+      "label": "Bam17",
+      "help": "A BAM file for chromosome 17.",
+      "name": "bam17",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bai"
+      ],
+      "label": "Index17",
+      "help": "A BAI file for chromosome 17.",
+      "name": "bai17",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bam"
+      ],
+      "label": "Bam18",
+      "help": "A BAM file for chromosome 18.",
+      "name": "bam18",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bai"
+      ],
+      "label": "Index18",
+      "help": "A BAI file for chromosome 18.",
+      "name": "bai18",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bam"
+      ],
+      "label": "Bam19",
+      "help": "A BAM file for chromosome 19.",
+      "name": "bam19",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bai"
+      ],
+      "label": "Index19",
+      "help": "A BAI file for chromosome 19.",
+      "name": "bai19",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bam"
+      ],
+      "label": "Bam20",
+      "help": "A BAM file for chromosome 20.",
+      "name": "bam20",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bai"
+      ],
+      "label": "Index20",
+      "help": "A BAI file for chromosome 20.",
+      "name": "bai20",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bam"
+      ],
+      "label": "Bam21",
+      "help": "A BAM file for chromosome 21.",
+      "name": "bam21",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bai"
+      ],
+      "label": "Index21",
+      "help": "A BAI file for chromosome 21.",
+      "name": "bai21",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bam"
+      ],
+      "label": "Bam22",
+      "help": "A BAM file for chromosome 22.",
+      "name": "bam22",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bai"
+      ],
+      "label": "Index22",
+      "help": "A BAI file for chromosome 22.",
+      "name": "bai22",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bam"
+      ],
+      "label": "BamX",
+      "help": "A BAM file for chromosome X.",
+      "name": "bamX",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bai"
+      ],
+      "label": "IndexX",
+      "help": "A BAI file for chromosome X.",
+      "name": "baiX",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bam"
+      ],
+      "label": "BamY",
+      "help": "A BAM file for chromosome Y.",
+      "name": "bamY",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bai"
+      ],
+      "label": "IndexY",
+      "help": "A BAI file for chromosome Y.",
+      "name": "baiY",
+      "class": "file"
+    }
+  ],
+  "runSpec": {
+    "execDepends": [
+      {
+        "name": "openjdk-6-jre-headless"
+      }
+    ],
+    "systemRequirements": {
+      "main": {
+        "instanceType": "mem2_hdd2_x2"
+      }
+    },
+    "file": "src/code.sh",
+    "interpreter": "bash"
+  },
+  "details": {
+    "upstreamUrl": "http://samtools.sourceforge.net/",
+    "upstreamVersion": "0.1.19",
+    "upstreamAuthor": "Heng Li",
+    "upstreamLicenses": [
+      "MIT License"
+    ]
+  }
+}

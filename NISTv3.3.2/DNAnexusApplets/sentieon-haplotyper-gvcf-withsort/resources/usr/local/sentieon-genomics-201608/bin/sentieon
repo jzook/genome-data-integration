@@ -1,0 +1,62 @@
+#!/bin/sh
+OS=$(uname)
+case "$0" in
+/*)	bin_dir=$(dirname "$0");;
+*)	bin_dir=$(dirname "$(pwd)/$0");;
+esac
+case "$bin_dir" in
+*/.)	install_dir=$bin_dir.;;
+*)	install_dir=$(dirname $bin_dir);;
+esac
+lib_dir=$install_dir/lib
+libexec_dir=$install_dir/libexec
+
+commands="driver util plot"
+if [ "$#" -eq 0 ]; then
+    str=`echo $commands | tr -s " " ","`
+    echo "Thank you for using Sentieon software. sentieon supported commands are $str" 
+    exit 1
+fi
+fun=$1
+shift
+found="no"
+for f in $commands
+do
+    if [ "x$f" = "x$fun" ]; then
+        found="yes"
+    fi
+done
+if [ "$found" = "no" ]; then
+    echo "sentieon command $fun not found"
+    exit 1
+fi
+cmd="$libexec_dir/$fun"
+# restart local lic server if needed
+if [ "$#" -gt 1 -a -e "$SENTIEON_LICENSE" ]; then
+    licsrvr="$libexec_dir/licsrvr"
+    #check if license is localhost or 127.0.0.1
+    grep -q '^MachineID: *localhost:[0-9]*' $SENTIEON_LICENSE
+    if [ $? -eq 0 ]; then
+        timeout=0
+        #check if licsrvr is running
+        while ! $licsrvr --ping $SENTIEON_LICENSE ; do
+            $licsrvr --start --log licsrvr.log --linger 300 $SENTIEON_LICENSE
+            sleep 1
+            timeout=$(($timeout+1))
+            if [ $timeout -eq 30 ]; then
+                echo "License server could not be started" >&2
+                exit 2
+            fi
+        done
+    fi
+fi
+
+if [ "$OS" != "Darwin" ]; then
+    if [ -z "$LD_LIBRARY_PATH" ]; then
+        LD_LIBRARY_PATH=$lib_dir
+    else
+        LD_LIBRARY_PATH=$lib_dir:$LD_LIBRARY_PATH
+    fi
+    export LD_LIBRARY_PATH
+fi
+exec $cmd "$@"

@@ -1,0 +1,32 @@
+#To run GATK-tenotype-gvcfs to convert gvcf output to vcf
+#Adjustments to options needed for each run:
+#input "vcf", -ivcfs
+#input .vcf.tbi, -ivcfs
+#output vcf filename prefix, -iprefix
+
+#Run 3/29/16, took ~6-8 min per chromosome
+dx run -y GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5 -ivcfs=HG001_1_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz -ivcfs=HG001_1_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz.tbi -iprefix=HG001_1_hs37d5_novoalign_Ilmn150bp300X_GATKHC
+dx run -y GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5 -ivcfs=HG001_2_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz -ivcfs=HG001_2_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz.tbi -iprefix=HG001_2_hs37d5_novoalign_Ilmn150bp300X_GATKHC
+dx run -y GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5 -ivcfs=HG001_3_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz -ivcfs=HG001_3_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz.tbi -iprefix=HG001_3_hs37d5_novoalign_Ilmn150bp300X_GATKHC
+dx run -y GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5 -ivcfs=HG001_4_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz -ivcfs=HG001_4_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz.tbi -iprefix=HG001_4_hs37d5_novoalign_Ilmn150bp300X_GATKHC
+dx run -y GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5 -ivcfs=HG001_5_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz -ivcfs=HG001_5_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz.tbi -iprefix=HG001_5_hs37d5_novoalign_Ilmn150bp300X_GATKHC
+dx run -y GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5 -ivcfs=HG001_6_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz -ivcfs=HG001_6_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz.tbi -iprefix=HG001_6_hs37d5_novoalign_Ilmn150bp300X_GATKHC
+dx run -y GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5 -ivcfs=HG001_7_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz -ivcfs=HG001_7_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz.tbi -iprefix=HG001_7_hs37d5_novoalign_Ilmn150bp300X_GATKHC
+dx run -y GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5 -ivcfs=HG001_8_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz -ivcfs=HG001_8_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz.tbi -iprefix=HG001_8_hs37d5_novoalign_Ilmn150bp300X_GATKHC
+dx run -y GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5 -ivcfs=HG001_9_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz -ivcfs=HG001_9_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz.tbi -iprefix=HG001_9_hs37d5_novoalign_Ilmn150bp300X_GATKHC
+dx run -y GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5 -ivcfs=HG001_10_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz -ivcfs=HG001_10_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz.tbi -iprefix=HG001_10_hs37d5_novoalign_Ilmn150bp300X_GATKHC
+dx run -y GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5 -ivcfs=HG001_11_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz -ivcfs=HG001_11_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz.tbi -iprefix=HG001_11_hs37d5_novoalign_Ilmn150bp300X_GATKHC
+dx run -y GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5 -ivcfs=HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz -ivcfs=HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz.tbi -iprefix=HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC
+dx run -y GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5 -ivcfs=HG001_13_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz -ivcfs=HG001_13_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz.tbi -iprefix=HG001_13_hs37d5_novoalign_Ilmn150bp300X_GATKHC
+dx run -y GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5 -ivcfs=HG001_14_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz -ivcfs=HG001_14_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz.tbi -iprefix=HG001_14_hs37d5_novoalign_Ilmn150bp300X_GATKHC
+dx run -y GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5 -ivcfs=HG001_15_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz -ivcfs=HG001_15_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz.tbi -iprefix=HG001_15_hs37d5_novoalign_Ilmn150bp300X_GATKHC
+dx run -y GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5 -ivcfs=HG001_16_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz -ivcfs=HG001_16_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz.tbi -iprefix=HG001_16_hs37d5_novoalign_Ilmn150bp300X_GATKHC
+dx run -y GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5 -ivcfs=HG001_17_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz -ivcfs=HG001_17_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz.tbi -iprefix=HG001_17_hs37d5_novoalign_Ilmn150bp300X_GATKHC
+dx run -y GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5 -ivcfs=HG001_18_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz -ivcfs=HG001_18_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz.tbi -iprefix=HG001_18_hs37d5_novoalign_Ilmn150bp300X_GATKHC
+dx run -y GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5 -ivcfs=HG001_19_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz -ivcfs=HG001_19_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz.tbi -iprefix=HG001_19_hs37d5_novoalign_Ilmn150bp300X_GATKHC
+#dx run -y GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5 -ivcfs=HG001_20_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz -ivcfs=HG001_20_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz.tbi -iprefix=HG001_20_hs37d5_novoalign_Ilmn150bp300X_GATKHC
+dx run -y GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5 -ivcfs=HG001_21_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz -ivcfs=HG001_21_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz.tbi -iprefix=HG001_21_hs37d5_novoalign_Ilmn150bp300X_GATKHC
+dx run -y GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5 -ivcfs=HG001_22_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz -ivcfs=HG001_22_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz.tbi -iprefix=HG001_22_hs37d5_novoalign_Ilmn150bp300X_GATKHC
+dx run -y GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5 -ivcfs=HG001_MT_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz -ivcfs=HG001_MT_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz.tbi -iprefix=HG001_MT_hs37d5_novoalign_Ilmn150bp300X_GATKHC
+dx run -y GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5 -ivcfs=HG001_X_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz -ivcfs=HG001_X_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz.tbi -iprefix=HG001_X_hs37d5_novoalign_Ilmn150bp300X_GATKHC
+dx run -y GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5 -ivcfs=HG001_Y_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz -ivcfs=HG001_Y_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf.vcf.gz.tbi -iprefix=HG001_Y_hs37d5_novoalign_Ilmn150bp300X_GATKHC

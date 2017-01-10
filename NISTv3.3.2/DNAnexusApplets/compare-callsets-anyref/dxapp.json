@@ -1,0 +1,179 @@
+{
+  "name": "compare-callsets-anyref",
+  "title": "compare-callsets-anyref",
+  "dxapi": "1.0.0",
+  "inputSpec": [
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "High-confidence Integrated Variants",
+      "help": "High-confidence integrated variants.",
+      "name": "vcfhighconfgz",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "High-confidence Integrated Variants index",
+      "help": "Index for High-confidence integrated variants",
+      "name": "vcfhighconftbi",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bed"
+      ],
+      "label": "High-confidence BED",
+      "help": "High-confidence BED file",
+      "name": "bedhighconf",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "Test VCF.gz file",
+      "help": "test callset",
+      "name": "vcftestgz",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "Test VCF.gz.tbi file",
+      "help": "test callset index",
+      "name": "vcftesttbi",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bed"
+      ],
+      "label": "Test BED file",
+      "help": "BED file defining callable regions for test callset",
+      "name": "bedtest",
+      "class": "file"
+    },
+    {
+      "label": "SV Bed",
+      "help": "Bed file containing potential SV regions in this genome.",
+      "name": "svbed",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.tar.gz"
+      ],
+      "label": "RTG Reference sdf tar.gz with rtgsdf subdir",
+      "help": "RTG Reference genome sdf in tar.gz with rtgsdf subdir",
+      "name": "rtgsdf",
+      "class": "file"
+    },
+    {
+      "label": "Output prefix",
+      "help": "The prefix to use when naming the output file (it will be called prefix.tar.gz).",
+      "name": "prefix",
+      "class": "string"
+    }
+  ],
+  "outputSpec": [
+    {
+      "patterns": [
+        "*.tar.gz"
+      ],
+      "label": "Output comparison folder from vcfeval",
+      "help": "Output comparison folder from vcfeval.",
+      "name": "compfolder",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "TPs in both beds VCF.gz file",
+      "help": "TPs in both beds VCF.gz file",
+      "name": "tpinbedsvcf",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "TPs in both beds VCF.gz.tbi file",
+      "help": "TPs in both beds index",
+      "name": "tpinbedsvcftbi",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "fps in both beds VCF.gz file",
+      "help": "fps in both beds VCF.gz file",
+      "name": "fpinbedsvcf",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "fps in both beds VCF.gz.tbi file",
+      "help": "fps in both beds index",
+      "name": "fpinbedsvcftbi",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "fns in both beds VCF.gz file",
+      "help": "fns in both beds VCF.gz file",
+      "name": "fninbedsvcf",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "fns in both beds VCF.gz.tbi file",
+      "help": "fns in both beds index",
+      "name": "fninbedsvcftbi",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "fns in high conf bed VCF.gz file",
+      "help": "fns in high conf bed VCF.gz file",
+      "name": "fninhighconfbedvcf",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "fns in high conf bed VCF.gz.tbi file",
+      "help": "fns in high conf bed index",
+      "name": "fninhighconfbedvcftbi",
+      "class": "file"
+    }
+  ],
+  "runSpec": {
+    "execDepends": [
+      {
+        "name": "openjdk-8-jre-headless"
+      }
+    ],
+    "systemRequirements": {
+      "main": {
+        "instanceType": "mem2_hdd2_x2"
+      }
+    },
+    "file": "src/code.sh",
+    "interpreter": "bash"
+  }
+}

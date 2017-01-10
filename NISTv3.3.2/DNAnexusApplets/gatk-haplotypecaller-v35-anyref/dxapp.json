@@ -1,0 +1,94 @@
+{
+  "name": "gatk-haplotypecaller-v35-anyref",
+  "title": "GATK HaplotypeCaller-v35",
+  "dxapi": "1.0.0",
+  "inputSpec": [
+    {
+      "patterns": [
+        "*.bam"
+      ],
+      "label": "Sorted Mappings",
+      "help": "A coordinate-sorted BAM file with the mappings to call variants on.",
+      "name": "sorted_bam",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bai"
+      ],
+      "label": "Sorted mappings index",
+      "help": "The associated BAI file",
+      "name": "sorted_bai",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.tar.gz"
+      ],
+      "label": "Reference tar.gz with genome.fa,genome.fa.fai, and genome.dict",
+      "help": "Reference genome fasta, index, and dict in tar.gz",
+      "name": "ref",
+      "class": "file"
+    },
+    {
+      "help": "A BED file with target coordinates. If given, processing will be restricted to only inside those coordinates.",
+      "label": "Target coordinates",
+      "patterns": [
+        "*.bed"
+      ],
+      "optional": true,
+      "class": "file",
+      "name": "targets"
+    },
+    {
+      "group": "Advanced",
+      "help": "A prefix to use for the output files.",
+      "label": "Output prefix",
+      "optional": true,
+      "class": "string",
+      "name": "output_prefix"
+    },
+    {
+      "group": "Advanced",
+      "help": "Extra command line options that will be supplied directly to the GATK execution.",
+      "label": "Extra command line options",
+      "optional": true,
+      "class": "string",
+      "name": "extra_options"
+    }
+  ],
+  "outputSpec": [
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "Variants",
+      "help": "The called variants in block-gzipped VCF format.",
+      "name": "vcfgz",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "Variants index",
+      "help": "The associated TBI file",
+      "name": "tbi",
+      "class": "file"
+    }
+  ],
+  "runSpec": {
+    "execDepends": [
+      {
+        "name": "openjdk-7-jre-headless"
+      }
+    ],
+    "systemRequirements": {
+      "main": {
+        "instanceType": "mem1_ssd1_x16"
+      }
+    },
+    "file": "src/code.sh",
+    "interpreter": "bash"
+  }
+}

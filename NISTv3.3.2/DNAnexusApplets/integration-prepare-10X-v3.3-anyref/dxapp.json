@@ -1,0 +1,143 @@
+{
+  "name": "integration-prepare-10X-v3.3-anyref",
+  "title": "integration-prepare-10X-v3.3-anyref",
+  "dxapi": "1.0.0",
+  "inputSpec": [
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "GATK HC gvcf for HP1",
+      "help": "gvcf from GATK-HC for HP1",
+      "name": "gvcf1",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "GATK HC gvcf tbi for HP1",
+      "help": "gvcf from GATK-HC tbi for HP1",
+      "name": "gvcftbi1",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bed"
+      ],
+      "label": "CallableLoci BED file for HP1",
+      "help": "CallableLoci BED file for HP1",
+      "name": "bed1",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "GATK HC gvcf for HP2",
+      "help": "gvcf from GATK-HC for HP2",
+      "name": "gvcf2",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "GATK HC gvcf tbi for HP2",
+      "help": "gvcf from GATK-HC tbi for HP2",
+      "name": "gvcftbi2",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bed"
+      ],
+      "label": "CallableLoci BED file for HP2",
+      "help": "CallableLoci BED file for HP2",
+      "name": "bed2",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.tar.gz"
+      ],
+      "label": "Reference tar.gz with genome.fa,genome.fa.fai, and genome.dict",
+      "help": "Reference genome fasta, index, and dict in tar.gz",
+      "name": "ref",
+      "class": "file"
+    },
+    {
+      "label": "Chromosome",
+      "help": "The chromosome to output bed files for.",
+      "name": "chrom",
+      "class": "string"
+    },
+    {
+      "label": "Maximum coverage",
+      "help": "Maximum coverage level per haplotype to allow to consider callable (suggested 2x median coverage).",
+      "name": "maxcov",
+      "class": "string"
+    },
+    {
+      "label": "Output prefix",
+      "help": "Prefix of output files.",
+      "name": "prefix",
+      "class": "string"
+    }
+  ],
+  "outputSpec": [
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "Variants",
+      "help": "The variants in VCF format.",
+      "name": "vcfgz",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "Variants index",
+      "help": "The associated TBI file",
+      "name": "tbi",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bed"
+      ],
+      "label": "Not callable BED",
+      "help": "BED file containing not callable regions",
+      "name": "outnotcallablebed",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bed"
+      ],
+      "label": "Callable BED",
+      "help": "BED file containing callable regions",
+      "name": "outcallablebed",
+      "class": "file"
+    }
+  ],
+  "runSpec": {
+    "execDepends": [
+      {
+        "name": "bedtools"
+      },
+      {
+        "name": "openjdk-7-jre-headless"
+      }
+    ],
+    "systemRequirements": {
+      "main": {
+        "instanceType": "mem2_hdd2_x1"
+      }
+    },
+    "file": "src/code.sh",
+    "interpreter": "bash"
+  }
+}

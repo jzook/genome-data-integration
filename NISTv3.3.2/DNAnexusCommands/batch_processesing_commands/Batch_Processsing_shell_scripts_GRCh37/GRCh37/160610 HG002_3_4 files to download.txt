@@ -1,0 +1,41 @@
+HG004
+
+300x:
+ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/AshkenazimTrio/HG004_NA24143_mother/NIST_HiSeq_HG004_Homogeneity-14572558/NHGRI_Illumina300X_AJtrio_novoalign_bams/HG004.hs37d5.300x.bam 
+
+2x250:
+ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/AshkenazimTrio/HG004_NA24143_mother/NIST_Illumina_2x250bps/novoalign_bams/HG004.hs37d5.2x250.bam 
+
+MP:
+ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/AshkenazimTrio/HG004_NA24143_mother/NIST_Stanford_Illumina_6kb_matepair/bams/HG004.mate_pair.sorted.bam 
+
+You should be able to run both GATK and freebayes for the 250bp and mate-pair bams.
+
+HG004 ion bam:
+ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/AshkenazimTrio/HG004_NA24143_mother/ion_exome/HG004_NA24143_SRR1767450_IonXpress_024_rawlib_24042.bam 
+ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/AshkenazimTrio/HG004_NA24143_mother/ion_exome/HG004_NA24143_SRR1767450_IonXpress_024_rawlib_24042.bam.bai 
+
+HG004 ion vcf:
+ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/AshkenazimTrio/analysis/IonTorrent_TVC_03162015/AmpliseqExome.20141120.NA24143.vcf 
+
+HG004 CG vcf:
+ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/AshkenazimTrio/analysis/CompleteGenomics_RefMaterial_SmallVariants_CGAtools_08082014/mom_NA24143_GS000037262-ASM/ASM/vcfBeta-GS000037262-ASM.vcf.bz2 
+
+*******************************
+HG003  Done 6/12/16 !!
+The HG3 2x250 is at:
+ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/AshkenazimTrio/HG003_NA24149_father/NIST_Illumina_2x250bps/novoalign_bams/HG003.hs37d5.2x250.bam 
+
+MP needed also
+
+*******************************
+HG002
+
+HG002 2x250: ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/AshkenazimTrio/HG002_NA24385_son/NIST_Illumina_2x250bps/novoalign_bams/HG002.hs37d5.2x250.bam (HG003 and 4 under similar directories)
+
+HG002 mate-pair: ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/AshkenazimTrio/HG002_NA24385_son/NIST_Stanford_Illumina_6kb_matepair/bams/HG002.mate_pair.sorted.bam (HG003 and 4 under similar directories)
+Here’s the import command I used for HG2:
+dx run -y GIAB:/Workflow/samtools_import_reheader_splitchrom_addrg_reord -iurlbam=ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/AshkenazimTrio/HG002_NA24385_son/NIST_Stanford_Illumina_6kb_matepair/bams/HG002.mate_pair.sorted.bam -iurlbai=ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/AshkenazimTrio/HG002_NA24385_son/NIST_Stanford_Illumina_6kb_matepair/bams/HG002.mate_pair.sorted.bam.bai -iprefix=HG002.mate_pair.sorted -irgid=1 -irglb=all -irgpl=illumina -irgpu=all -irgsm=HG002 --destination=/HG002/IlluminaMP/
+
+
+The best way I’ve found to navigate our ftp and get links is to go to ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/ and then right click and copy link address for any files you want the links to.

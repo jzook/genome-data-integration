@@ -1,0 +1,4 @@
+#Combine bed files for each chromosome into a single bed file for solid run 130920 --Ran for 19 min
+bed_inputs=""
+for l in `dx ls "GIAB:/NA12878/SOLID/130920_PE50x50bp/callableLoci_output/*.bed"`; do bed_inputs="-ibeds=/NA12878/Illumina/CallableLoci_output/$l $bed_inputs"; done
+dx run GIAB:/Workflow/bed-combineallchrom $bed_inputs -iprefix=HG001_ALLCHROM_hg19_solid5500_PE50x50bp_callableloci --destination=/NA12878/SOLID/130920_PE50x50bp/callableLoci_output/

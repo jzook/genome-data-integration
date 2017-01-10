@@ -1,0 +1,84 @@
+{
+  "name": "gatk-callableloci-v3.5-anyref",
+  "title": "GATK CallableLoci-v3.5",
+  "dxapi": "1.0.0",
+  "inputSpec": [
+    {
+      "patterns": [
+        "*.bam"
+      ],
+      "label": "Mappings",
+      "help": "A BAM file with the mappings for exactly one sample.",
+      "name": "input_bam",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bai"
+      ],
+      "label": "Mappings index",
+      "help": "The associated BAI file",
+      "name": "input_bai",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.tar.gz"
+      ],
+      "label": "Reference tar.gz with genome.fa,genome.fa.fai, and genome.dict",
+      "help": "Reference genome fasta, index, and dict in tar.gz",
+      "name": "ref",
+      "class": "file"
+    },
+    {
+      "group": "Advanced",
+      "help": "A prefix to use for the output files.",
+      "label": "Output prefix",
+      "optional": true,
+      "class": "string",
+      "name": "output_prefix"
+    },
+    {
+      "group": "Advanced",
+      "help": "Extra command line options that will be supplied directly to the GATK execution.",
+      "label": "Extra command line options",
+      "optional": true,
+      "class": "string",
+      "name": "extra_options"
+    }
+  ],
+  "outputSpec": [
+    {
+      "patterns": [
+        "*.summary"
+      ],
+      "label": "Summary",
+      "help": "A table of callable status x count of all examined bases.",
+      "name": "summary",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bed"
+      ],
+      "label": "Output bed file",
+      "help": "A bed file with the callable status covering each base",
+      "name": "bed_file",
+      "class": "file"
+    }
+  ],
+  "runSpec": {
+    "execDepends": [
+      {
+        "name": "openjdk-7-jre-headless"
+      }
+    ],
+    "systemRequirements": {
+      "main": {
+        "instanceType": "mem2_hdd2_x1"
+      }
+    },
+    "file": "src/code.sh",
+    "interpreter": "bash"
+  }
+}

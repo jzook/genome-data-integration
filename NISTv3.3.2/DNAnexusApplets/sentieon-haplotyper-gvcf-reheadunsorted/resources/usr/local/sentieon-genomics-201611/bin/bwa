@@ -1,0 +1,64 @@
+#!/bin/sh
+OS=$(uname)
+case "$OS" in
+CYGWIN*) OS=Cygwin;;
+esac
+
+if [ ! ${0%%/*} ]; then
+    bin_dir=$(dirname "$0")
+else
+    bin_dir=$(dirname "$(pwd)/$0")
+fi
+# remove trailing '/.'
+bin_dir=${bin_dir%%/.*}
+install_dir=$(dirname "$bin_dir")
+lib_dir=$install_dir/lib
+libexec_dir=$install_dir/libexec
+
+if [ "$#" -ge 1 ]; then
+    fun=$1
+fi
+
+    # restart local lic server if needed
+if [ -e "$SENTIEON_LICENSE" ]; then
+    licsrvr="$libexec_dir/licsrvr"
+        #check if license is localhost or 127.0.0.1
+    grep -q '^MachineID: *localhost:[0-9]*' $SENTIEON_LICENSE
+    if [ $? -eq 0 ]; then
+        timeout=0
+            #check if licsrvr is running
+        while ! $licsrvr --ping $SENTIEON_LICENSE ; do
+            $licsrvr --start --log licsrvr.log --linger 300 $SENTIEON_LICENSE
+            sleep 1
+            timeout=$(($timeout+1))
+            if [ $timeout -eq 30 ]; then
+                echo "License server could not be started" >&2
+                exit 2
+            fi
+        done
+    fi
+fi
+
+if [ "$OS" = "Darwin" ]; then
+    if [ -z "$DYLD_LIBRARY_PATH" ]; then
+        DYLD_LIBRARY_PATH=$lib_dir
+    else
+        DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$lib_dir
+    fi
+    export DYLD_LIBRARY_PATH
+elif [ "$OS" = "Cygwin" ]; then
+    if [ -z "$PATH" ]; then
+        PATH=$lib_dir
+    else
+        PATH=$PATH:$lib_dir
+    fi
+    export PATH
+else
+    if [ -z "$LD_LIBRARY_PATH" ]; then
+        LD_LIBRARY_PATH=$lib_dir
+    else
+        LD_LIBRARY_PATH=$lib_dir:$LD_LIBRARY_PATH
+    fi
+    export LD_LIBRARY_PATH
+fi
+exec $libexec_dir/bwa "$@"

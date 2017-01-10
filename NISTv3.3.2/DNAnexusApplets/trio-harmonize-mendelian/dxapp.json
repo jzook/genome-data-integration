@@ -1,0 +1,195 @@
+{
+  "name": "trio-harmonize-mendelian",
+  "title": "trio-harmonize-mendelian",
+  "summary": "Takes a mother/father/child set of high-confidence vcf and bed files as input, harmonizes variant representations with RTG, phases variants using the trio, finds Mendelian inconsistent sites, and transfers the phase to the son's vcf",
+  "dxapi": "1.0.0",
+  "inputSpec": [
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "Child vcf.gz file",
+      "help": "Child vcf.gz file.",
+      "name": "vcfchildgz",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "Child vcf.gz.tbi file",
+      "help": "Child vcf.gz.tbi file.",
+      "name": "vcfchildtbi",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bed"
+      ],
+      "label": "Child bed file",
+      "help": "Child high-confidence bed file.",
+      "name": "childbed",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "Dad vcf.gz file",
+      "help": "Dad vcf.gz file.",
+      "name": "vcfdadgz",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "Dad vcf.gz.tbi file",
+      "help": "Dad vcf.gz.tbi file.",
+      "name": "vcfdadtbi",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bed"
+      ],
+      "label": "Dad bed file",
+      "help": "Dad high-confidence bed file.",
+      "name": "dadbed",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "Mom vcf.gz file",
+      "help": "Mom vcf.gz file.",
+      "name": "vcfmomgz",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "Mom vcf.gz.tbi file",
+      "help": "Mom vcf.gz.tbi file.",
+      "name": "vcfmomtbi",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bed"
+      ],
+      "label": "Mom bed file",
+      "help": "Mom high-confidence bed file.",
+      "name": "mombed",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.tar.gz"
+      ],
+      "label": "RTG Reference sdf tar.gz with rtgsdf subdir",
+      "help": "RTG Reference genome sdf in tar.gz with rtgsdf subdir",
+      "name": "rtgsdf",
+      "class": "file"
+    },
+    {
+      "label": "Output prefix",
+      "help": "The prefix to use when naming the output files (prefix_triophased.vcf.gz and prefix_trioinconsistent.vcf.gz).",
+      "name": "prefix",
+      "class": "string"
+    }
+  ],
+  "outputSpec": [
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "Output Phased VCF.gz ",
+      "help": "Output Phased VCF.gz ",
+      "name": "outputphasedvcf",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "Output Phased VCF.gz.tbi ",
+      "help": "Output Phased VCF.gz.tbi ",
+      "name": "outputphasedvcftbi",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "Output Mendelian Inconsistent VCF.gz ",
+      "help": "Output Mendelian Inconsistent VCF.gz ",
+      "name": "outputinconsistentvcf",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "Output Mendelian Inconsistent VCF.gz.tbi ",
+      "help": "Output Mendelian Inconsistent VCF.gz.tbi ",
+      "name": "outputinconsistentvcftbi",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bed"
+      ],
+      "label": "Output Mendelian Inconsistent bed ",
+      "help": "Output Mendelian Inconsistent bed ",
+      "name": "outputinconsistentbed",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bed"
+      ],
+      "label": "Output New Child bed without Mendelian inconsistent regions that aren't de novo mutations",
+      "help": "Output New Child bed without Mendelian inconsistent regions that aren't de novo mutations ",
+      "name": "outputnewchildbed",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bed"
+      ],
+      "label": "Output New Dad bed without Mendelian inconsistent regions that aren't de novo mutations",
+      "help": "Output New Dad bed without Mendelian inconsistent regions that aren't de novo mutations ",
+      "name": "outputnewdadbed",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bed"
+      ],
+      "label": "Output New Mom bed without Mendelian inconsistent regions that aren't de novo mutations",
+      "help": "Output New Mom bed without Mendelian inconsistent regions that aren't de novo mutations ",
+      "name": "outputnewmombed",
+      "class": "file"
+    }
+  ],
+  "runSpec": {
+    "execDepends": [
+      {
+        "name": "openjdk-8-jre-headless"
+      },
+      {
+        "name": "bedtools"
+      }
+    ],
+    "systemRequirements": {
+      "main": {
+        "instanceType": "mem2_hdd2_x2"
+      }
+    },
+    "file": "src/code.sh",
+    "interpreter": "bash"
+  }
+}

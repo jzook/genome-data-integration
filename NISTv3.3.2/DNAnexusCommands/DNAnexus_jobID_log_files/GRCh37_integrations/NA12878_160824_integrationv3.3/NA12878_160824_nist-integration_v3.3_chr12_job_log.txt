@@ -1,0 +1,810 @@
+* nist-integration-v3.3 (done) job-Byz00Yj0pB3GypFvX4kqkk1J
+  jmcdani15 2016-08-24 16:15:10 (runtime 0:53:24)
+2016-08-24 16:21:20 nist-integration-v3.3 INFO Logging initialized (priority)
+2016-08-24 16:21:23 nist-integration-v3.3 INFO CPU: 38% (1 cores) * Memory: 417/3750MB * Storage: 395GB free * Net: 0↓/0↑MBps
+2016-08-24 16:21:24 nist-integration-v3.3 STDOUT dxpy/0.197.0 (Linux-3.2.0-107-virtual-x86_64-with-Ubuntu-12.04-precise)
+2016-08-24 16:21:25 nist-integration-v3.3 INFO CPU: 38% (1 cores) * Memory: 468/3750MB * Storage: 395GB free * Net: 0↓/0↑MBps
+2016-08-24 16:21:25 nist-integration-v3.3 INFO Downloading bundled file resources.tar.gz
+2016-08-24 16:21:26 nist-integration-v3.3 STDOUT >>> Unpacking resources.tar.gz to /
+2016-08-24 16:21:26 nist-integration-v3.3 INFO Installing apt packages bedtools, openjdk-7-jre-headless, dx-toolkit
+2016-08-24 16:22:08 nist-integration-v3.3 STDOUT dxpy/0.197.0 (Linux-3.2.0-107-virtual-x86_64-with-Ubuntu-12.04-precise)
+2016-08-24 16:22:09 nist-integration-v3.3 STDOUT bash running (job ID job-Byz00Yj0pB3GypFvX4kqkk1J)
+2016-08-24 16:22:12 nist-integration-v3.3 STDERR ++ dx-download-all-inputs --parallel
+2016-08-24 16:22:15 nist-integration-v3.3 STDOUT downloading file: file-ByPvPz80pB34JJp2F4xzGj5x to filesystem: /home/dnanexus/in/callsettable/NA12878_RM8398_Datasets_CG_Illumina_Ion_Solid5500_10X_Files_12.txt
+2016-08-24 16:22:15 nist-integration-v3.3 STDOUT downloading file: file-ByJfv3806pXKvbyPfJ98F4YP to filesystem: /home/dnanexus/in/beds/0/vcfBeta-GS000025639-ASM_callable_12.bed
+2016-08-24 16:22:15 nist-integration-v3.3 STDOUT downloading file: file-ByJf4Q80jvZ6YVQPFxb6fJ2Z to filesystem: /home/dnanexus/in/beds/1/HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf_callable.bed
+2016-08-24 16:22:15 nist-integration-v3.3 STDOUT downloading file: file-BqxG2p007102vK61Pkk4yfZf to filesystem: /home/dnanexus/in/beds/2/HG001_12_hs37d5_novoalign_Ilmn150bp300X_callableloci.bed
+2016-08-24 16:22:15 nist-integration-v3.3 STDOUT downloading file: file-ByJgF8j0GJkv8PFx8kbFX7YG to filesystem: /home/dnanexus/in/beds/3/TSVC_variants_defaultlowsetting_callable_12.bed
+2016-08-24 16:22:15 nist-integration-v3.3 STDOUT downloading file: file-ByyqG1j01y1PXgF7k8YKqxfP to filesystem: /home/dnanexus/in/beds/4/HG001_12_10X_GATKHCbyhaplo_callable.bed
+2016-08-24 16:22:15 nist-integration-v3.3 STDOUT downloading file: file-Bv6bpJ80pB3JX2VZZZXZqPB4 to filesystem: /home/dnanexus/in/filtbeds/0/PacBio_MetaSV_svclassify_mergedSVs.bed
+2016-08-24 16:22:15 nist-integration-v3.3 STDOUT downloading file: file-By398v80pB39F4X5BjZv6XZ4 to filesystem: /home/dnanexus/in/filtbeds/1/AllRepeats_lt51bp_gt95identity_merged_slop5.bed.gz
+2016-08-24 16:22:16 nist-integration-v3.3 STDOUT downloading file: file-By398v80pB380yZ278ZyGxx8 to filesystem: /home/dnanexus/in/filtbeds/2/AllRepeats_51to200bp_gt95identity_merged_slop5.bed.gz
+2016-08-24 16:22:16 nist-integration-v3.3 STDOUT downloading file: file-By215V00pB3PQ0X26jYzy77Z to filesystem: /home/dnanexus/in/filtbeds/3/AllRepeats_gt200bp_gt95identity_merged_sort.bed
+2016-08-24 16:22:16 nist-integration-v3.3 STDOUT downloading file: file-By215V00pB32G9P3QZgyjP83 to filesystem: /home/dnanexus/in/filtbeds/4/hg19_self_chain_split_withalts_gt10k.bed.gz
+2016-08-24 16:22:16 nist-integration-v3.3 STDOUT downloading file: file-By215V00pB3PQ0X26jYzy77X to filesystem: /home/dnanexus/in/filtbeds/5/SimpleRepeat_imperfecthomopolgt10_slop5.bed.gz
+2016-08-24 16:22:17 nist-integration-v3.3 STDOUT downloading file: file-By215V00pB31jf7V5jYX33XP to filesystem: /home/dnanexus/in/filtbeds/6/superdupsmerged_all_sort.bed
+2016-08-24 16:22:17 nist-integration-v3.3 STDOUT downloading file: file-By215V00pB37fpVp4jYjz8y8 to filesystem: /home/dnanexus/in/filtbeds/7/mm-2-merged.bed
+2016-08-24 16:22:17 nist-integration-v3.3 STDOUT downloading file: file-BvjP82Q0pB34xvj0Q0fQVK52 to filesystem: /home/dnanexus/in/annotations/0/GATK_Annotations_160509.txt
+2016-08-24 16:22:18 nist-integration-v3.3 STDOUT downloading file: file-Bv3vYGj0pB35pBVgYxK5Jg39 to filesystem: /home/dnanexus/in/annotations/1/Freebayes_Annotations_160408.txt
+2016-08-24 16:22:18 nist-integration-v3.3 STDOUT downloading file: file-Bv3vYGj0pB34X2yjp02952X8 to filesystem: /home/dnanexus/in/annotations/2/CG_Annotations_160408.txt
+2016-08-24 16:22:18 nist-integration-v3.3 STDOUT downloading file: file-Bv3vYGj0pB31BgP8gGQvj8zX to filesystem: /home/dnanexus/in/annotations/3/Ion_Annotations_160408.txt
+2016-08-24 16:22:19 nist-integration-v3.3 STDOUT downloading file: file-ByJfv2806pXB5gfJZ59Fx98P to filesystem: /home/dnanexus/in/vcfs/0/vcfBeta-GS000025639-ASM_12.vcf.gz
+2016-08-24 16:22:19 nist-integration-v3.3 STDOUT downloading file: file-Bqx8v4803p0b61VVvjKFB2qp to filesystem: /home/dnanexus/in/vcfs/1/HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC.vcf.gz
+2016-08-24 16:22:20 nist-integration-v3.3 STDOUT downloading file: file-Bqx9XPQ0g31gG20YVjQgKQKB to filesystem: /home/dnanexus/in/vcfs/2/HG001_12_hs37d5_novoalign_Ilmn150bp300X_FB.vcf.gz
+2016-08-24 16:22:20 nist-integration-v3.3 STDOUT downloading file: file-ByJgF4j0GJkyKZbj9Vb3ZF10 to filesystem: /home/dnanexus/in/vcfs/3/TSVC_variants_defaultlowsetting_12.vcf.gz
+2016-08-24 16:22:20 nist-integration-v3.3 STDOUT downloading file: file-BvGjyvQ0jYX59v0pf53yK09F to filesystem: /home/dnanexus/in/vcfs/4/HG001_12_hg19_solid5500_PE50x50bp_GATKHC.vcf.gz
+2016-08-24 16:22:20 nist-integration-v3.3 STDOUT downloading file: file-BvJ1kJ00zqb9Fz5PYV3fQBJv to filesystem: /home/dnanexus/in/vcfs/5/HG001_12_hg19_solid5500_SE75bp_GATKHC.vcf.gz
+2016-08-24 16:22:21 nist-integration-v3.3 STDOUT downloading file: file-ByyqG0Q01y1BjYkFbGY0260p to filesystem: /home/dnanexus/in/vcfs/6/HG001_12_10X_GATKHCbyhaplo.vcf.gz
+2016-08-24 16:22:28 nist-integration-v3.3 STDERR ++ dx download '{"$dnanexus_link": "file-ByPvPz80pB34JJp2F4xzGj5x"}' -o callsettable.txt
+2016-08-24 16:22:29 nist-integration-v3.3 STDERR ++ tar zxvf -
+2016-08-24 16:22:29 nist-integration-v3.3 STDERR ++ dx cat project-BVg4vxj0pB30PkvPY1Xz035P:/assets/hs37d5.fasta-index.tar.gz
+2016-08-24 16:22:30 nist-integration-v3.3 STDOUT genome.dict
+2016-08-24 16:22:30 nist-integration-v3.3 STDOUT genome.fa
+2016-08-24 16:24:38 nist-integration-v3.3 STDOUT genome.fa.fai
+2016-08-24 16:24:38 nist-integration-v3.3 STDERR ++ tar zxvf -
+2016-08-24 16:24:38 nist-integration-v3.3 STDERR ++ dx cat project-BVg4vxj0pB30PkvPY1Xz035P:/assets/human_g1k_v37.tar.gz
+2016-08-24 16:24:40 nist-integration-v3.3 STDOUT human_g1k_v37/
+2016-08-24 16:24:40 nist-integration-v3.3 STDOUT human_g1k_v37/done
+2016-08-24 16:24:40 nist-integration-v3.3 STDOUT human_g1k_v37/format.log
+2016-08-24 16:24:40 nist-integration-v3.3 STDOUT human_g1k_v37/mainIndex
+2016-08-24 16:24:40 nist-integration-v3.3 STDOUT human_g1k_v37/namedata0
+2016-08-24 16:24:40 nist-integration-v3.3 STDOUT human_g1k_v37/nameIndex0
+2016-08-24 16:24:40 nist-integration-v3.3 STDOUT human_g1k_v37/namepointer0
+2016-08-24 16:24:40 nist-integration-v3.3 STDOUT human_g1k_v37/progress
+2016-08-24 16:24:40 nist-integration-v3.3 STDOUT human_g1k_v37/seqdata0
+2016-08-24 16:25:12 nist-integration-v3.3 STDOUT human_g1k_v37/seqdata1
+2016-08-24 16:25:46 nist-integration-v3.3 STDOUT human_g1k_v37/seqdata2
+2016-08-24 16:26:08 nist-integration-v3.3 STDOUT human_g1k_v37/seqdata3
+2016-08-24 16:26:09 nist-integration-v3.3 STDOUT human_g1k_v37/seqpointer0
+2016-08-24 16:26:09 nist-integration-v3.3 STDOUT human_g1k_v37/seqpointer1
+2016-08-24 16:26:09 nist-integration-v3.3 STDOUT human_g1k_v37/seqpointer2
+2016-08-24 16:26:09 nist-integration-v3.3 STDOUT human_g1k_v37/seqpointer3
+2016-08-24 16:26:09 nist-integration-v3.3 STDOUT human_g1k_v37/sequenceIndex0
+2016-08-24 16:26:09 nist-integration-v3.3 STDOUT human_g1k_v37/suffixdata0
+2016-08-24 16:26:09 nist-integration-v3.3 STDOUT human_g1k_v37/suffixIndex0
+2016-08-24 16:26:09 nist-integration-v3.3 STDOUT human_g1k_v37/suffixpointer0
+2016-08-24 16:26:09 nist-integration-v3.3 STDOUT human_g1k_v37/summary.txt
+2016-08-24 16:26:09 nist-integration-v3.3 STDERR ++ mkdir data
+2016-08-24 16:26:09 nist-integration-v3.3 STDERR ++ mv /home/dnanexus/in/vcfs/0/vcfBeta-GS000025639-ASM_12.vcf.gz /home/dnanexus/in/vcfs/1/HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC.vcf.gz /home/dnanexus/in/vcfs/2/HG001_12_hs37d5_novoalign_Ilmn150bp300X_FB.vcf.gz /home/dnanexus/in/vcfs/3/TSVC_variants_defaultlowsetting_12.vcf.gz /home/dnanexus/in/vcfs/4/HG001_12_hg19_solid5500_PE50x50bp_GATKHC.vcf.gz /home/dnanexus/in/vcfs/5/HG001_12_hg19_solid5500_SE75bp_GATKHC.vcf.gz /home/dnanexus/in/vcfs/6/HG001_12_10X_GATKHCbyhaplo.vcf.gz data
+2016-08-24 16:26:09 nist-integration-v3.3 STDERR ++ mv /home/dnanexus/in/beds/0/vcfBeta-GS000025639-ASM_callable_12.bed /home/dnanexus/in/beds/1/HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_gvcf_callable.bed /home/dnanexus/in/beds/2/HG001_12_hs37d5_novoalign_Ilmn150bp300X_callableloci.bed /home/dnanexus/in/beds/3/TSVC_variants_defaultlowsetting_callable_12.bed /home/dnanexus/in/beds/4/HG001_12_10X_GATKHCbyhaplo_callable.bed data
+2016-08-24 16:26:09 nist-integration-v3.3 STDERR ++ mv /home/dnanexus/in/annotations/0/GATK_Annotations_160509.txt /home/dnanexus/in/annotations/1/Freebayes_Annotations_160408.txt /home/dnanexus/in/annotations/2/CG_Annotations_160408.txt /home/dnanexus/in/annotations/3/Ion_Annotations_160408.txt data
+2016-08-24 16:26:09 nist-integration-v3.3 STDERR ++ mv /home/dnanexus/in/filtbeds/0/PacBio_MetaSV_svclassify_mergedSVs.bed /home/dnanexus/in/filtbeds/1/AllRepeats_lt51bp_gt95identity_merged_slop5.bed.gz /home/dnanexus/in/filtbeds/2/AllRepeats_51to200bp_gt95identity_merged_slop5.bed.gz /home/dnanexus/in/filtbeds/3/AllRepeats_gt200bp_gt95identity_merged_sort.bed /home/dnanexus/in/filtbeds/4/hg19_self_chain_split_withalts_gt10k.bed.gz /home/dnanexus/in/filtbeds/5/SimpleRepeat_imperfecthomopolgt10_slop5.bed.gz /home/dnanexus/in/filtbeds/6/superdupsmerged_all_sort.bed /home/dnanexus/in/filtbeds/7/mm-2-merged.bed .
+2016-08-24 16:26:09 nist-integration-v3.3 STDERR ++ perl /preprocess_combine_vcfs.pl -cstable callsettable.txt -p data/
+2016-08-24 16:26:09 nist-integration-v3.3 STDOUT Usage = perl preprocess_combine_vcfs.pl -cstable callsettable.txt -p data/ 
+2016-08-24 16:26:09 nist-integration-v3.3 STDOUT 
+2016-08-24 16:30:24 nist-integration-v3.3 STDOUT Duplicated vcf lines: 12	50829263	.	T	TTATTC	242.17	PASS	AF=0.802469;AO=61;DP=82;FAO=65;FDP=81;FR=.;FRO=16;FSAF=35;FSAR=30;FSRF=8;FSRR=8;FWDB=0.00476716;FXX=0.0121936;HRUN=0;LEN=5;MLLD=410.101;OALT=TATTC;OID=.;OMAPALT=TTATTC;OPOS=50829264;OREF=-;PB=0.5;PBP=1;QD=11.9591;RBI=0.0133931;REFB=0.000572213;REVB=-0.0125159;RO=17;SAF=35;SAR=26;SRF=9;SRR=8;SSEN=0;SSEP=0;SSSB=0.0183928;STB=0.507631;STBP=0.79;TYPE=ins;VARB=-0.000110219	GT:AF:AO:DP:FAO:FDP:FRO:FSAF:FSAR:FSRF:FSRR:GQ:RO:SAF:SAR:SRF:SRR	1/1:0.802469:61:82:65:81:16:35:30:8:8:8:17:35:26:9:8
+2016-08-24 16:30:24 nist-integration-v3.3 STDOUT 12	50829263	.	T	TTATTC	478.21	PASS	AF=1;AO=15;DP=82;FAO=81;FDP=81;FR=.;FRO=0;FSAF=43;FSAR=38;FSRF=0;FSRR=0;FWDB=0.0105144;FXX=0;HRUN=6;LEN=5;MLLD=494.147;OALT=TATTC;OID=.;OMAPALT=TTATTC;OPOS=50829264;OREF=-;PB=0.5;PBP=1;QD=23.6154;RBI=0.0172752;REFB=0;REVB=-0.0137069;RO=66;SAF=7;SAR=8;SRF=36;SRR=30;SSEN=0;SSEP=0;SSSB=-0.0985897;STB=0.5;STBP=1;TYPE=ins;VARB=-8.80635e-07	GT:AF:AO:DP:FAO:FDP:FRO:FSAF:FSAR:FSRF:FSRR:GQ:RO:SAF:SAR:SRF:SRR	1/1:1:15:82:81:81:0:43:38:0:0:99:66:7:8:36:30
+2016-08-24 16:30:24 nist-integration-v3.3 STDOUT 12	50829213	50829313
+2016-08-24 16:31:10 nist-integration-v3.3 STDOUT  data/VCF01_HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_nohomref_v37_samplename.vcf.gz data/VCF02_vcfBeta-GS000025639-ASM_12_nohomref_v37_samplename.vcf.gz data/VCF03_HG001_12_hs37d5_novoalign_Ilmn150bp300X_FB_nohomref_v37_samplename.vcf.gz data/VCF04_HG001_12_10X_GATKHCbyhaplo_nohomref_v37_samplename.vcf.gz data/VCF05_TSVC_variants_defaultlowsetting_12_nohomref_v37_samplename.vcf.gz data/VCF06_HG001_12_hg19_solid5500_PE50x50bp_GATKHC_nohomref_v37_samplename.vcf.gz data/VCF07_HG001_12_hg19_solid5500_SE75bp_GATKHC_nohomref_v37_samplename.vcf.gz
+2016-08-24 16:31:22 nist-integration-v3.3 INFO CPU: 58% (1 cores) * Memory: 543/3750MB * Storage: 390GB free * Net: 3↓/0↑MBps
+2016-08-24 16:31:24 nist-integration-v3.3 INFO CPU: 58% (1 cores) * Memory: 540/3750MB * Storage: 390GB free * Net: 3↓/0↑MBps
+2016-08-24 16:31:26 nist-integration-v3.3 STDERR ++ vars=
+2016-08-24 16:31:26 nist-integration-v3.3 STDERR ++ for v in 'data/*_nohomref_v37_samplename.vcf.gz'
+2016-08-24 16:31:26 nist-integration-v3.3 STDERR ++ vars=' data/VCF01_HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_nohomref_v37_samplename.vcf.gz'
+2016-08-24 16:31:26 nist-integration-v3.3 STDERR ++ for v in 'data/*_nohomref_v37_samplename.vcf.gz'
+2016-08-24 16:31:26 nist-integration-v3.3 STDERR ++ vars=' data/VCF01_HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_nohomref_v37_samplename.vcf.gz data/VCF02_vcfBeta-GS000025639-ASM_12_nohomref_v37_samplename.vcf.gz'
+2016-08-24 16:31:26 nist-integration-v3.3 STDERR ++ for v in 'data/*_nohomref_v37_samplename.vcf.gz'
+2016-08-24 16:31:26 nist-integration-v3.3 STDERR ++ vars=' data/VCF01_HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_nohomref_v37_samplename.vcf.gz data/VCF02_vcfBeta-GS000025639-ASM_12_nohomref_v37_samplename.vcf.gz data/VCF03_HG001_12_hs37d5_novoalign_Ilmn150bp300X_FB_nohomref_v37_samplename.vcf.gz'
+2016-08-24 16:31:26 nist-integration-v3.3 STDERR ++ for v in 'data/*_nohomref_v37_samplename.vcf.gz'
+2016-08-24 16:31:26 nist-integration-v3.3 STDERR ++ vars=' data/VCF01_HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_nohomref_v37_samplename.vcf.gz data/VCF02_vcfBeta-GS000025639-ASM_12_nohomref_v37_samplename.vcf.gz data/VCF03_HG001_12_hs37d5_novoalign_Ilmn150bp300X_FB_nohomref_v37_samplename.vcf.gz data/VCF04_HG001_12_10X_GATKHCbyhaplo_nohomref_v37_samplename.vcf.gz'
+2016-08-24 16:31:26 nist-integration-v3.3 STDERR ++ for v in 'data/*_nohomref_v37_samplename.vcf.gz'
+2016-08-24 16:31:26 nist-integration-v3.3 STDERR ++ vars=' data/VCF01_HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_nohomref_v37_samplename.vcf.gz data/VCF02_vcfBeta-GS000025639-ASM_12_nohomref_v37_samplename.vcf.gz data/VCF03_HG001_12_hs37d5_novoalign_Ilmn150bp300X_FB_nohomref_v37_samplename.vcf.gz data/VCF04_HG001_12_10X_GATKHCbyhaplo_nohomref_v37_samplename.vcf.gz data/VCF05_TSVC_variants_defaultlowsetting_12_nohomref_v37_samplename.vcf.gz'
+2016-08-24 16:31:26 nist-integration-v3.3 STDERR ++ for v in 'data/*_nohomref_v37_samplename.vcf.gz'
+2016-08-24 16:31:26 nist-integration-v3.3 STDERR ++ vars=' data/VCF01_HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_nohomref_v37_samplename.vcf.gz data/VCF02_vcfBeta-GS000025639-ASM_12_nohomref_v37_samplename.vcf.gz data/VCF03_HG001_12_hs37d5_novoalign_Ilmn150bp300X_FB_nohomref_v37_samplename.vcf.gz data/VCF04_HG001_12_10X_GATKHCbyhaplo_nohomref_v37_samplename.vcf.gz data/VCF05_TSVC_variants_defaultlowsetting_12_nohomref_v37_samplename.vcf.gz data/VCF06_HG001_12_hg19_solid5500_PE50x50bp_GATKHC_nohomref_v37_samplename.vcf.gz'
+2016-08-24 16:31:26 nist-integration-v3.3 STDERR ++ for v in 'data/*_nohomref_v37_samplename.vcf.gz'
+2016-08-24 16:31:26 nist-integration-v3.3 STDERR ++ vars=' data/VCF01_HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_nohomref_v37_samplename.vcf.gz data/VCF02_vcfBeta-GS000025639-ASM_12_nohomref_v37_samplename.vcf.gz data/VCF03_HG001_12_hs37d5_novoalign_Ilmn150bp300X_FB_nohomref_v37_samplename.vcf.gz data/VCF04_HG001_12_10X_GATKHCbyhaplo_nohomref_v37_samplename.vcf.gz data/VCF05_TSVC_variants_defaultlowsetting_12_nohomref_v37_samplename.vcf.gz data/VCF06_HG001_12_hg19_solid5500_PE50x50bp_GATKHC_nohomref_v37_samplename.vcf.gz data/VCF07_HG001_12_hg19_solid5500_SE75bp_GATKHC_nohomref_v37_samplename.vcf.gz'
+2016-08-24 16:31:26 nist-integration-v3.3 STDERR ++ vcfcombine data/VCF01_HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_nohomref_v37_samplename.vcf.gz data/VCF02_vcfBeta-GS000025639-ASM_12_nohomref_v37_samplename.vcf.gz data/VCF03_HG001_12_hs37d5_novoalign_Ilmn150bp300X_FB_nohomref_v37_samplename.vcf.gz data/VCF04_HG001_12_10X_GATKHCbyhaplo_nohomref_v37_samplename.vcf.gz data/VCF05_TSVC_variants_defaultlowsetting_12_nohomref_v37_samplename.vcf.gz data/VCF06_HG001_12_hg19_solid5500_PE50x50bp_GATKHC_nohomref_v37_samplename.vcf.gz data/VCF07_HG001_12_hg19_solid5500_SE75bp_GATKHC_nohomref_v37_samplename.vcf.gz
+2016-08-24 16:33:08 nist-integration-v3.3 STDERR ++ i=1
+2016-08-24 16:33:08 nist-integration-v3.3 STDERR ++ for v in 'data/*_callable_v37_processed.bed'
+2016-08-24 16:33:08 nist-integration-v3.3 STDERR ++ (( j=i+1 ))
+2016-08-24 16:33:08 nist-integration-v3.3 STDERR ++ vcfannotate -b data/HG001_12_10X_GATKHCbyhaplo_callable_v37_processed.bed -k callable union.1.vcf
+2016-08-24 16:33:55 nist-integration-v3.3 STDERR ++ rm union.1.vcf
+2016-08-24 16:33:55 nist-integration-v3.3 STDERR ++ awk '{ sum+=$3; sum-=$2 } END { print sum }' data/HG001_12_10X_GATKHCbyhaplo_callable_v37_processed.bed
+2016-08-24 16:33:55 nist-integration-v3.3 STDOUT 55123483
+2016-08-24 16:33:55 nist-integration-v3.3 STDERR ++ (( i=i+1 ))
+2016-08-24 16:33:55 nist-integration-v3.3 STDERR ++ for v in 'data/*_callable_v37_processed.bed'
+2016-08-24 16:33:55 nist-integration-v3.3 STDERR ++ (( j=i+1 ))
+2016-08-24 16:33:55 nist-integration-v3.3 STDERR ++ vcfannotate -b data/HG001_12_hs37d5_novoalign_Ilmn150bp300X_FB_callable_v37_processed.bed -k callable union.2.vcf
+2016-08-24 16:34:55 nist-integration-v3.3 STDERR ++ rm union.2.vcf
+2016-08-24 16:34:55 nist-integration-v3.3 STDERR ++ awk '{ sum+=$3; sum-=$2 } END { print sum }' data/HG001_12_hs37d5_novoalign_Ilmn150bp300X_FB_callable_v37_processed.bed
+2016-08-24 16:34:55 nist-integration-v3.3 STDOUT 120848678
+2016-08-24 16:34:55 nist-integration-v3.3 STDERR ++ (( i=i+1 ))
+2016-08-24 16:34:55 nist-integration-v3.3 STDERR ++ for v in 'data/*_callable_v37_processed.bed'
+2016-08-24 16:34:55 nist-integration-v3.3 STDERR ++ (( j=i+1 ))
+2016-08-24 16:34:55 nist-integration-v3.3 STDERR ++ vcfannotate -b data/HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_callable_v37_processed.bed -k callable union.3.vcf
+2016-08-24 16:35:55 nist-integration-v3.3 STDERR ++ rm union.3.vcf
+2016-08-24 16:35:55 nist-integration-v3.3 STDERR ++ awk '{ sum+=$3; sum-=$2 } END { print sum }' data/HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_callable_v37_processed.bed
+2016-08-24 16:35:55 nist-integration-v3.3 STDOUT 118003222
+2016-08-24 16:35:55 nist-integration-v3.3 STDERR ++ (( i=i+1 ))
+2016-08-24 16:35:55 nist-integration-v3.3 STDERR ++ for v in 'data/*_callable_v37_processed.bed'
+2016-08-24 16:35:55 nist-integration-v3.3 STDERR ++ (( j=i+1 ))
+2016-08-24 16:35:55 nist-integration-v3.3 STDERR ++ vcfannotate -b data/TSVC_variants_defaultlowsetting_12_callable_v37_processed.bed -k callable union.4.vcf
+2016-08-24 16:36:55 nist-integration-v3.3 STDERR ++ rm union.4.vcf
+2016-08-24 16:36:55 nist-integration-v3.3 STDERR ++ awk '{ sum+=$3; sum-=$2 } END { print sum }' data/TSVC_variants_defaultlowsetting_12_callable_v37_processed.bed
+2016-08-24 16:36:55 nist-integration-v3.3 STDOUT 2330917
+2016-08-24 16:36:55 nist-integration-v3.3 STDERR ++ (( i=i+1 ))
+2016-08-24 16:36:55 nist-integration-v3.3 STDERR ++ for v in 'data/*_callable_v37_processed.bed'
+2016-08-24 16:36:55 nist-integration-v3.3 STDERR ++ (( j=i+1 ))
+2016-08-24 16:36:55 nist-integration-v3.3 STDERR ++ vcfannotate -b data/vcfBeta-GS000025639-ASM_12_callable_v37_processed.bed -k callable union.5.vcf
+2016-08-24 16:37:55 nist-integration-v3.3 STDERR ++ rm union.5.vcf
+2016-08-24 16:37:55 nist-integration-v3.3 STDERR ++ awk '{ sum+=$3; sum-=$2 } END { print sum }' data/vcfBeta-GS000025639-ASM_12_callable_v37_processed.bed
+2016-08-24 16:37:55 nist-integration-v3.3 STDOUT 116824550
+2016-08-24 16:37:55 nist-integration-v3.3 STDERR ++ (( i=i+1 ))
+2016-08-24 16:37:55 nist-integration-v3.3 STDERR ++ for v in '*_diffbedannotcol.bed'
+2016-08-24 16:37:55 nist-integration-v3.3 STDERR ++ (( j=i+1 ))
+2016-08-24 16:37:55 nist-integration-v3.3 STDERR ++ vcfannotate -b AllRepeats_51to200bp_gt95identity_merged_slop5_diffbedannotcol.bed -k difficultregion union.6.vcf
+2016-08-24 16:38:55 nist-integration-v3.3 STDERR ++ rm union.6.vcf
+2016-08-24 16:38:55 nist-integration-v3.3 STDERR ++ awk '{ sum+=$3; sum-=$2 } END { print sum }' AllRepeats_51to200bp_gt95identity_merged_slop5_diffbedannotcol.bed
+2016-08-24 16:38:55 nist-integration-v3.3 STDOUT 7459094
+2016-08-24 16:38:55 nist-integration-v3.3 STDERR ++ (( i=i+1 ))
+2016-08-24 16:38:55 nist-integration-v3.3 STDERR ++ for v in '*_diffbedannotcol.bed'
+2016-08-24 16:38:55 nist-integration-v3.3 STDERR ++ (( j=i+1 ))
+2016-08-24 16:38:55 nist-integration-v3.3 STDERR ++ vcfannotate -b AllRepeats_gt200bp_gt95identity_merged_sort_diffbedannotcol.bed -k difficultregion union.7.vcf
+2016-08-24 16:39:54 nist-integration-v3.3 STDERR ++ rm union.7.vcf
+2016-08-24 16:39:54 nist-integration-v3.3 STDERR ++ awk '{ sum+=$3; sum-=$2 } END { print sum }' AllRepeats_gt200bp_gt95identity_merged_sort_diffbedannotcol.bed
+2016-08-24 16:39:54 nist-integration-v3.3 STDOUT 6282681
+2016-08-24 16:39:54 nist-integration-v3.3 STDERR ++ (( i=i+1 ))
+2016-08-24 16:39:54 nist-integration-v3.3 STDERR ++ for v in '*_diffbedannotcol.bed'
+2016-08-24 16:39:54 nist-integration-v3.3 STDERR ++ (( j=i+1 ))
+2016-08-24 16:39:54 nist-integration-v3.3 STDERR ++ vcfannotate -b AllRepeats_lt51bp_gt95identity_merged_slop5_diffbedannotcol.bed -k difficultregion union.8.vcf
+2016-08-24 16:41:12 nist-integration-v3.3 STDERR ++ rm union.8.vcf
+2016-08-24 16:41:12 nist-integration-v3.3 STDERR ++ awk '{ sum+=$3; sum-=$2 } END { print sum }' AllRepeats_lt51bp_gt95identity_merged_slop5_diffbedannotcol.bed
+2016-08-24 16:41:16 nist-integration-v3.3 STDOUT 137760917
+2016-08-24 16:41:16 nist-integration-v3.3 STDERR ++ (( i=i+1 ))
+2016-08-24 16:41:16 nist-integration-v3.3 STDERR ++ for v in '*_diffbedannotcol.bed'
+2016-08-24 16:41:16 nist-integration-v3.3 STDERR ++ (( j=i+1 ))
+2016-08-24 16:41:16 nist-integration-v3.3 STDERR ++ vcfannotate -b hg19_self_chain_split_withalts_gt10k_diffbedannotcol.bed -k difficultregion union.9.vcf
+2016-08-24 16:41:22 nist-integration-v3.3 INFO CPU: 91% (1 cores) * Memory: 527/3750MB * Storage: 389GB free * Net: 0↓/0↑MBps
+2016-08-24 16:41:24 nist-integration-v3.3 INFO CPU: 91% (1 cores) * Memory: 527/3750MB * Storage: 389GB free * Net: 0↓/0↑MBps
+2016-08-24 16:42:16 nist-integration-v3.3 STDERR ++ rm union.9.vcf
+2016-08-24 16:42:16 nist-integration-v3.3 STDERR ++ awk '{ sum+=$3; sum-=$2 } END { print sum }' hg19_self_chain_split_withalts_gt10k_diffbedannotcol.bed
+2016-08-24 16:42:16 nist-integration-v3.3 STDOUT 146352960
+2016-08-24 16:42:16 nist-integration-v3.3 STDERR ++ (( i=i+1 ))
+2016-08-24 16:42:16 nist-integration-v3.3 STDERR ++ for v in '*_diffbedannotcol.bed'
+2016-08-24 16:42:16 nist-integration-v3.3 STDERR ++ (( j=i+1 ))
+2016-08-24 16:42:16 nist-integration-v3.3 STDERR ++ vcfannotate -b mm-2-merged_diffbedannotcol.bed -k difficultregion union.10.vcf
+2016-08-24 16:43:16 nist-integration-v3.3 STDERR ++ rm union.10.vcf
+2016-08-24 16:43:16 nist-integration-v3.3 STDERR ++ awk '{ sum+=$3; sum-=$2 } END { print sum }' mm-2-merged_diffbedannotcol.bed
+2016-08-24 16:43:16 nist-integration-v3.3 STDOUT 52665419
+2016-08-24 16:43:16 nist-integration-v3.3 STDERR ++ (( i=i+1 ))
+2016-08-24 16:43:16 nist-integration-v3.3 STDERR ++ for v in '*_diffbedannotcol.bed'
+2016-08-24 16:43:16 nist-integration-v3.3 STDERR ++ (( j=i+1 ))
+2016-08-24 16:43:16 nist-integration-v3.3 STDERR ++ vcfannotate -b PacBio_MetaSV_svclassify_mergedSVs_diffbedannotcol.bed -k difficultregion union.11.vcf
+2016-08-24 16:44:16 nist-integration-v3.3 STDERR ++ rm union.11.vcf
+2016-08-24 16:44:16 nist-integration-v3.3 STDERR ++ awk '{ sum+=$3; sum-=$2 } END { print sum }' PacBio_MetaSV_svclassify_mergedSVs_diffbedannotcol.bed
+2016-08-24 16:44:16 nist-integration-v3.3 STDOUT 75315080
+2016-08-24 16:44:16 nist-integration-v3.3 STDERR ++ (( i=i+1 ))
+2016-08-24 16:44:16 nist-integration-v3.3 STDERR ++ for v in '*_diffbedannotcol.bed'
+2016-08-24 16:44:16 nist-integration-v3.3 STDERR ++ (( j=i+1 ))
+2016-08-24 16:44:16 nist-integration-v3.3 STDERR ++ vcfannotate -b SimpleRepeat_imperfecthomopolgt10_slop5_diffbedannotcol.bed -k difficultregion union.12.vcf
+2016-08-24 16:45:24 nist-integration-v3.3 STDERR ++ rm union.12.vcf
+2016-08-24 16:45:24 nist-integration-v3.3 STDERR ++ awk '{ sum+=$3; sum-=$2 } END { print sum }' SimpleRepeat_imperfecthomopolgt10_slop5_diffbedannotcol.bed
+2016-08-24 16:45:25 nist-integration-v3.3 STDOUT 56540628
+2016-08-24 16:45:25 nist-integration-v3.3 STDERR ++ (( i=i+1 ))
+2016-08-24 16:45:25 nist-integration-v3.3 STDERR ++ for v in '*_diffbedannotcol.bed'
+2016-08-24 16:45:25 nist-integration-v3.3 STDERR ++ (( j=i+1 ))
+2016-08-24 16:45:25 nist-integration-v3.3 STDERR ++ vcfannotate -b superdupsmerged_all_sort_diffbedannotcol.bed -k difficultregion union.13.vcf
+2016-08-24 16:46:26 nist-integration-v3.3 STDERR ++ rm union.13.vcf
+2016-08-24 16:46:26 nist-integration-v3.3 STDERR ++ awk '{ sum+=$3; sum-=$2 } END { print sum }' superdupsmerged_all_sort_diffbedannotcol.bed
+2016-08-24 16:46:26 nist-integration-v3.3 STDOUT 156538246
+2016-08-24 16:46:26 nist-integration-v3.3 STDERR ++ (( i=i+1 ))
+2016-08-24 16:46:26 nist-integration-v3.3 STDERR ++ mv union.14.vcf union_callableannotate.vcf
+2016-08-24 16:46:26 nist-integration-v3.3 STDERR ++ perl /VcfClassifyUsingFilters_v3.3.pl union_callableannotate.vcf callsettable.txt union_callableannotate
+2016-08-24 16:48:36 nist-integration-v3.3 STDERR ++ wc -l union_callableannotate_ClassifyUsingFilters_v3_2platforms.vcf
+2016-08-24 16:48:36 nist-integration-v3.3 STDOUT 154059 union_callableannotate_ClassifyUsingFilters_v3_2platforms.vcf
+2016-08-24 16:48:36 nist-integration-v3.3 STDERR ++ wc -l union_callableannotate_ClassifyUsingFilters_v3_arbitrated.vcf
+2016-08-24 16:48:36 nist-integration-v3.3 STDOUT 181364 union_callableannotate_ClassifyUsingFilters_v3_arbitrated.vcf
+2016-08-24 16:48:36 nist-integration-v3.3 STDERR ++ bgzip union_callableannotate_ClassifyUsingFilters_v3_2platforms.vcf
+2016-08-24 16:48:38 nist-integration-v3.3 STDERR ++ tabix -p vcf union_callableannotate_ClassifyUsingFilters_v3_2platforms.vcf.gz
+2016-08-24 16:48:38 nist-integration-v3.3 STDERR ++ bgzip union_callableannotate_ClassifyUsingFilters_v3_allcalls.vcf
+2016-08-24 16:48:41 nist-integration-v3.3 STDERR ++ tabix -p vcf union_callableannotate_ClassifyUsingFilters_v3_allcalls.vcf.gz
+2016-08-24 16:48:42 nist-integration-v3.3 STDERR ++ for v in 'data/*_nohomref_v37_samplename.vcf.gz'
+2016-08-24 16:48:42 nist-integration-v3.3 STDERR ++ vcfintersect --intersect-vcf union_callableannotate_ClassifyUsingFilters_v3_2platforms.vcf.gz -r genome.fa data/VCF01_HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_nohomref_v37_samplename.vcf.gz
+2016-08-24 16:49:14 nist-integration-v3.3 STDERR ++ wc -l data/VCF01_HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_nohomref_v37_samplename.vcf.gz_indivintersect2platforms.vcf
+2016-08-24 16:49:14 nist-integration-v3.3 STDOUT 154002 data/VCF01_HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_nohomref_v37_samplename.vcf.gz_indivintersect2platforms.vcf
+2016-08-24 16:49:14 nist-integration-v3.3 STDERR ++ for v in 'data/*_nohomref_v37_samplename.vcf.gz'
+2016-08-24 16:49:14 nist-integration-v3.3 STDERR ++ vcfintersect --intersect-vcf union_callableannotate_ClassifyUsingFilters_v3_2platforms.vcf.gz -r genome.fa data/VCF02_vcfBeta-GS000025639-ASM_12_nohomref_v37_samplename.vcf.gz
+2016-08-24 16:49:43 nist-integration-v3.3 STDERR ++ wc -l data/VCF02_vcfBeta-GS000025639-ASM_12_nohomref_v37_samplename.vcf.gz_indivintersect2platforms.vcf
+2016-08-24 16:49:43 nist-integration-v3.3 STDOUT 152501 data/VCF02_vcfBeta-GS000025639-ASM_12_nohomref_v37_samplename.vcf.gz_indivintersect2platforms.vcf
+2016-08-24 16:49:43 nist-integration-v3.3 STDERR ++ for v in 'data/*_nohomref_v37_samplename.vcf.gz'
+2016-08-24 16:49:43 nist-integration-v3.3 STDERR ++ vcfintersect --intersect-vcf union_callableannotate_ClassifyUsingFilters_v3_2platforms.vcf.gz -r genome.fa data/VCF03_HG001_12_hs37d5_novoalign_Ilmn150bp300X_FB_nohomref_v37_samplename.vcf.gz
+2016-08-24 16:50:39 nist-integration-v3.3 STDERR ++ wc -l data/VCF03_HG001_12_hs37d5_novoalign_Ilmn150bp300X_FB_nohomref_v37_samplename.vcf.gz_indivintersect2platforms.vcf
+2016-08-24 16:50:39 nist-integration-v3.3 STDOUT 154049 data/VCF03_HG001_12_hs37d5_novoalign_Ilmn150bp300X_FB_nohomref_v37_samplename.vcf.gz_indivintersect2platforms.vcf
+2016-08-24 16:50:39 nist-integration-v3.3 STDERR ++ for v in 'data/*_nohomref_v37_samplename.vcf.gz'
+2016-08-24 16:50:39 nist-integration-v3.3 STDERR ++ vcfintersect --intersect-vcf union_callableannotate_ClassifyUsingFilters_v3_2platforms.vcf.gz -r genome.fa data/VCF04_HG001_12_10X_GATKHCbyhaplo_nohomref_v37_samplename.vcf.gz
+2016-08-24 16:51:03 nist-integration-v3.3 STDERR ++ wc -l data/VCF04_HG001_12_10X_GATKHCbyhaplo_nohomref_v37_samplename.vcf.gz_indivintersect2platforms.vcf
+2016-08-24 16:51:03 nist-integration-v3.3 STDOUT 148882 data/VCF04_HG001_12_10X_GATKHCbyhaplo_nohomref_v37_samplename.vcf.gz_indivintersect2platforms.vcf
+2016-08-24 16:51:03 nist-integration-v3.3 STDERR ++ for v in 'data/*_nohomref_v37_samplename.vcf.gz'
+2016-08-24 16:51:03 nist-integration-v3.3 STDERR ++ vcfintersect --intersect-vcf union_callableannotate_ClassifyUsingFilters_v3_2platforms.vcf.gz -r genome.fa data/VCF05_TSVC_variants_defaultlowsetting_12_nohomref_v37_samplename.vcf.gz
+2016-08-24 16:51:13 nist-integration-v3.3 STDERR ++ wc -l data/VCF05_TSVC_variants_defaultlowsetting_12_nohomref_v37_samplename.vcf.gz_indivintersect2platforms.vcf
+2016-08-24 16:51:13 nist-integration-v3.3 STDOUT 1839 data/VCF05_TSVC_variants_defaultlowsetting_12_nohomref_v37_samplename.vcf.gz_indivintersect2platforms.vcf
+2016-08-24 16:51:13 nist-integration-v3.3 STDERR ++ for v in 'data/*_nohomref_v37_samplename.vcf.gz'
+2016-08-24 16:51:13 nist-integration-v3.3 STDERR ++ vcfintersect --intersect-vcf union_callableannotate_ClassifyUsingFilters_v3_2platforms.vcf.gz -r genome.fa data/VCF06_HG001_12_hg19_solid5500_PE50x50bp_GATKHC_nohomref_v37_samplename.vcf.gz
+2016-08-24 16:51:22 nist-integration-v3.3 INFO CPU: 91% (1 cores) * Memory: 1324/3750MB * Storage: 389GB free * Net: 0↓/0↑MBps
+2016-08-24 16:51:24 nist-integration-v3.3 INFO CPU: 91% (1 cores) * Memory: 1328/3750MB * Storage: 389GB free * Net: 0↓/0↑MBps
+2016-08-24 16:51:29 nist-integration-v3.3 STDERR ++ wc -l data/VCF06_HG001_12_hg19_solid5500_PE50x50bp_GATKHC_nohomref_v37_samplename.vcf.gz_indivintersect2platforms.vcf
+2016-08-24 16:51:29 nist-integration-v3.3 STDOUT 61763 data/VCF06_HG001_12_hg19_solid5500_PE50x50bp_GATKHC_nohomref_v37_samplename.vcf.gz_indivintersect2platforms.vcf
+2016-08-24 16:51:29 nist-integration-v3.3 STDERR ++ for v in 'data/*_nohomref_v37_samplename.vcf.gz'
+2016-08-24 16:51:29 nist-integration-v3.3 STDERR ++ vcfintersect --intersect-vcf union_callableannotate_ClassifyUsingFilters_v3_2platforms.vcf.gz -r genome.fa data/VCF07_HG001_12_hg19_solid5500_SE75bp_GATKHC_nohomref_v37_samplename.vcf.gz
+2016-08-24 16:51:51 nist-integration-v3.3 STDERR ++ wc -l data/VCF07_HG001_12_hg19_solid5500_SE75bp_GATKHC_nohomref_v37_samplename.vcf.gz_indivintersect2platforms.vcf
+2016-08-24 16:51:51 nist-integration-v3.3 STDOUT 111916 data/VCF07_HG001_12_hg19_solid5500_SE75bp_GATKHC_nohomref_v37_samplename.vcf.gz_indivintersect2platforms.vcf
+2016-08-24 16:51:51 nist-integration-v3.3 STDERR ++ perl /RunOneClassFilter.pl -cstable callsettable.txt -p data/
+2016-08-24 16:51:51 nist-integration-v3.3 STDOUT Usage = perl RunOneClassFilter.pl -cstable callsettable.txt -p data/ 
+2016-08-24 16:51:51 nist-integration-v3.3 STDOUT 
+2016-08-24 16:51:51 nist-integration-v3.3 STDOUT perl /VcfOneClassFiltering_v3.3.pl data/VCF01_HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_nohomref_v37_samplename.vcf.gz_indivintersect2platforms.vcf data/VCF01_HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_nohomref_v37_samplename.vcf data/GATK_Annotations_160509.txt data/VCF01_HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_nohomref_v37_samplename_oneclassfilter HiSeqPE300xGATK
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Proportion of rows used to get 40000: 0.259736886533941
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT 105141 37217 11448
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for BaseQRankSum for SNPs: 37217, -4.378e+00, 4.51
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for BaseQRankSum for indels: 11448, -3.458e+00, 3.94
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for ClippingRankSum for SNPs: 37217, -2.574e+00, 2.58
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for ClippingRankSum for indels: 11448, -2.542e+00, 2.54
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for DP for SNPs: 37217, 119, 408
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for DP for indels: 11448, 106, 417
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for FS for SNPs: 37217, -1000000, 21.562
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for FS for indels: 11448, -1000000, 22.386
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for MQRankSum for SNPs: 37217, -2.614e+00, 2.69
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for MQRankSum for indels: 11448, -2.559e+00, 2.58
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for ReadPosRankSum for SNPs: 37217, -2.151e+00, 4.17
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for ReadPosRankSum for indels: 11448, -3.918e+00, 2.64
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for QD for SNPs: 37217, 12.78, 1000000
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for QD for indels: 11448, 9.26, 1000000
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for SOR for SNPs: 37217, -1000000, 1.650
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for SOR for indels: 11448, -1000000, 1.774
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of vcf records filtered: 29139 out of 221956.
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier BaseQRankSum: 2363
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier BaseQRankSum: 781
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier ClippingRankSum: 1060
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier ClippingRankSum: 234
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier DP: 5119
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier DP: 4855
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier FS: 3905
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier FS: 1195
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier MQRankSum: 3125
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier MQRankSum: 416
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier ReadPosRankSum: 2941
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier ReadPosRankSum: 1943
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier QD: 7080
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier QD: 5400
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier SOR: 5175
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier SOR: 0
+2016-08-24 16:53:12 nist-integration-v3.3 STDOUT perl /VcfOneClassFiltering_v3.3.pl data/VCF02_vcfBeta-GS000025639-ASM_12_nohomref_v37_samplename.vcf.gz_indivintersect2platforms.vcf data/VCF02_vcfBeta-GS000025639-ASM_12_nohomref_v37_samplename.vcf data/CG_Annotations_160408.txt data/VCF02_vcfBeta-GS000025639-ASM_12_nohomref_v37_samplename_oneclassfilter CGnormal
+2016-08-24 16:53:29 nist-integration-v3.3 STDOUT Proportion of rows used to get 40000: 0.262293362010741
+2016-08-24 16:53:29 nist-integration-v3.3 STDOUT 103926 36971 11478
+2016-08-24 16:53:29 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for GQ for SNPs: 36971, 71, 1000000
+2016-08-24 16:53:29 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for GQ for indels: 11478, 32, 1000000
+2016-08-24 16:53:29 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for DP for SNPs: 36971, 25, 125
+2016-08-24 16:53:29 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for DP for indels: 11478, 13, 122
+2016-08-24 16:53:29 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for CGA_CEHQ for SNPs: 36971, 27, 1000000
+2016-08-24 16:53:29 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for CGA_CEHQ for indels: 11478, 13, 1000000
+2016-08-24 16:53:29 nist-integration-v3.3 STDOUT Number of vcf records filtered: 39152 out of 210173.
+2016-08-24 16:53:29 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier GQ: 5653
+2016-08-24 16:53:29 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier GQ: 486
+2016-08-24 16:53:29 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier DP: 4282
+2016-08-24 16:53:29 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier DP: 546
+2016-08-24 16:53:29 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier CGA_CEHQ: 7546
+2016-08-24 16:53:29 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier CGA_CEHQ: 4994
+2016-08-24 16:53:29 nist-integration-v3.3 STDOUT perl /VcfOneClassFiltering_v3.3.pl data/VCF03_HG001_12_hs37d5_novoalign_Ilmn150bp300X_FB_nohomref_v37_samplename.vcf.gz_indivintersect2platforms.vcf data/VCF03_HG001_12_hs37d5_novoalign_Ilmn150bp300X_FB_nohomref_v37_samplename.vcf data/Freebayes_Annotations_160408.txt data/VCF03_HG001_12_hs37d5_novoalign_Ilmn150bp300X_FB_nohomref_v37_samplename_oneclassfilter HiSeqPE300xfreebayes
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Proportion of rows used to get 40000: 0.259657641399814
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT 105596 36911 11479
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for ABP for SNPs: 36911, -1000000, 30.2883
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for ABP for indels: 11479, -1000000, 71.803
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for DP for SNPs: 36911, 146, 408
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for DP for indels: 11479, 105, 400
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for EPP for SNPs: 36911, -1000000, 40.5458
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for EPP for indels: 11479, -1000000, 40.7416
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for EPPR for SNPs: 36911, -1000000, 31.3795
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for EPPR for indels: 11479, -1000000, 31.4858
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for PAIRED for SNPs: 36911, 0.890625, 1000000
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for PAIRED for indels: 11479, 0.873786, 1000000
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for PAIREDR for SNPs: 36911, 0, 1000000
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for PAIREDR for indels: 11479, 0, 1000000
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for RPP for SNPs: 36911, -1000000, 59.6574
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for RPP for indels: 11479, -1000000, 62.5934
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for RPPR for SNPs: 36911, -1000000, 37.8095
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for RPPR for indels: 11479, -1000000, 39.9253
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for SAP for SNPs: 36911, -1000000, 64.6231
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for SAP for indels: 11479, -1000000, 66.4798
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for SRP for SNPs: 36911, -1000000, 42.0968
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for SRP for indels: 11479, -1000000, 43.0863
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of vcf records filtered: 38853 out of 229811.
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier ABP: 14706
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier ABP: 3282
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier DP: 8949
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier DP: 4835
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier EPP: 3693
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier EPP: 427
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier EPPR: 3463
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier EPPR: 541
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier PAIRED: 5139
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier PAIRED: 1199
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier PAIREDR: 0
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier PAIREDR: 0
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier RPP: 5667
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier RPP: 1209
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier RPPR: 5257
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier RPPR: 1560
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier SAP: 6421
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier SAP: 0
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier SRP: 5527
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier SRP: 0
+2016-08-24 16:57:44 nist-integration-v3.3 STDOUT perl /VcfOneClassFiltering_v3.3.pl data/VCF04_HG001_12_10X_GATKHCbyhaplo_nohomref_v37_samplename.vcf.gz_indivintersect2platforms.vcf data/VCF04_HG001_12_10X_GATKHCbyhaplo_nohomref_v37_samplename.vcf data/GATK_Annotations_160509.txt data/VCF04_HG001_12_10X_GATKHCbyhaplo_nohomref_v37_samplename_oneclassfilter 10XGATKhaplo
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Proportion of rows used to get 40000: 0.268669147378461
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT 100961 37130 10595
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for BaseQRankSum for SNPs: 37130, -1.182e+00, 1.63
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for BaseQRankSum for indels: 10595, -1.736e+00, 1.70
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for ClippingRankSum for SNPs: 37130, -1.569e+00, 1.45
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for ClippingRankSum for indels: 10595, -1.735e+00, 1.56
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for DP for SNPs: 37130, 10, 89
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for DP for indels: 10595, 8, 94
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for FS for SNPs: 37130, -1000000, 3.979
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for FS for indels: 10595, -1000000, 6.495
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for MQRankSum for SNPs: 37130, -1.583e+00, 1.47
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for MQRankSum for indels: 10595, -1.735e+00, 1.58
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for ReadPosRankSum for SNPs: 37130, -1.375e+00, 1.61
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for ReadPosRankSum for indels: 10595, -1.735e+00, 1.64
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for QD for SNPs: 37130, 22.31, 1000000
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for QD for indels: 10595, 20.80, 1000000
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for SOR for SNPs: 37130, -1000000, 2.833
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for SOR for indels: 10595, -1000000, 3.126
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of vcf records filtered: 11609 out of 193529.
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier BaseQRankSum: 915
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier BaseQRankSum: 393
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier ClippingRankSum: 1018
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier ClippingRankSum: 310
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier DP: 1836
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier DP: 482
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier FS: 1096
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier FS: 637
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier MQRankSum: 1008
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier MQRankSum: 323
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier ReadPosRankSum: 929
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier ReadPosRankSum: 354
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier QD: 1243
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier QD: 1891
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier SOR: 1503
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier SOR: 0
+2016-08-24 16:58:41 nist-integration-v3.3 STDOUT perl /VcfOneClassFiltering_v3.3.pl data/VCF05_TSVC_variants_defaultlowsetting_12_nohomref_v37_samplename.vcf.gz_indivintersect2platforms.vcf data/VCF05_TSVC_variants_defaultlowsetting_12_nohomref_v37_samplename.vcf data/Ion_Annotations_160408.txt data/VCF05_TSVC_variants_defaultlowsetting_12_nohomref_v37_samplename_oneclassfilter IonExomeTVC
+2016-08-24 16:58:42 nist-integration-v3.3 STDOUT Proportion of rows used to get 40000: 21.7509516041327
+2016-08-24 16:58:42 nist-integration-v3.3 STDOUT 0 1683 58
+2016-08-24 16:58:42 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for STB for SNPs: 1683, -1000000, 0.995562
+2016-08-24 16:58:42 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for STB for indels: 58, -1000000, 1000000
+2016-08-24 16:58:42 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for MLLD for SNPs: 1683, 44.3586, 1000000
+2016-08-24 16:58:42 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for MLLD for indels: 58, -1000000, 1000000
+2016-08-24 16:58:42 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for AF for SNPs: 1683, 0.357143, 1000000
+2016-08-24 16:58:42 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for AF for indels: 58, -1000000, 1000000
+2016-08-24 16:58:42 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for RBI for SNPs: 1683, -1000000, 0.145364
+2016-08-24 16:58:42 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for RBI for indels: 58, -1000000, 1000000
+2016-08-24 16:58:42 nist-integration-v3.3 STDOUT Number of vcf records filtered: 222 out of 1952.
+2016-08-24 16:58:42 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier STB: 30
+2016-08-24 16:58:42 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier STB: 0
+2016-08-24 16:58:42 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier MLLD: 33
+2016-08-24 16:58:42 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier MLLD: 0
+2016-08-24 16:58:42 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier AF: 37
+2016-08-24 16:58:42 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier AF: 0
+2016-08-24 16:58:42 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier RBI: 23
+2016-08-24 16:58:42 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier RBI: 0
+2016-08-24 16:58:42 nist-integration-v3.3 STDOUT perl /VcfOneClassFiltering_v3.3.pl data/VCF06_HG001_12_hg19_solid5500_PE50x50bp_GATKHC_nohomref_v37_samplename.vcf.gz_indivintersect2platforms.vcf data/VCF06_HG001_12_hg19_solid5500_PE50x50bp_GATKHC_nohomref_v37_samplename.vcf data/GATK_Annotations_160509.txt data/VCF06_HG001_12_hg19_solid5500_PE50x50bp_GATKHC_nohomref_v37_samplename_oneclassfilter SolidPE50x50GATKHC
+2016-08-24 16:59:13 nist-integration-v3.3 STDOUT Proportion of rows used to get 40000: 0.647636934734388
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT 21203 38794 1570
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for BaseQRankSum for SNPs: 38794, -1.754e+00, 1.93
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for BaseQRankSum for indels: 1570, -1.517e+00, 1.75
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for ClippingRankSum for SNPs: 38794, -1.754e+00, 1.75
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for ClippingRankSum for indels: 1570, -1.537e+00, 1.75
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for DP for SNPs: 38794, 2, 17
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for DP for indels: 1570, 2, 16
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for FS for SNPs: 38794, -1000000, 12.175
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for FS for indels: 1570, -1000000, 10.000
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for MQRankSum for SNPs: 38794, -2.054e+00, 1.92
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for MQRankSum for indels: 1570, -2.228e+00, 1.38
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for ReadPosRankSum for SNPs: 38794, -1.652e+00, 2.22
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for ReadPosRankSum for indels: 1570, -1.380e+00, 2.05
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for QD for SNPs: 38794, 3.86, 1000000
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for QD for indels: 1570, 4.53, 1000000
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for SOR for SNPs: 38794, -1000000, 4.174
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for SOR for indels: 1570, -1000000, 3.912
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of vcf records filtered: 36243 out of 72887.
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier BaseQRankSum: 439
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier BaseQRankSum: 77
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier ClippingRankSum: 340
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier ClippingRankSum: 19
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier DP: 265
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier DP: 13
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier FS: 537
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier FS: 57
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier MQRankSum: 370
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier MQRankSum: 30
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier ReadPosRankSum: 456
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier ReadPosRankSum: 38
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier QD: 837
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier QD: 37
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier SOR: 289
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier SOR: 0
+2016-08-24 16:59:14 nist-integration-v3.3 STDOUT perl /VcfOneClassFiltering_v3.3.pl data/VCF07_HG001_12_hg19_solid5500_SE75bp_GATKHC_nohomref_v37_samplename.vcf.gz_indivintersect2platforms.vcf data/VCF07_HG001_12_hg19_solid5500_SE75bp_GATKHC_nohomref_v37_samplename.vcf data/GATK_Annotations_160509.txt data/VCF07_HG001_12_hg19_solid5500_SE75bp_GATKHC_nohomref_v37_samplename_oneclassfilter SolidSE75GATKHC
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Proportion of rows used to get 40000: 0.357410915329354
+2016-08-24 17:00:04 nist-integration-v3.3 STDERR ++ cp union_callableannotate.vcf union_callableannotate.1.vcf
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT 69098 38621 4001
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for BaseQRankSum for SNPs: 38621, -2.141e+00, 2.63
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for BaseQRankSum for indels: 4001, -1.754e+00, 2.77
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for ClippingRankSum for SNPs: 38621, -2.208e+00, 2.18
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for ClippingRankSum for indels: 4001, -2.050e+00, 2.02
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for DP for SNPs: 38621, 2, 43
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for DP for indels: 4001, 2, 42
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for FS for SNPs: 38621, -1000000, 19.445
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for FS for indels: 4001, -1000000, 18.176
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for MQRankSum for SNPs: 38621, -3.493e+00, 2.20
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for MQRankSum for indels: 4001, -4.545e+00, 1.27
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for ReadPosRankSum for SNPs: 38621, -2.069e+00, 2.95
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for ReadPosRankSum for indels: 4001, -1.952e+00, 3.04
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for QD for SNPs: 38621, 3.06, 1000000
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for QD for indels: 4001, 1.84, 1000000
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for SOR for SNPs: 38621, -1000000, 4.977
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of records with values and left and right cutoffs for SOR for indels: 4001, -1000000, 4.977
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of vcf records filtered: 23991 out of 134342.
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier BaseQRankSum: 1031
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier BaseQRankSum: 60
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier ClippingRankSum: 741
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier ClippingRankSum: 35
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier DP: 1039
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier DP: 60
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier FS: 1076
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier FS: 53
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier MQRankSum: 1335
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier MQRankSum: 98
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier ReadPosRankSum: 1512
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier ReadPosRankSum: 95
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier QD: 2653
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier QD: 59
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of snps filtered due to outlier SOR: 965
+2016-08-24 17:00:04 nist-integration-v3.3 STDOUT Number of non-snps filtered due to outlier SOR: 0
+2016-08-24 17:00:04 nist-integration-v3.3 STDERR ++ i=1
+2016-08-24 17:00:04 nist-integration-v3.3 STDERR ++ for v in 'data/*_samplename_oneclassfilter_filtered.bed'
+2016-08-24 17:00:04 nist-integration-v3.3 STDERR ++ (( j=i+1 ))
+2016-08-24 17:00:04 nist-integration-v3.3 STDERR ++ vcfannotate -b data/VCF01_HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_nohomref_v37_samplename_oneclassfilter_filtered.bed -k oneclassfilt union_callableannotate.1.vcf
+2016-08-24 17:01:08 nist-integration-v3.3 STDERR ++ rm union_callableannotate.1.vcf
+2016-08-24 17:01:08 nist-integration-v3.3 STDERR ++ (( i=i+1 ))
+2016-08-24 17:01:08 nist-integration-v3.3 STDERR ++ for v in 'data/*_samplename_oneclassfilter_filtered.bed'
+2016-08-24 17:01:08 nist-integration-v3.3 STDERR ++ (( j=i+1 ))
+2016-08-24 17:01:08 nist-integration-v3.3 STDERR ++ vcfannotate -b data/VCF02_vcfBeta-GS000025639-ASM_12_nohomref_v37_samplename_oneclassfilter_filtered.bed -k oneclassfilt union_callableannotate.2.vcf
+2016-08-24 17:01:22 nist-integration-v3.3 INFO CPU: 97% (1 cores) * Memory: 533/3750MB * Storage: 388GB free * Net: 0↓/0↑MBps
+2016-08-24 17:01:24 nist-integration-v3.3 INFO CPU: 97% (1 cores) * Memory: 533/3750MB * Storage: 388GB free * Net: 0↓/0↑MBps
+2016-08-24 17:02:09 nist-integration-v3.3 STDERR ++ rm union_callableannotate.2.vcf
+2016-08-24 17:02:09 nist-integration-v3.3 STDERR ++ (( i=i+1 ))
+2016-08-24 17:02:09 nist-integration-v3.3 STDERR ++ for v in 'data/*_samplename_oneclassfilter_filtered.bed'
+2016-08-24 17:02:09 nist-integration-v3.3 STDERR ++ (( j=i+1 ))
+2016-08-24 17:02:09 nist-integration-v3.3 STDERR ++ vcfannotate -b data/VCF03_HG001_12_hs37d5_novoalign_Ilmn150bp300X_FB_nohomref_v37_samplename_oneclassfilter_filtered.bed -k oneclassfilt union_callableannotate.3.vcf
+2016-08-24 17:03:10 nist-integration-v3.3 STDERR ++ rm union_callableannotate.3.vcf
+2016-08-24 17:03:10 nist-integration-v3.3 STDERR ++ (( i=i+1 ))
+2016-08-24 17:03:10 nist-integration-v3.3 STDERR ++ for v in 'data/*_samplename_oneclassfilter_filtered.bed'
+2016-08-24 17:03:10 nist-integration-v3.3 STDERR ++ (( j=i+1 ))
+2016-08-24 17:03:10 nist-integration-v3.3 STDERR ++ vcfannotate -b data/VCF04_HG001_12_10X_GATKHCbyhaplo_nohomref_v37_samplename_oneclassfilter_filtered.bed -k oneclassfilt union_callableannotate.4.vcf
+2016-08-24 17:04:11 nist-integration-v3.3 STDERR ++ rm union_callableannotate.4.vcf
+2016-08-24 17:04:11 nist-integration-v3.3 STDERR ++ (( i=i+1 ))
+2016-08-24 17:04:11 nist-integration-v3.3 STDERR ++ for v in 'data/*_samplename_oneclassfilter_filtered.bed'
+2016-08-24 17:04:11 nist-integration-v3.3 STDERR ++ (( j=i+1 ))
+2016-08-24 17:04:11 nist-integration-v3.3 STDERR ++ vcfannotate -b data/VCF05_TSVC_variants_defaultlowsetting_12_nohomref_v37_samplename_oneclassfilter_filtered.bed -k oneclassfilt union_callableannotate.5.vcf
+2016-08-24 17:05:12 nist-integration-v3.3 STDERR ++ rm union_callableannotate.5.vcf
+2016-08-24 17:05:12 nist-integration-v3.3 STDERR ++ (( i=i+1 ))
+2016-08-24 17:05:12 nist-integration-v3.3 STDERR ++ for v in 'data/*_samplename_oneclassfilter_filtered.bed'
+2016-08-24 17:05:12 nist-integration-v3.3 STDERR ++ (( j=i+1 ))
+2016-08-24 17:05:12 nist-integration-v3.3 STDERR ++ vcfannotate -b data/VCF06_HG001_12_hg19_solid5500_PE50x50bp_GATKHC_nohomref_v37_samplename_oneclassfilter_filtered.bed -k oneclassfilt union_callableannotate.6.vcf
+2016-08-24 17:06:13 nist-integration-v3.3 STDERR ++ rm union_callableannotate.6.vcf
+2016-08-24 17:06:13 nist-integration-v3.3 STDERR ++ (( i=i+1 ))
+2016-08-24 17:06:13 nist-integration-v3.3 STDERR ++ for v in 'data/*_samplename_oneclassfilter_filtered.bed'
+2016-08-24 17:06:13 nist-integration-v3.3 STDERR ++ (( j=i+1 ))
+2016-08-24 17:06:13 nist-integration-v3.3 STDERR ++ vcfannotate -b data/VCF07_HG001_12_hg19_solid5500_SE75bp_GATKHC_nohomref_v37_samplename_oneclassfilter_filtered.bed -k oneclassfilt union_callableannotate.7.vcf
+2016-08-24 17:07:15 nist-integration-v3.3 STDERR ++ rm union_callableannotate.7.vcf
+2016-08-24 17:07:15 nist-integration-v3.3 STDERR ++ (( i=i+1 ))
+2016-08-24 17:07:15 nist-integration-v3.3 STDERR ++ mv union_callableannotate.8.vcf union_callableannotate_filterannotate.vcf
+2016-08-24 17:07:15 nist-integration-v3.3 STDERR ++ perl /VcfClassifyUsingFilters_v3.3.pl union_callableannotate_filterannotate.vcf callsettable.txt union_callableannotate_filterannotate
+2016-08-24 17:09:27 nist-integration-v3.3 STDERR ++ bgzip union_callableannotate_filterannotate.vcf
+2016-08-24 17:09:34 nist-integration-v3.3 STDERR ++ tabix -p vcf union_callableannotate_filterannotate.vcf.gz
+2016-08-24 17:09:35 nist-integration-v3.3 STDERR ++ bgzip union_callableannotate_filterannotate_ClassifyUsingFilters_v3_allcalls.vcf
+2016-08-24 17:09:38 nist-integration-v3.3 STDERR ++ tabix -p vcf union_callableannotate_filterannotate_ClassifyUsingFilters_v3_allcalls.vcf.gz
+2016-08-24 17:09:39 nist-integration-v3.3 STDERR ++ bgzip union_callableannotate_filterannotate_ClassifyUsingFilters_v3_arbitrated.vcf
+2016-08-24 17:09:41 nist-integration-v3.3 STDERR ++ tabix -p vcf union_callableannotate_filterannotate_ClassifyUsingFilters_v3_arbitrated.vcf.gz
+2016-08-24 17:09:41 nist-integration-v3.3 STDERR ++ bgzip union_callableannotate_filterannotate_ClassifyUsingFilters_v3_2platforms.vcf
+2016-08-24 17:09:43 nist-integration-v3.3 STDERR ++ tabix -p vcf union_callableannotate_filterannotate_ClassifyUsingFilters_v3_2platforms.vcf.gz
+2016-08-24 17:09:43 nist-integration-v3.3 STDERR ++ rtg vcfstats union_callableannotate_filterannotate_ClassifyUsingFilters_v3_allcalls.vcf.gz
+2016-08-24 17:09:51 nist-integration-v3.3 STDERR Failed to send usage information to https://api.realtimegenomics.com/usage/submit.php (Connection refused)
+2016-08-24 17:09:51 nist-integration-v3.3 STDERR (Gave up after 3 attempts)
+2016-08-24 17:09:57 nist-integration-v3.3 STDOUT Location                     : union_callableannotate_filterannotate_ClassifyUsingFilters_v3_allcalls.vcf.gz
+2016-08-24 17:09:57 nist-integration-v3.3 STDOUT Failed Filters               : 81951
+2016-08-24 17:09:57 nist-integration-v3.3 STDOUT Passed Filters               : 206595
+2016-08-24 17:09:57 nist-integration-v3.3 STDOUT SNPs                         : 152942
+2016-08-24 17:09:57 nist-integration-v3.3 STDOUT MNPs                         : 0
+2016-08-24 17:09:57 nist-integration-v3.3 STDOUT Insertions                   : 8766
+2016-08-24 17:09:57 nist-integration-v3.3 STDOUT Deletions                    : 9788
+2016-08-24 17:09:57 nist-integration-v3.3 STDOUT Indels                       : 721
+2016-08-24 17:09:57 nist-integration-v3.3 STDOUT Same as reference            : 34378
+2016-08-24 17:09:57 nist-integration-v3.3 STDOUT Phased Genotypes             : 7.6% (15794/206595)
+2016-08-24 17:09:57 nist-integration-v3.3 STDOUT SNP Transitions/Transversions: 2.15 (145904/67839)
+2016-08-24 17:09:57 nist-integration-v3.3 STDOUT Total Het/Hom ratio          : 1.55 (104631/67586)
+2016-08-24 17:09:57 nist-integration-v3.3 STDOUT SNP Het/Hom ratio            : 1.52 (92185/60757)
+2016-08-24 17:09:57 nist-integration-v3.3 STDOUT MNP Het/Hom ratio            : - (0/0)
+2016-08-24 17:09:57 nist-integration-v3.3 STDOUT Insertion Het/Hom ratio      : 1.77 (5596/3170)
+2016-08-24 17:09:57 nist-integration-v3.3 STDOUT Deletion Het/Hom ratio       : 1.73 (6203/3585)
+2016-08-24 17:09:57 nist-integration-v3.3 STDOUT Indel Het/Hom ratio          : 8.74 (647/74)
+2016-08-24 17:09:57 nist-integration-v3.3 STDOUT Insertion/Deletion ratio     : 0.90 (8766/9788)
+2016-08-24 17:09:57 nist-integration-v3.3 STDOUT Indel/SNP+MNP ratio          : 0.13 (19275/152942)
+2016-08-24 17:10:02 nist-integration-v3.3 STDERR Failed to send usage information to https://api.realtimegenomics.com/usage/submit.php (Connection refused)
+2016-08-24 17:10:02 nist-integration-v3.3 STDERR (Gave up after 3 attempts)
+2016-08-24 17:10:02 nist-integration-v3.3 STDERR ++ rtg vcfstats union_callableannotate_filterannotate_ClassifyUsingFilters_v3_2platforms.vcf.gz
+2016-08-24 17:10:09 nist-integration-v3.3 STDERR Failed to send usage information to https://api.realtimegenomics.com/usage/submit.php (Connection refused)
+2016-08-24 17:10:09 nist-integration-v3.3 STDERR (Gave up after 3 attempts)
+2016-08-24 17:10:12 nist-integration-v3.3 STDOUT Location                     : union_callableannotate_filterannotate_ClassifyUsingFilters_v3_2platforms.vcf.gz
+2016-08-24 17:10:12 nist-integration-v3.3 STDOUT Failed Filters               : 0
+2016-08-24 17:10:12 nist-integration-v3.3 STDOUT Passed Filters               : 145749
+2016-08-24 17:10:12 nist-integration-v3.3 STDOUT SNPs                         : 135393
+2016-08-24 17:10:12 nist-integration-v3.3 STDOUT MNPs                         : 0
+2016-08-24 17:10:12 nist-integration-v3.3 STDOUT Insertions                   : 5114
+2016-08-24 17:10:12 nist-integration-v3.3 STDOUT Deletions                    : 5227
+2016-08-24 17:10:12 nist-integration-v3.3 STDOUT Indels                       : 15
+2016-08-24 17:10:12 nist-integration-v3.3 STDOUT Same as reference            : 0
+2016-08-24 17:10:12 nist-integration-v3.3 STDOUT Phased Genotypes             : 7.8% (11337/145749)
+2016-08-24 17:10:12 nist-integration-v3.3 STDOUT SNP Transitions/Transversions: 2.24 (130235/58243)
+2016-08-24 17:10:12 nist-integration-v3.3 STDOUT Total Het/Hom ratio          : 1.56 (88738/57011)
+2016-08-24 17:10:12 nist-integration-v3.3 STDOUT SNP Het/Hom ratio            : 1.55 (82346/53047)
+2016-08-24 17:10:12 nist-integration-v3.3 STDOUT MNP Het/Hom ratio            : - (0/0)
+2016-08-24 17:10:12 nist-integration-v3.3 STDOUT Insertion Het/Hom ratio      : 1.41 (2991/2123)
+2016-08-24 17:10:12 nist-integration-v3.3 STDOUT Deletion Het/Hom ratio       : 1.84 (3388/1839)
+2016-08-24 17:10:12 nist-integration-v3.3 STDOUT Indel Het/Hom ratio          : 6.50 (13/2)
+2016-08-24 17:10:12 nist-integration-v3.3 STDOUT Insertion/Deletion ratio     : 0.98 (5114/5227)
+2016-08-24 17:10:12 nist-integration-v3.3 STDOUT Indel/SNP+MNP ratio          : 0.08 (10356/135393)
+2016-08-24 17:10:17 nist-integration-v3.3 STDERR Failed to send usage information to https://api.realtimegenomics.com/usage/submit.php (Connection refused)
+2016-08-24 17:10:17 nist-integration-v3.3 STDERR (Gave up after 3 attempts)
+2016-08-24 17:10:17 nist-integration-v3.3 STDERR ++ rtg vcfstats union_callableannotate_filterannotate_ClassifyUsingFilters_v3_arbitrated.vcf.gz
+2016-08-24 17:10:24 nist-integration-v3.3 STDERR Failed to send usage information to https://api.realtimegenomics.com/usage/submit.php (Connection refused)
+2016-08-24 17:10:24 nist-integration-v3.3 STDERR (Gave up after 3 attempts)
+2016-08-24 17:10:28 nist-integration-v3.3 STDOUT Location                     : union_callableannotate_filterannotate_ClassifyUsingFilters_v3_arbitrated.vcf.gz
+2016-08-24 17:10:28 nist-integration-v3.3 STDOUT Failed Filters               : 0
+2016-08-24 17:10:28 nist-integration-v3.3 STDOUT Passed Filters               : 172217
+2016-08-24 17:10:28 nist-integration-v3.3 STDOUT SNPs                         : 152942
+2016-08-24 17:10:28 nist-integration-v3.3 STDOUT MNPs                         : 0
+2016-08-24 17:10:28 nist-integration-v3.3 STDOUT Insertions                   : 8766
+2016-08-24 17:10:28 nist-integration-v3.3 STDOUT Deletions                    : 9788
+2016-08-24 17:10:28 nist-integration-v3.3 STDOUT Indels                       : 721
+2016-08-24 17:10:28 nist-integration-v3.3 STDOUT Same as reference            : 0
+2016-08-24 17:10:28 nist-integration-v3.3 STDOUT Phased Genotypes             : 9.2% (15794/172217)
+2016-08-24 17:10:28 nist-integration-v3.3 STDOUT SNP Transitions/Transversions: 2.15 (145904/67839)
+2016-08-24 17:10:28 nist-integration-v3.3 STDOUT Total Het/Hom ratio          : 1.55 (104631/67586)
+2016-08-24 17:10:28 nist-integration-v3.3 STDOUT SNP Het/Hom ratio            : 1.52 (92185/60757)
+2016-08-24 17:10:28 nist-integration-v3.3 STDOUT MNP Het/Hom ratio            : - (0/0)
+2016-08-24 17:10:28 nist-integration-v3.3 STDOUT Insertion Het/Hom ratio      : 1.77 (5596/3170)
+2016-08-24 17:10:28 nist-integration-v3.3 STDOUT Deletion Het/Hom ratio       : 1.73 (6203/3585)
+2016-08-24 17:10:28 nist-integration-v3.3 STDOUT Indel Het/Hom ratio          : 8.74 (647/74)
+2016-08-24 17:10:28 nist-integration-v3.3 STDOUT Insertion/Deletion ratio     : 0.90 (8766/9788)
+2016-08-24 17:10:28 nist-integration-v3.3 STDOUT Indel/SNP+MNP ratio          : 0.13 (19275/152942)
+2016-08-24 17:10:33 nist-integration-v3.3 STDERR Failed to send usage information to https://api.realtimegenomics.com/usage/submit.php (Connection refused)
+2016-08-24 17:10:33 nist-integration-v3.3 STDERR (Gave up after 3 attempts)
+2016-08-24 17:10:33 nist-integration-v3.3 STDERR ++ wc -l
+2016-08-24 17:10:33 nist-integration-v3.3 STDERR ++ zgrep GQlessthan70 union_callableannotate_filterannotate_ClassifyUsingFilters_v3_allcalls.vcf.gz
+2016-08-24 17:10:34 nist-integration-v3.3 STDOUT 44
+2016-08-24 17:10:34 nist-integration-v3.3 STDERR ++ zgrep allfilteredanddisagree union_callableannotate_filterannotate_ClassifyUsingFilters_v3_allcalls.vcf.gz
+2016-08-24 17:10:34 nist-integration-v3.3 STDERR ++ wc -l
+2016-08-24 17:10:35 nist-integration-v3.3 STDOUT 61985
+2016-08-24 17:10:35 nist-integration-v3.3 STDERR ++ zgrep allfilteredbutagree union_callableannotate_filterannotate_ClassifyUsingFilters_v3_allcalls.vcf.gz
+2016-08-24 17:10:35 nist-integration-v3.3 STDERR ++ wc -l
+2016-08-24 17:10:36 nist-integration-v3.3 STDOUT 17652
+2016-08-24 17:10:36 nist-integration-v3.3 STDERR ++ zgrep discordantunfiltered union_callableannotate_filterannotate_ClassifyUsingFilters_v3_allcalls.vcf.gz
+2016-08-24 17:10:36 nist-integration-v3.3 STDERR ++ wc -l
+2016-08-24 17:10:37 nist-integration-v3.3 STDOUT 1488
+2016-08-24 17:10:37 nist-integration-v3.3 STDERR ++ wc -l
+2016-08-24 17:10:37 nist-integration-v3.3 STDERR ++ zgrep discordanthet union_callableannotate_filterannotate_ClassifyUsingFilters_v3_allcalls.vcf.gz
+2016-08-24 17:10:38 nist-integration-v3.3 STDOUT 27
+2016-08-24 17:10:38 nist-integration-v3.3 STDERR ++ zgrep questionableindel union_callableannotate_filterannotate_ClassifyUsingFilters_v3_allcalls.vcf.gz
+2016-08-24 17:10:38 nist-integration-v3.3 STDERR ++ wc -l
+2016-08-24 17:10:40 nist-integration-v3.3 STDOUT 600
+2016-08-24 17:10:40 nist-integration-v3.3 STDERR ++ zgrep cgonly union_callableannotate_filterannotate_ClassifyUsingFilters_v3_allcalls.vcf.gz
+2016-08-24 17:10:40 nist-integration-v3.3 STDERR ++ wc -l
+2016-08-24 17:10:41 nist-integration-v3.3 STDOUT 133
+2016-08-24 17:10:41 nist-integration-v3.3 STDERR ++ wc -l
+2016-08-24 17:10:41 nist-integration-v3.3 STDERR ++ zgrep alleleimbalance union_callableannotate_filterannotate_ClassifyUsingFilters_v3_allcalls.vcf.gz
+2016-08-24 17:10:42 nist-integration-v3.3 STDOUT 30
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR ++ awk -v chrom=12 'BEGIN {FS = OFS = "\t"} {if($1 == chrom || chrom == "allbutY" || chrom == "all" || $1 ~ /^#/) print }' /human.b37.genome
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR ++ awk -v chrom=12 'BEGIN {FS = OFS = "\t"} {if($1 == chrom || chrom == "allbutY" || chrom == "all" || $1 ~ /^#/) print }' /human.b37.genome.bed
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR ++ vars=
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR ++ for v in 'data/*_callable_v37_processed.bed'
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR +++ awk '{print $1}'
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR +++ wc -l data/HG001_12_10X_GATKHCbyhaplo_callable_v37_processed.bed
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR ++ count=294345
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR ++ '[' 294345 -gt 1 ']'
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR ++ vars=' data/HG001_12_10X_GATKHCbyhaplo_callable_v37_processed.bed'
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR ++ for v in 'data/*_callable_v37_processed.bed'
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR +++ awk '{print $1}'
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR +++ wc -l data/HG001_12_hs37d5_novoalign_Ilmn150bp300X_FB_callable_v37_processed.bed
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR ++ count=102632
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR ++ '[' 102632 -gt 1 ']'
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR ++ vars=' data/HG001_12_10X_GATKHCbyhaplo_callable_v37_processed.bed data/HG001_12_hs37d5_novoalign_Ilmn150bp300X_FB_callable_v37_processed.bed'
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR ++ for v in 'data/*_callable_v37_processed.bed'
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR +++ awk '{print $1}'
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR +++ wc -l data/HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_callable_v37_processed.bed
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR ++ count=46586
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR ++ '[' 46586 -gt 1 ']'
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR ++ vars=' data/HG001_12_10X_GATKHCbyhaplo_callable_v37_processed.bed data/HG001_12_hs37d5_novoalign_Ilmn150bp300X_FB_callable_v37_processed.bed data/HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_callable_v37_processed.bed'
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR ++ for v in 'data/*_callable_v37_processed.bed'
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR +++ awk '{print $1}'
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR +++ wc -l data/TSVC_variants_defaultlowsetting_12_callable_v37_processed.bed
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR ++ count=24796
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR ++ '[' 24796 -gt 1 ']'
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR ++ vars=' data/HG001_12_10X_GATKHCbyhaplo_callable_v37_processed.bed data/HG001_12_hs37d5_novoalign_Ilmn150bp300X_FB_callable_v37_processed.bed data/HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_callable_v37_processed.bed data/TSVC_variants_defaultlowsetting_12_callable_v37_processed.bed'
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR ++ for v in 'data/*_callable_v37_processed.bed'
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR +++ awk '{print $1}'
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR +++ wc -l data/vcfBeta-GS000025639-ASM_12_callable_v37_processed.bed
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR ++ count=125739
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR ++ '[' 125739 -gt 1 ']'
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR ++ vars=' data/HG001_12_10X_GATKHCbyhaplo_callable_v37_processed.bed data/HG001_12_hs37d5_novoalign_Ilmn150bp300X_FB_callable_v37_processed.bed data/HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_callable_v37_processed.bed data/TSVC_variants_defaultlowsetting_12_callable_v37_processed.bed data/vcfBeta-GS000025639-ASM_12_callable_v37_processed.bed'
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR ++ awk -v chrom=12 'BEGIN {FS = OFS = "\t"} {if($1 == chrom || chrom == "allbutY" || chrom == "all" || $1 ~ /^#/) print }'
+2016-08-24 17:10:42 nist-integration-v3.3 STDERR ++ multiIntersectBed -i data/HG001_12_10X_GATKHCbyhaplo_callable_v37_processed.bed data/HG001_12_hs37d5_novoalign_Ilmn150bp300X_FB_callable_v37_processed.bed data/HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_callable_v37_processed.bed data/TSVC_variants_defaultlowsetting_12_callable_v37_processed.bed data/vcfBeta-GS000025639-ASM_12_callable_v37_processed.bed
+2016-08-24 17:11:12 nist-integration-v3.3 STDERR ++ mergeBed -i stdin
+2016-08-24 17:11:12 nist-integration-v3.3 STDERR ++ awk '{if($4>1) print $0}' callablemultinter.bed
+2016-08-24 17:11:20 nist-integration-v3.3 STDERR ++ mergeBed -i stdin
+2016-08-24 17:11:20 nist-integration-v3.3 STDERR ++ awk '{if($4>0) print $0}' callablemultinter.bed
+2016-08-24 17:11:22 nist-integration-v3.3 INFO CPU: 85% (1 cores) * Memory: 686/3750MB * Storage: 388GB free * Net: 0↓/0↑MBps
+2016-08-24 17:11:24 nist-integration-v3.3 INFO CPU: 85% (1 cores) * Memory: 820/3750MB * Storage: 388GB free * Net: 0↓/0↑MBps
+2016-08-24 17:11:28 nist-integration-v3.3 STDERR ++ awk '{ sum+=$3; sum-=$2 } END { print sum }' callablemultinter_gt1.bed
+2016-08-24 17:11:28 nist-integration-v3.3 STDOUT 119331389
+2016-08-24 17:11:28 nist-integration-v3.3 STDERR ++ awk '{ sum+=$3; sum-=$2 } END { print sum }' callablemultinter_gt0.bed
+2016-08-24 17:11:28 nist-integration-v3.3 STDOUT 126860033
+2016-08-24 17:11:28 nist-integration-v3.3 STDERR ++ slopBed -i stdin -g /human.b37.chrom.genome -b 50
+2016-08-24 17:11:28 nist-integration-v3.3 STDERR ++ subtractBed -a /human.b37.chrom.genome.bed -b stdin
+2016-08-24 17:11:28 nist-integration-v3.3 STDERR ++ complementBed -i stdin -g /human.b37.chrom.genome
+2016-08-24 17:11:28 nist-integration-v3.3 STDERR ++ awk '{OFS="\t"; if (!($7 ~ /^PASS/ || $7 ~ /^\./ || $1 ~ /^#/)) {print $1,$2-1,$2,$4"/"$5}}'
+2016-08-24 17:11:28 nist-integration-v3.3 STDERR ++ gunzip -c union_callableannotate_filterannotate_ClassifyUsingFilters_v3_allcalls.vcf.gz
+2016-08-24 17:11:33 nist-integration-v3.3 STDERR ++ rtg vcfeval -b union_callableannotate_filterannotate_ClassifyUsingFilters_v3_arbitrated.vcf.gz -c union_callableannotate_filterannotate_ClassifyUsingFilters_v3_arbitrated.vcf.gz -o selfcompare -t human_g1k_v37
+2016-08-24 17:11:40 nist-integration-v3.3 STDERR Failed to send usage information to https://api.realtimegenomics.com/usage/submit.php (Connection refused)
+2016-08-24 17:11:40 nist-integration-v3.3 STDERR (Gave up after 3 attempts)
+2016-08-24 17:11:56 nist-integration-v3.3 STDERR Evaluation too complex (50002 unresolved paths, 78486 iterations) at reference region 12:42165024-42165037. Variants in this region will not be included in results.
+2016-08-24 17:12:14 nist-integration-v3.3 STDOUT Threshold  True-pos  False-pos  False-neg  Precision  Sensitivity  F-measure
+2016-08-24 17:12:14 nist-integration-v3.3 STDOUT ----------------------------------------------------------------------------
+2016-08-24 17:12:14 nist-integration-v3.3 STDOUT    74.000    172102        109        109     0.9994       0.9994     0.9994
+2016-08-24 17:12:14 nist-integration-v3.3 STDOUT      None    172102        109        109     0.9994       0.9994     0.9994
+2016-08-24 17:12:14 nist-integration-v3.3 STDOUT 
+2016-08-24 17:12:19 nist-integration-v3.3 STDERR Failed to send usage information to https://api.realtimegenomics.com/usage/submit.php (Connection refused)
+2016-08-24 17:12:19 nist-integration-v3.3 STDERR (Gave up after 3 attempts)
+2016-08-24 17:12:19 nist-integration-v3.3 STDERR ++ mergeBed -i stdin -d 50
+2016-08-24 17:12:19 nist-integration-v3.3 STDERR ++ sort -k1,1n -k2,2n
+2016-08-24 17:12:19 nist-integration-v3.3 STDERR ++ sed 's/^23/X/;s/^24/Y/;s/^25/MT/'
+2016-08-24 17:12:19 nist-integration-v3.3 STDERR ++ sed 's/^X/23/;s/^Y/24/;s/^M/25/'
+2016-08-24 17:12:19 nist-integration-v3.3 STDERR ++ awk 'BEGIN {FS = OFS = "\t"} {print $1,$2-50,$2+length($4)+50}'
+2016-08-24 17:12:19 nist-integration-v3.3 STDERR ++ zgrep -v '^#' selfcompare/fp.vcf.gz
+2016-08-24 17:12:19 nist-integration-v3.3 STDERR ++ subtractBed -a stdin -b /example_of_no_ref_regions_input_file_b37.bed
+2016-08-24 17:12:19 nist-integration-v3.3 STDERR ++ subtractBed -a stdin -b excludeoverlappingvars.bed
+2016-08-24 17:12:19 nist-integration-v3.3 STDERR ++ subtractBed -a callablemultinter_gt0.bed -b union_callableannotate_filterannotate_ClassifyUsingFilters_v3_filtered.bed
+2016-08-24 17:12:20 nist-integration-v3.3 STDERR ++ subtractBed -a stdin -b /example_of_no_ref_regions_input_file_b37.bed
+2016-08-24 17:12:20 nist-integration-v3.3 STDERR ++ subtractBed -a stdin -b excludeoverlappingvars.bed
+2016-08-24 17:12:20 nist-integration-v3.3 STDERR ++ subtractBed -a callablemultinter_gt1.bed -b union_callableannotate_filterannotate_ClassifyUsingFilters_v3_filtered.bed
+2016-08-24 17:12:23 nist-integration-v3.3 STDERR ++ awk '{ sum+=$3; sum-=$2 } END { print sum }' callablemultinter_gt1_nofilt_nooverlapvar.bed
+2016-08-24 17:12:23 nist-integration-v3.3 STDOUT 118168677
+2016-08-24 17:12:23 nist-integration-v3.3 STDERR ++ awk '{ sum+=$3; sum-=$2 } END { print sum }' callablemultinter_gt0_nofilt_nooverlapvar.bed
+2016-08-24 17:12:23 nist-integration-v3.3 STDOUT 121491264
+2016-08-24 17:12:23 nist-integration-v3.3 STDERR ++ rtg vcffilter -i selfcompare/tp.vcf.gz --include-bed callablemultinter_gt0_nofilt_nooverlapvar.bed -o selfcompare/tp_in3.0bed.vcf.gz
+2016-08-24 17:12:30 nist-integration-v3.3 STDERR Failed to send usage information to https://api.realtimegenomics.com/usage/submit.php (Connection refused)
+2016-08-24 17:12:30 nist-integration-v3.3 STDERR (Gave up after 3 attempts)
+2016-08-24 17:12:39 nist-integration-v3.3 STDOUT 
+2016-08-24 17:12:39 nist-integration-v3.3 STDOUT Total records : 172102
+2016-08-24 17:12:39 nist-integration-v3.3 STDOUT Filtered due to include file : 3957
+2016-08-24 17:12:39 nist-integration-v3.3 STDOUT Remaining records : 168145
+2016-08-24 17:12:44 nist-integration-v3.3 STDERR Failed to send usage information to https://api.realtimegenomics.com/usage/submit.php (Connection refused)
+2016-08-24 17:12:44 nist-integration-v3.3 STDERR (Gave up after 3 attempts)
+2016-08-24 17:12:44 nist-integration-v3.3 STDERR ++ rtg vcfstats selfcompare/tp_in3.0bed.vcf.gz
+2016-08-24 17:12:51 nist-integration-v3.3 STDERR Failed to send usage information to https://api.realtimegenomics.com/usage/submit.php (Connection refused)
+2016-08-24 17:12:51 nist-integration-v3.3 STDERR (Gave up after 3 attempts)
+2016-08-24 17:12:55 nist-integration-v3.3 STDOUT Location                     : selfcompare/tp_in3.0bed.vcf.gz
+2016-08-24 17:12:55 nist-integration-v3.3 STDOUT Failed Filters               : 0
+2016-08-24 17:12:55 nist-integration-v3.3 STDOUT Passed Filters               : 168145
+2016-08-24 17:12:55 nist-integration-v3.3 STDOUT SNPs                         : 150121
+2016-08-24 17:12:55 nist-integration-v3.3 STDOUT MNPs                         : 0
+2016-08-24 17:12:55 nist-integration-v3.3 STDOUT Insertions                   : 8244
+2016-08-24 17:12:55 nist-integration-v3.3 STDOUT Deletions                    : 9256
+2016-08-24 17:12:55 nist-integration-v3.3 STDOUT Indels                       : 524
+2016-08-24 17:12:55 nist-integration-v3.3 STDOUT Same as reference            : 0
+2016-08-24 17:12:55 nist-integration-v3.3 STDOUT Phased Genotypes             : 8.7% (14694/168145)
+2016-08-24 17:12:55 nist-integration-v3.3 STDOUT SNP Transitions/Transversions: 2.16 (143431/66470)
+2016-08-24 17:12:55 nist-integration-v3.3 STDOUT Total Het/Hom ratio          : 1.54 (101823/66322)
+2016-08-24 17:12:55 nist-integration-v3.3 STDOUT SNP Het/Hom ratio            : 1.51 (90383/59738)
+2016-08-24 17:12:55 nist-integration-v3.3 STDOUT MNP Het/Hom ratio            : - (0/0)
+2016-08-24 17:12:55 nist-integration-v3.3 STDOUT Insertion Het/Hom ratio      : 1.69 (5184/3060)
+2016-08-24 17:12:55 nist-integration-v3.3 STDOUT Deletion Het/Hom ratio       : 1.67 (5785/3471)
+2016-08-24 17:12:55 nist-integration-v3.3 STDOUT Indel Het/Hom ratio          : 8.89 (471/53)
+2016-08-24 17:12:55 nist-integration-v3.3 STDOUT Insertion/Deletion ratio     : 0.89 (8244/9256)
+2016-08-24 17:12:55 nist-integration-v3.3 STDOUT Indel/SNP+MNP ratio          : 0.12 (18024/150121)
+2016-08-24 17:13:00 nist-integration-v3.3 STDERR Failed to send usage information to https://api.realtimegenomics.com/usage/submit.php (Connection refused)
+2016-08-24 17:13:00 nist-integration-v3.3 STDERR (Gave up after 3 attempts)
+2016-08-24 17:13:00 nist-integration-v3.3 STDERR ++ rtg vcffilter -i selfcompare/tp.vcf.gz --exclude-bed callablemultinter_gt0.bed -o selfcompare/tp_notinuniongt0bed.vcf.gz
+2016-08-24 17:13:06 nist-integration-v3.3 STDERR Failed to send usage information to https://api.realtimegenomics.com/usage/submit.php (Connection refused)
+2016-08-24 17:13:06 nist-integration-v3.3 STDERR (Gave up after 3 attempts)
+2016-08-24 17:13:11 nist-integration-v3.3 STDOUT 
+2016-08-24 17:13:11 nist-integration-v3.3 STDOUT Total records : 172102
+2016-08-24 17:13:11 nist-integration-v3.3 STDOUT Filtered due to exclude file : 172037
+2016-08-24 17:13:11 nist-integration-v3.3 STDOUT Remaining records : 65
+2016-08-24 17:13:16 nist-integration-v3.3 STDERR Failed to send usage information to https://api.realtimegenomics.com/usage/submit.php (Connection refused)
+2016-08-24 17:13:16 nist-integration-v3.3 STDERR (Gave up after 3 attempts)
+2016-08-24 17:13:16 nist-integration-v3.3 STDERR ++ rtg vcffilter -i selfcompare/tp.vcf.gz --include-bed union_callableannotate_filterannotate_ClassifyUsingFilters_v3_filtered.bed -o selfcompare/tp_infiltslop50bed.vcf.gz
+2016-08-24 17:13:23 nist-integration-v3.3 STDERR Failed to send usage information to https://api.realtimegenomics.com/usage/submit.php (Connection refused)
+2016-08-24 17:13:23 nist-integration-v3.3 STDERR (Gave up after 3 attempts)
+2016-08-24 17:13:28 nist-integration-v3.3 STDOUT 
+2016-08-24 17:13:28 nist-integration-v3.3 STDOUT Total records : 172102
+2016-08-24 17:13:28 nist-integration-v3.3 STDOUT Filtered due to include file : 168241
+2016-08-24 17:13:28 nist-integration-v3.3 STDOUT Remaining records : 3861
+2016-08-24 17:13:33 nist-integration-v3.3 STDERR Failed to send usage information to https://api.realtimegenomics.com/usage/submit.php (Connection refused)
+2016-08-24 17:13:33 nist-integration-v3.3 STDERR (Gave up after 3 attempts)
+2016-08-24 17:13:33 nist-integration-v3.3 STDERR ++ rtg vcffilter -i selfcompare/tp.vcf.gz --include-bed excludeoverlappingvars.bed -o selfcompare/tp_inexcludeoverlappingvarsbed.vcf.gz
+2016-08-24 17:13:39 nist-integration-v3.3 STDERR Failed to send usage information to https://api.realtimegenomics.com/usage/submit.php (Connection refused)
+2016-08-24 17:13:39 nist-integration-v3.3 STDERR (Gave up after 3 attempts)
+2016-08-24 17:13:44 nist-integration-v3.3 STDOUT 
+2016-08-24 17:13:44 nist-integration-v3.3 STDOUT Total records : 172102
+2016-08-24 17:13:44 nist-integration-v3.3 STDOUT Filtered due to include file : 171931
+2016-08-24 17:13:44 nist-integration-v3.3 STDOUT Remaining records : 171
+2016-08-24 17:13:49 nist-integration-v3.3 STDERR Failed to send usage information to https://api.realtimegenomics.com/usage/submit.php (Connection refused)
+2016-08-24 17:13:49 nist-integration-v3.3 STDERR (Gave up after 3 attempts)
+2016-08-24 17:13:49 nist-integration-v3.3 STDERR ++ tar -zcf indivfilteredbeds.tar.gz data/HG001_12_10X_GATKHCbyhaplo_callable_v37_processed.bed data/HG001_12_hs37d5_novoalign_Ilmn150bp300X_FB_callable_v37_processed.bed data/HG001_12_hs37d5_novoalign_Ilmn150bp300X_GATKHC_callable_v37_processed.bed data/TSVC_variants_defaultlowsetting_12_callable_v37_processed.bed data/vcfBeta-GS000025639-ASM_12_callable_v37_processed.bed
+2016-08-24 17:13:50 nist-integration-v3.3 STDERR +++ dx upload union_callableannotate_filterannotate.vcf.gz -o NA12878_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-Solid-10X_12_v3.3_annotated.vcf.gz --brief
+2016-08-24 17:13:53 nist-integration-v3.3 STDERR ++ file_idvcfann=file-Byz0v3j02759p2xFzx4z7k2y
+2016-08-24 17:13:53 nist-integration-v3.3 STDERR ++ dx-jobutil-add-output vcfanngz file-Byz0v3j02759p2xFzx4z7k2y
+2016-08-24 17:13:53 nist-integration-v3.3 STDERR +++ dx upload union_callableannotate_filterannotate.vcf.gz.tbi -o NA12878_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-Solid-10X_12_v3.3_annotated.vcf.gz.tbi --brief
+2016-08-24 17:13:54 nist-integration-v3.3 STDERR ++ file_idvcfanntbi=file-Byz0v4802759p2xFzx4z7k4f
+2016-08-24 17:13:54 nist-integration-v3.3 STDERR ++ dx-jobutil-add-output vcfanntbi file-Byz0v4802759p2xFzx4z7k4f
+2016-08-24 17:13:54 nist-integration-v3.3 STDERR +++ dx upload union_callableannotate_filterannotate_ClassifyUsingFilters_v3_allcalls.vcf.gz -o NA12878_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-Solid-10X_12_v3.3_all.vcf.gz --brief
+2016-08-24 17:13:56 nist-integration-v3.3 STDERR ++ file_idvcfall=file-Byz0v4j02759p2xFzx4z7k5P
+2016-08-24 17:13:56 nist-integration-v3.3 STDERR ++ dx-jobutil-add-output vcfallgz file-Byz0v4j02759p2xFzx4z7k5P
+2016-08-24 17:13:56 nist-integration-v3.3 STDERR +++ dx upload union_callableannotate_filterannotate_ClassifyUsingFilters_v3_allcalls.vcf.gz.tbi -o NA12878_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-Solid-10X_12_v3.3_all.vcf.gz.tbi --brief
+2016-08-24 17:13:58 nist-integration-v3.3 STDERR ++ file_idvcfalltbi=file-Byz0v58027592X7Y155KQ105
+2016-08-24 17:13:58 nist-integration-v3.3 STDERR ++ dx-jobutil-add-output vcfalltbi file-Byz0v58027592X7Y155KQ105
+2016-08-24 17:13:58 nist-integration-v3.3 STDERR +++ dx upload selfcompare/tp.vcf.gz -o NA12878_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-Solid-10X_12_v3.3_highconf.vcf.gz --brief
+2016-08-24 17:13:59 nist-integration-v3.3 STDERR ++ file_idvcfhighconf=file-Byz0v5Q027582byV2J5GQ025
+2016-08-24 17:13:59 nist-integration-v3.3 STDERR ++ dx-jobutil-add-output vcfhighconfgz file-Byz0v5Q027582byV2J5GQ025
+2016-08-24 17:13:59 nist-integration-v3.3 STDERR +++ dx upload selfcompare/tp.vcf.gz.tbi -o NA12878_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-Solid-10X_12_v3.3_highconf.vcf.gz.tbi --brief
+2016-08-24 17:14:00 nist-integration-v3.3 STDERR ++ file_idvcfhighconftbi=file-Byz0v60027582byV2J5GQ02K
+2016-08-24 17:14:00 nist-integration-v3.3 STDERR ++ dx-jobutil-add-output vcfhighconftbi file-Byz0v60027582byV2J5GQ02K
+2016-08-24 17:14:01 nist-integration-v3.3 STDERR +++ dx upload union_callableannotate_filterannotate_ClassifyUsingFilters_v3_2platforms.vcf.gz -o NA12878_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-Solid-10X_12_v3.3_highconf_2tech.vcf.gz --brief
+2016-08-24 17:14:02 nist-integration-v3.3 STDERR ++ file_idvcfhighconf2tech=file-Byz0v6802755v783q14bfb59
+2016-08-24 17:14:02 nist-integration-v3.3 STDERR ++ dx-jobutil-add-output vcfhighconf2techgz file-Byz0v6802755v783q14bfb59
+2016-08-24 17:14:03 nist-integration-v3.3 STDERR +++ dx upload union_callableannotate_filterannotate_ClassifyUsingFilters_v3_2platforms.vcf.gz.tbi -o NA12878_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-Solid-10X_12_v3.3_highconf_2tech.vcf.gz.tbi --brief
+2016-08-24 17:14:04 nist-integration-v3.3 STDERR ++ file_idvcfhighconf2techtbi=file-Byz0v6j02759p2xFzx4z7kF2
+2016-08-24 17:14:04 nist-integration-v3.3 STDERR ++ dx-jobutil-add-output vcfhighconf2techtbi file-Byz0v6j02759p2xFzx4z7kF2
+2016-08-24 17:14:04 nist-integration-v3.3 STDERR +++ dx upload union_callableannotate_ClassifyUsingFilters_v3_allcalls.vcf.gz -o NA12878_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-Solid-10X_12_v3.3_nofilt_all.vcf.gz --brief
+2016-08-24 17:14:05 nist-integration-v3.3 STDERR ++ file_idvcfallnofilt=file-Byz0v7002755ZQ3Fv54j4p4G
+2016-08-24 17:14:05 nist-integration-v3.3 STDERR ++ dx-jobutil-add-output vcfallnofiltgz file-Byz0v7002755ZQ3Fv54j4p4G
+2016-08-24 17:14:06 nist-integration-v3.3 STDERR +++ dx upload union_callableannotate_ClassifyUsingFilters_v3_allcalls.vcf.gz.tbi -o NA12878_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-Solid-10X_12_v3.3_nofilt_all.vcf.gz.tbi --brief
+2016-08-24 17:14:07 nist-integration-v3.3 STDERR ++ file_idvcfallnofilttbi=file-Byz0v7Q02756XkKyx94kjP08
+2016-08-24 17:14:07 nist-integration-v3.3 STDERR ++ dx-jobutil-add-output vcfallnofilttbi file-Byz0v7Q02756XkKyx94kjP08
+2016-08-24 17:14:07 nist-integration-v3.3 STDERR +++ dx upload callablemultinter_gt0_nofilt_nooverlapvar.bed -o NA12878_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-Solid-10X_12_v3.3_highconf.bed --brief
+2016-08-24 17:14:09 nist-integration-v3.3 STDERR ++ file_idbed1=file-Byz0v8002759p2xFzx4z7kJX
+2016-08-24 17:14:09 nist-integration-v3.3 STDERR ++ dx-jobutil-add-output bed1 file-Byz0v8002759p2xFzx4z7kJX
+2016-08-24 17:14:09 nist-integration-v3.3 STDERR +++ dx upload callablemultinter_gt1_nofilt_nooverlapvar.bed -o NA12878_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-Solid-10X_12_v3.3_highconf_gt1.bed --brief
+2016-08-24 17:14:10 nist-integration-v3.3 STDERR ++ file_idbed2=file-Byz0v8802755ZQ3Fv54j4p5B
+2016-08-24 17:14:10 nist-integration-v3.3 STDERR ++ dx-jobutil-add-output bed2 file-Byz0v8802755ZQ3Fv54j4p5B
+2016-08-24 17:14:10 nist-integration-v3.3 STDERR +++ dx upload callablemultinter_gt0.bed -o NA12878_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-Solid-10X_12_v3.3_callablemultinter_gt0.bed --brief
+2016-08-24 17:14:11 nist-integration-v3.3 STDERR ++ file_idbedcallablegt0=file-Byz0v8j027582byV2J5GQ05p
+2016-08-24 17:14:11 nist-integration-v3.3 STDERR ++ dx-jobutil-add-output bedcallablegt0 file-Byz0v8j027582byV2J5GQ05p
+2016-08-24 17:14:12 nist-integration-v3.3 STDERR +++ dx upload callablemultinter.bed -o NA12878_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-Solid-10X_12_v3.3_callablemultinter_all.bed --brief
+2016-08-24 17:14:14 nist-integration-v3.3 STDERR ++ file_idbedcallableall=file-Byz0v9002759p2xFzx4z7kQ0
+2016-08-24 17:14:14 nist-integration-v3.3 STDERR ++ dx-jobutil-add-output bedcallableall file-Byz0v9002759p2xFzx4z7kQ0
+2016-08-24 17:14:15 nist-integration-v3.3 STDERR +++ dx upload union_callableannotate_filterannotate_ClassifyUsingFilters_v3_filtered.bed -o NA12878_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-Solid-10X_12_v3.3_filteredsites.bed --brief
+2016-08-24 17:14:16 nist-integration-v3.3 STDERR ++ file_idbedfilteredsites=file-Byz0v9j02759p2xFzx4z7kXG
+2016-08-24 17:14:16 nist-integration-v3.3 STDERR ++ dx-jobutil-add-output bedfilteredsites file-Byz0v9j02759p2xFzx4z7kXG
+2016-08-24 17:14:16 nist-integration-v3.3 STDERR +++ dx upload indivfilteredbeds.tar.gz -o NA12878_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-Solid-10X_12_v3.3_indivfilteredbeds.tar.gz --brief
+2016-08-24 17:14:17 nist-integration-v3.3 STDERR ++ file_idindivbedfilteredsites=file-Byz0vB802759p2xFzx4z7kYQ
+2016-08-24 17:14:17 nist-integration-v3.3 STDERR ++ dx-jobutil-add-output bedindivfilteredsites file-Byz0vB802759p2xFzx4z7kYQ
+2016-08-24 17:14:18 nist-integration-v3.3 STDERR ++ type -t main
+2016-08-24 17:14:18 nist-integration-v3.3 STDERR + [[ '' == \f\u\n\c\t\i\o\n ]]
+2016-08-24 17:14:18 nist-integration-v3.3 STDERR + echo '/home/dnanexus/job-Byz00Yj0pB3GypFvX4kqkk1J: Global scope execution complete. Not invoking entry point function main because it was not found'
+2016-08-24 17:14:18 nist-integration-v3.3 STDERR /home/dnanexus/job-Byz00Yj0pB3GypFvX4kqkk1J: Global scope execution complete. Not invoking entry point function main because it was not found
+* nist-integration-v3.3 (done) job-Byz00Yj0pB3GypFvX4kqkk1J
+  jmcdani15 2016-08-24 16:15:10 (runtime 0:53:24)
+  Output: vcfallnofilttbi = file-Byz0v7Q02756XkKyx94kjP08
+          vcfallgz = file-Byz0v4j02759p2xFzx4z7k5P
+          bedcallablegt0 = file-Byz0v8j027582byV2J5GQ05p
+          bed2 = file-Byz0v8802755ZQ3Fv54j4p5B
+          bedcallableall = file-Byz0v9002759p2xFzx4z7kQ0
+          vcfhighconftbi = file-Byz0v60027582byV2J5GQ02K
+          bedindivfilteredsites = file-Byz0vB802759p2xFzx4z7kYQ
+          bed1 = file-Byz0v8002759p2xFzx4z7kJX
+          bedfilteredsites = file-Byz0v9j02759p2xFzx4z7kXG
+          vcfanngz = file-Byz0v3j02759p2xFzx4z7k2y
+          vcfhighconf2techgz = file-Byz0v6802755v783q14bfb59
+          vcfallnofiltgz = file-Byz0v7002755ZQ3Fv54j4p4G
+          vcfalltbi = file-Byz0v58027592X7Y155KQ105
+          vcfhighconfgz = file-Byz0v5Q027582byV2J5GQ025
+          vcfanntbi = file-Byz0v4802759p2xFzx4z7k4f
+          vcfhighconf2techtbi = file-Byz0v6j02759p2xFzx4z7kF2

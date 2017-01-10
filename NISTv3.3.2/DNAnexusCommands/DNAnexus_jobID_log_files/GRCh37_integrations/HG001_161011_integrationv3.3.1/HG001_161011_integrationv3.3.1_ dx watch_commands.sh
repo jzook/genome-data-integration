@@ -1,0 +1,23 @@
+dx watch job-BzyZxj80pB3PpxPv8032B3py > /Users/jmcdani/Documents/GiaB/GiAB_informatics_work/DNAnexus_jobID_log_files/HG001_161011_integrationv3.3.1/HG001_161011_nist-integration_v3.3.1_chr1_job_log.txt
+dx watch job-BzyZxjQ0pB31by9y39x1ZBKJ > /Users/jmcdani/Documents/GiaB/GiAB_informatics_work/DNAnexus_jobID_log_files/HG001_161011_integrationv3.3.1/HG001_161011_nist-integration_v3.3.1_chr2_job_log.txt
+dx watch job-BzyZxjj0pB31z240yJVbkY4P > /Users/jmcdani/Documents/GiaB/GiAB_informatics_work/DNAnexus_jobID_log_files/HG001_161011_integrationv3.3.1/HG001_161011_nist-integration_v3.3.1_chr3_job_log.txt	
+dx watch job-BzyZxk00pB351y9pVVjg2JB1 > /Users/jmcdani/Documents/GiaB/GiAB_informatics_work/DNAnexus_jobID_log_files/HG001_161011_integrationv3.3.1/HG001_161011_nist-integration_v3.3.1_chr4_job_log.txt
+dx watch job-BzyZyJj0pB35kYq8B14fyYPP > /Users/jmcdani/Documents/GiaB/GiAB_informatics_work/DNAnexus_jobID_log_files/HG001_161011_integrationv3.3.1/HG001_161011_nist-integration_v3.3.1_chr5_job_log.txt
+dx watch job-BzyZyK80pB3Kz2B2zVVkbK3G > /Users/jmcdani/Documents/GiaB/GiAB_informatics_work/DNAnexus_jobID_log_files/HG001_161011_integrationv3.3.1/HG001_161011_nist-integration_v3.3.1_chr6_job_log.txt
+dx watch job-BzyZyKQ0pB36B9JPyJvY618Z > /Users/jmcdani/Documents/GiaB/GiAB_informatics_work/DNAnexus_jobID_log_files/HG001_161011_integrationv3.3.1/HG001_161011_nist-integration_v3.3.1_chr7_job_log.txt
+dx watch job-BzyZyKj0pB351y9pVVjg2JB3 > /Users/jmcdani/Documents/GiaB/GiAB_informatics_work/DNAnexus_jobID_log_files/HG001_161011_integrationv3.3.1/HG001_161011_nist-integration_v3.3.1_chr8_job_log.txt
+dx watch job-BzyZyP00pB391j0Y3JyfF1QJ > /Users/jmcdani/Documents/GiaB/GiAB_informatics_work/DNAnexus_jobID_log_files/HG001_161011_integrationv3.3.1/HG001_161011_nist-integration_v3.3.1_chr9_job_log.txt
+dx watch job-BzyZyPQ0pB3P1b3BBbyX3Yq8 > /Users/jmcdani/Documents/GiaB/GiAB_informatics_work/DNAnexus_jobID_log_files/HG001_161011_integrationv3.3.1/HG001_161011_nist-integration_v3.3.1_chr10_job_log.txt
+dx watch job-BzyZyQ00pB3K5j7B2byp3Xy9 > /Users/jmcdani/Documents/GiaB/GiAB_informatics_work/DNAnexus_jobID_log_files/HG001_161011_integrationv3.3.1/HG001_161011_nist-integration_v3.3.1_chr11_job_log.txt
+dx watch job-BzyZyQ80pB391j0Y3JyfF1QP > /Users/jmcdani/Documents/GiaB/GiAB_informatics_work/DNAnexus_jobID_log_files/HG001_161011_integrationv3.3.1/HG001_161011_nist-integration_v3.3.1_chr12_job_log.txt
+dx watch job-BzyZyV00pB3KB74k4VyX1Y5z > /Users/jmcdani/Documents/GiaB/GiAB_informatics_work/DNAnexus_jobID_log_files/HG001_161011_integrationv3.3.1/HG001_161011_nist-integration_v3.3.1_chr13_job_log.txt
+dx watch job-BzyZyVQ0pB3KB74k4VyX1Y61 > /Users/jmcdani/Documents/GiaB/GiAB_informatics_work/DNAnexus_jobID_log_files/HG001_161011_integrationv3.3.1/HG001_161011_nist-integration_v3.3.1_chr14_job_log.txt
+dx watch job-BzyZyVj0pB34k9q39VyfZq73 > /Users/jmcdani/Documents/GiaB/GiAB_informatics_work/DNAnexus_jobID_log_files/HG001_161011_integrationv3.3.1/HG001_161011_nist-integration_v3.3.1_chr15_job_log.txt	
+dx watch job-BzyZyX00pB391j0Y3JyfF1QV > /Users/jmcdani/Documents/GiaB/GiAB_informatics_work/DNAnexus_jobID_log_files/HG001_161011_integrationv3.3.1/HG001_161011_nist-integration_v3.3.1_chr16_job_log.txt
+dx watch job-BzyZyXQ0pB3K5j7B2byp3XyF > /Users/jmcdani/Documents/GiaB/GiAB_informatics_work/DNAnexus_jobID_log_files/HG001_161011_integrationv3.3.1/HG001_161011_nist-integration_v3.3.1_chr17_job_log.txt
+dx watch job-BzyZyY00pB34k9q39VyfZq75 > /Users/jmcdani/Documents/GiaB/GiAB_informatics_work/DNAnexus_jobID_log_files/HG001_161011_integrationv3.3.1/HG001_161011_nist-integration_v3.3.1_chr18_job_log.txt
+dx watch job-BzyZyY80pB3P1b3BBbyX3YqB > /Users/jmcdani/Documents/GiaB/GiAB_informatics_work/DNAnexus_jobID_log_files/HG001_161011_integrationv3.3.1/HG001_161011_nist-integration_v3.3.1_chr19_job_log.txt
+dx watch job-BzyZyZ00pB34k9q39VyfZq77 > /Users/jmcdani/Documents/GiaB/GiAB_informatics_work/DNAnexus_jobID_log_files/HG001_161011_integrationv3.3.1/HG001_161011_nist-integration_v3.3.1_chr20_job_log.txt
+dx watch job-BzyZyZQ0pB3KB74k4VyX1Y63 > /Users/jmcdani/Documents/GiaB/GiAB_informatics_work/DNAnexus_jobID_log_files/HG001_161011_integrationv3.3.1/HG001_161011_nist-integration_v3.3.1_chr21_job_log.txt
+dx watch job-BzyZ7Qj0pB3GbJY0f4zJfXpf > /Users/jmcdani/Documents/GiaB/GiAB_informatics_work/DNAnexus_jobID_log_files/HG001_161011_integrationv3.3.1/HG001_161011_nist-integration_v3.3.1_chr22_job_log.txt
+

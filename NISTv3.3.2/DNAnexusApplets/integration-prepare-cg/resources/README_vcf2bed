@@ -1,0 +1,157 @@
+================================================================================
+vcf2bed.py - A script to determine called (or no-called) regions from a VCF file
+================================================================================
+
+-------------------------------------------------------------------------------
+Usage:
+
+    ./vcf2bed.py vcf_input_file no_ref_regions_input_file bed_output_file [ options ]
+
+-------------------------------------------------------------------------------
+Options:
+
+    -include_partial_calls		(consider partial calls to be calls)
+    -not_pass_calls_are_no-calls	(consider calls that are not "PASS" to be no-calls)
+    -print_no-calls			(print no-call regions, instead of call regions)
+    -use_FT_instead_of_FILTER		(use FT flag, rather than FILTER column*)
+
+*The last option should be set for VCF-Beta format, but not for the new VCF format.
+
+-------------------------------------------------------------------------------
+Scripts needed:
+
+    vcf2bed.py
+    vcf2bed_helper_module.py
+
+-------------------------------------------------------------------------------
+Input files:
+
+    vcf_input_file		(VCF file to learn called, or no-called,
+				 regions from)
+
+    no_ref_regions_input_file	(The set of no-ref regions in the genome:
+				 Before printing a region to the output file,
+				 we remove any part of that region that
+				 overlaps with a no-ref region)
+
+-------------------------------------------------------------------------------
+Output file:
+
+    bed_output_file		(BED output file to which the called,
+				 or no-called, regions are printed)
+
+-------------------------------------------------------------------------------
+Special Notes:
+
+	[1.] Any full ref call for which
+
+		(A) the value of the FT flag is the empty string
+			[if the option "-use_FT_instead_of_FILTER" is specified]
+
+		(B) the value of the FILTER entry is "."
+			[if the option "-use_FT_instead_of_FILTER" is not specified]
+
+	is treated as having an FT/FILTER value of PASS.
+
+
+	[2.] Any partial ref call (but not a mixed ref/variant call) for which
+
+		(A) the value of the FT flag is the empty string
+			[if the option "-use_FT_instead_of_FILTER" is specified]
+
+		(B) the value of the FILTER entry is "NC-CORR" or "NOCALL"
+			[if the option "-use_FT_instead_of_FILTER" is not specified]
+
+	is treated as having an FT/FILTER value of PASS.
+
+
+	[3.] Before printing a given call or no-call region, we first
+
+	divide/trim that region according to any overlapping 'no-ref'
+
+	regions that were listed in the user-specified 'no-ref' file.
+
+
+	[4.] Any non-'no-ref' position that is not accounted for by
+
+	any entry in the VCF file is treated as a full reference call with a
+
+	filter value of PASS.
+
+
+	[5.] For every entry in the VCF file, I check for a padding region
+
+	by looking for the maximum-length prefix shared between the base
+
+	sequence in the REF field and all distinct (comma-delimited) base
+
+	sequences in the ALT field. 
+
+
+	If this shared prefix has a length of exactly 1,
+
+	then I remove it from the entry by incrementing
+
+	the start position of the entry by 1, and then
+
+	I do NOT consider that shared prefix to be a
+
+	separate entry in and of itself.
+
+
+	If this shared prefix has a length of greater than 1,
+
+	then I take no action, thereby considering it
+
+	as part of the original entry.
+
+	(We looked at seven entries in the VCF file that had a
+
+	 multi-base shared prefix, and we found that, for each of
+
+	 these entries, it was **NOT** the case that the full set
+
+	 of positions covered by that multi-base shared prefix
+
+	 were listed in the VAR file as a full-ref call with
+
+	 PASS quality/qualities.)
+
+
+	[6.] It appears that when there is a mixed ref/variant
+
+	call in the VCF file, then the value of the FT flag or
+
+	FILTER field (depending on whether we are looking at an
+
+	old format or new format VCF) will refer to the allele
+
+	called as variant, rather than the allele called as ref.
+
+	(We are not sure if this holds in all cases, only that it
+
+	 holds for at least one entry in a new format VCF file
+
+	 and at least one entry in an old format VCF file,
+
+	 where both VCF entries were identified by searching for
+
+	 entries called as 0/1 or 1/0-- depending on which VCF file
+
+	 we were looking at-- with a low quality filter value.
+
+	 To verify each case, we compared the entry in the VCF file
+
+	 to the corresponding entry/entries in the VAR file.)
+
+
+	[7.] Mixed ref/variant calls (0/1 or 1/0) are not considered
+
+	to be partial calls.
+
+
+	[8.] We do not print out any call regions for chromosomes
+
+	for which there are no explicitly defined entries in the VCF file.
+
+-------------------------------------------------------------------------------

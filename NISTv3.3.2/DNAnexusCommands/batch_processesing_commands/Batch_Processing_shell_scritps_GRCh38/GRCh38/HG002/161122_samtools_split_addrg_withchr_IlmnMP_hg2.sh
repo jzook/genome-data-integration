@@ -1,0 +1,2 @@
+#Run 11/22/16 ran 3hrs 22 min
+dx run -y GIAB:/Workflow/samtools_splitchrom_addrg_withchr -isorted_bam=/HG002/GRCh38/Illumina/Illumina_GRCh38_MatePair/HG002.sorted.bam -iindex_bai=/HG002/GRCh38/Illumina/Illumina_GRCh38_MatePair/HG002.sorted.bam.bai -iprefix=HG002_GRCh38_MatePair_bwa_mem_ -irgid=1 -irglb=MP -irgpl=illumina -irgpu=all -irgsm=HG002 --destination=/HG002/GRCh38/Illumina/Illumina_GRCh38_MatePair/ 

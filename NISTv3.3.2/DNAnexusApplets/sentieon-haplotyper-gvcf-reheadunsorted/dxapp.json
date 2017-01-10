@@ -1,0 +1,140 @@
+{
+  "name": "sentieon-haplotyper-gvcf-reheadunsorted",
+  "title": "Sentieon Haplotyper in GVCF generation mode changing unsorted header to sorted",
+  "dxapi": "1.0.3",
+  "inputSpec": [
+    {
+      "patterns": [
+        "*.bam"
+      ],
+      "label": "Sorted Mappings",
+      "help": "A coordinate-sorted BAM file with the mappings to call variants on.",
+      "name": "sorted_bam",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bai"
+      ],
+      "label": "Sorted mappings index",
+      "help": "The associated BAI file",
+      "name": "sorted_bai",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.fa*.gz"
+      ],
+      "label": "Reference genome fasta file",
+      "help": "A gzipped file containing the reference genome that the reads were mapped against.",
+      "name": "genome_fasta",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.fa*.fai"
+      ],
+      "label": "Reference genome fasta index",
+      "help": "The fai index file for the reference genome that the reads were mapped against.",
+      "name": "genome_fastaindex",
+      "class": "file"
+    },
+    {
+      "help": "A bundle containing known mutations.",
+      "label": "GATK resource bundle",
+      "patterns": [
+        "*.resource.bundle.tar.gz"
+      ],
+      "optional": true,
+      "class": "file",
+      "name": "gatk_resources"
+    },
+    {
+      "help": "A BED file with target coordinates. If given, processing will be restricted to only inside those coordinates.",
+      "label": "Target coordinates",
+      "patterns": [
+        "*.bed"
+      ],
+      "optional": true,
+      "class": "file",
+      "name": "targets"
+    },
+    {
+      "patterns": [
+        "*.info"
+      ],
+      "label": "Location of the license server and Authorization token",
+      "help": "A file containing the location of the license server as well as an authorization token for the account. It should contain two lines with the following format: license_server_location=<FQDN>:<PORT> and auth_token=<AUTH_KEY>",
+      "name": "license_server_file",
+      "class": "file"
+    },
+    {
+      "group": "Advanced",
+      "help": "A prefix to use for the output files.",
+      "label": "Output prefix",
+      "optional": true,
+      "class": "string",
+      "name": "output_prefix"
+    },
+    {
+      "group": "Advanced",
+      "help": "Extra command line options that will be supplied directly to the Sentieon execution.",
+      "label": "Extra command line options (for driver)",
+      "optional": true,
+      "class": "string",
+      "name": "extra_driver_options"
+    },
+    {
+      "group": "Advanced",
+      "help": "Extra algo command line options that will be supplied directly to the Sentieon execution.",
+      "label": "Extra command line options (for algo Haplotyper)",
+      "optional": true,
+      "class": "string",
+      "name": "extra_algo_options"
+    }
+  ],
+  "outputSpec": [
+    {
+      "patterns": [
+        "*.gvcf.gz"
+      ],
+      "label": "Variants",
+      "help": "The called variants in block-gzipped GVCF format.",
+      "name": "gvcfgz",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.gvcf.gz.tbi"
+      ],
+      "label": "Variants index",
+      "help": "The associated TBI file",
+      "name": "tbi",
+      "class": "file"
+    }
+  ],
+  "runSpec": {
+    "bundledDependsByRegion": {
+      "aws:us-east-1": [
+        {
+          "name": "resources.tar.gz",
+          "id": {
+            "$dnanexus_link": "file-F07zKQ80xF9BgF5f15PFF2F0"
+          }
+        }
+      ]
+    },
+    "systemRequirements": {
+      "main": {
+        "instanceType": "mem2_ssd1_x8"
+      }
+    },
+    "file": "src/code.sh",
+    "interpreter": "bash"
+  },
+  "access": {
+    "network": [
+      "*"
+    ]
+  }
+}

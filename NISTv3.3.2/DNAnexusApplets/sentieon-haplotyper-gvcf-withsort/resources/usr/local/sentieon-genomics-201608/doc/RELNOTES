@@ -1,0 +1,177 @@
+Sentieon software for DNA pipeline analysis
+
+2016-08-31
+Release 201608
+Feature: Introduced β-version of new product TNscope for Tumor-Normal somatic variant calling and structural variant calling.
+Feature: Reduced peak memory utilization in klib for alignment.
+Feature: Speed improvement in the input file loading of GVCFtyper.
+Feature: Speed improvement in the Haplotyper algorithm. 
+Feature: Made VarCal more robust when building the VQSR gaussian models.
+Feature: Cleared up certain error messages to make them more user friendly.
+Bug-Fix: Solved issue in Genotyper that caused a segmentation fault when using var_type BOTH.
+
+2016-07-25
+Release 201606.02
+Feature: Reduced memory utilization in GVCFtyper to reduce requirements for analyss of large (4000+) cohorts.
+Bug-Fix: Solved issue in TNsnv that created VCF files non-conforming to the standard.
+ 
+2016-07-15
+Release 201606.01
+Bug-Fix: Solved an issue that prevented licsrvr from serving licenses when the user group list is longer than 1000 characters.
+
+2016-06-31
+Release 201606
+Feature: Maintenance update of TNhaplotyper algorithm (still in β).
+Feature: Added support for RNAseq variant calling.
+Feature: Added online help.
+Feature: Added support for interval padding.
+Bug-Fix: Solved issue that produced no output in TNhaplotyper when using a PoN or no normal sample data.
+Bug-Fix: Solved issue preventing BED file with a header from being used.
+
+2016-05-31
+Release 201603.03
+Feature: Added method for inputting long list of VCF files to GVCFtyper .
+Feature: Added command line to VCF header.
+Feature: Added support for additional annotations on all variant callers.
+Bug-Fix: Solved issue producing an assertion error when too few variants are called.
+Bug-Fix: Solved issue reporting the wrong assembly in the VCF header when the FASTA file cannot be interpreted correctly.
+
+2016-04-29
+Release 201603.02
+Bug-Fix: Solved issue in TNhaplotyper that incorrectly filtered INDELs.
+Bug-Fix: Solved issue in TNsnv and TNhaplotyper that made the dbsnp a required argument.
+Bug-Fix: Solved issue that creates non-conforming vcf files when calling variants in locations where the REF base is M.
+
+2016-03-25
+Release 201603.01
+Feature: Speed improvement in the VQSR algorithm.
+Bug-Fix: Solved issue that caused VQSR to apply to the wrong type of variants when the variants had a prior LOD annotation.
+Bug-Fix: Solved issue that slowed down dedup optical duplicate calculation when the number of duplicates at one locus is too large.
+
+2016-03-11
+Release 201603
+Feature: Maintenance update of algorithms.
+Feature: Added TNseq-snv algorithm for Tumor-Normal and Tumor only somatic variant calling.
+Feature: Added support for CRAM files.
+Feature: Added support for Haploid and Polyploid samples.
+Bug-Fix: Solved issue that droped reads when the reads extended beyond the contig boundary.
+
+2016-02-12
+Release 201601.01
+Bug-Fix: Solved issue in GVCFtyper that produced the wrong variant quality on sites with AAF > 0.5 when using more than 50 samples.
+
+2016-01-31
+Release 201601
+Feature: Added support for using interval files only on the realign target creation portion of Realigner.
+Bug-Fix: Solved issue preventing license server from running in systems with an Infiniband interface.
+Bug-Fix: Solved issue when merging bam files that marks reads as unmapped when their mate is unmapped.
+Bug-Fix: Solved issue in Haplotyper in gvcf mode when intervals are used that causes missed variants when the first interval of a contig contains no variants.
+Bug-Fix: Solved issue in GVCFtyper to remove stray/empty SB annotations from the output VCF.
+Bug-Fix: Solved issue causing the corruption of the output VCF under rare conditions involving large number of samples.
+Bug-Fix: Solved issue that prevented using bam index files without the optional metadata pseudo bin.
+
+2015-12-17
+Release 2015011.01
+Bug-Fix: Solved issue in QualCal algorithm that slowed down execution when using bam files with large number of Read Groups.
+Bug-Fix: Solved issue in ReadWriter algorithm that produced an incorrect bam file when using a recalibration table and an input bam that had PGZ auxiliary data.
+Bug-Fix: Solved issue in VQSR algorithm that caused the execution to hang when using the results from joint calling of more than 20 samples.
+
+2015-11-30
+Release 201511
+Feature: Maintenance update of algorithms.
+Feature: Added depth metrics tool.
+Feature: Added pcr_indel_model flag to Haplotyper tool.
+Feature: Added phasing information to the output of Haplotyper.
+Feature: Added support for compressed vcf/gvcf input and output.
+Feature: Added support for picard style interval files.
+Feature: Added wrapper script to remove requirement of LD_LIBRARY_PATH environmental library.
+Bug-Fix: Added FILTER definition to the VQSR output file header.
+Bug-Fix: Solved issue that would cause an Out of Memory error in BQSR when using interval files.
+Bug-Fix: Solved issue that would cause a crash in IndelRealigner when the bam file has reads with supplementary alignment.
+
+2015-09-20
+Release 201509
+Feature: Reduced resource requirements, including reducing the required maximum number of open files in the system.
+Feature: Various improvements in error reporting.
+Bug-Fix: Solved issue that prevented using multiple bam files as input to algorithms that produced another bam file.
+Bug-Fix: Solved issue that prevented running BQSR when using Read Groups containing spaces.
+Bug-Fix: Solved issue in Haplotyper that could cause an incorrect variant quality score calculation in low coverage regions. The change could be up to 2% in the quality score, for 1 in 100000 variants.
+
+2015-09-02
+Release 201508.01
+Bug-Fix: Solved issue in Realign algorithm that may cause an error when using known sites.
+
+2015-08-31
+Release 201508
+Feature: Enhanced error reporting and error handling when dealing with inconsistent input data
+Feature: Packaged BWA 0.7.12, and removed non-official options for BWA interface. The results of the packaged BWA are identical to the official BWA 0.7.12
+Feature: Grouped the temporary files for VQSR plotting into a single file
+Feature: New license server for large clusters
+Bug-Fix: Solved error in Haplotype Caller when using gvcf emit mode for joint calling 
+Bug-Fix: Solved error in joint calling GVCFtyper that prevented using more than 20 samples
+
+2015-06-30
+Release 201506
+Feature: Added Hybrid Selection Analysis metrics
+Feature: Unified Genotyper default behavior is to call only SNP variants, to be consistent with GATK 3.3 default behavior 
+Bug-Fix: Alignment metrics properly reports unmapped reads when both mates in the pair are unmapped
+Alpha-Feature: Added initial support for joint variant calling of multiple samples that have ben previously processed individually
+
+2015-06-15
+Release 201505.02
+Feature: Speed improvement in Alignment stage
+Feature: Speed improvement in Dedup stage
+Feature: Added support for temporary bam files
+
+2015-06-09
+Release 201505.01
+Bug-Fix: Issue running VQSR in Mac platform
+
+2015-05-31
+Release 201505
+Feature: Speed improvement via AVX optimization
+Feature: Standarized option naming convention
+Feature: tmp folder moved to the same location as the job
+Feature: Added validation checks to input files
+Bug-fix: Solved run to run differences in BQSR when reads have quality scores of 0
+Bug-fix: BQSR applied twice when running variant calling using a recaled bam file
+
+
+2015-03-02
+1. add vqsr
+2. support IONTORRENT platform
+
+2015-01-16
+
+1. Bring the code to be compatible with GATK 3.3
+
+2. Add support for different variant emit modes:
+        --emit_mode=variant     Emit confident variants only (default)
+        --emit_mode=confident   Emit confident variants or reference
+        --emit_mode=all         Emit all sites
+   Applicable to both Genotyper and Haplotyper.
+
+3. Add the ability to generate graphical(pdf) outputs for various reports:
+     o  metrics
+        - MeanQualityByCycle
+        - QualDistribution
+        - GCBias
+     o  BQSR
+
+2014-12-18
+
+1, Add command line options to set calling or emitting confidence thresholds:
+        --algo Genotyper --emit_conf=10 --call_conf=30
+   Applicable to both Genotyper and Haplotyper.
+
+2, Add command line option to set minimum pruning factor in local assembly:
+        --algo Haplotyper --prune_factor=3
+   Applicable to Haplotyper.
+
+3, Add command line option to set chromosome region filters:
+        driver -c /path/to/filter.bed
+   This is a driver level option, therefore applicable to algos.
+
+4, Generate additional variant annotations. Here's the full list,
+        AC, AF, AN, DP, MLEAC, MLEAF, MQ, MQ0, QD, FS,
+        BaseQRankSum, ClippingRankSum, MQRankSum, ReadPosRankSum

@@ -1,0 +1,3 @@
+#initially run 11/22 however discovered bams were mapped with 10X reference.
+#Ran 12/8/16
+dx run -y GIAB:/Workflow/samtools_splitchrom_addrg_withchr -isorted_bam=/HG003/GRCh38/Illumina/Illumina_GRCh38_MatePair/HG003.sorted.bam -iindex_bai=/HG003/GRCh38/Illumina/Illumina_GRCh38_MatePair/HG003.sorted.bam.bai -iprefix=HG003_GRCh38_MatePair_bwa_mem_ -irgid=1 -irglb=MP -irgpl=illumina -irgpu=all -irgsm=HG003 --destination=/HG003/GRCh38/Illumina/Illumina_GRCh38_MatePair/ 

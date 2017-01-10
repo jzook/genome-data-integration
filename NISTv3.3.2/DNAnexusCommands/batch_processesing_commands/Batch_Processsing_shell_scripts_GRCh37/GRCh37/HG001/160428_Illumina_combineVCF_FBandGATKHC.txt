@@ -1,0 +1,17 @@
+#Combine individual vcf files from GATK into one vcf
+#Adjustments to options needed for each run:
+#directory where vcf files are located
+#set name of output file, -iprefix
+#set output directory, --destination
+vcf_inputs=""
+for l in `dx ls "GIAB:/NA12878/Illumina/GATKHC_output/*GATKHC.vcf.gz"`; do vcf_inputs="-ivcfs=/NA12878/Illumina/GATKHC_output/$l $vcf_inputs"; done
+dx run GIAB:/Workflow/vcf-combineallchrom $vcf_inputs -iprefix=HG001_ALLCHROM_hs37d5_novoalign_Ilmn150bp300X_GATKHC  --destination=/NA12878/Illumina/GATKHC_output/
+
+#Combine individual vcf files from FreeBayes into one vcf
+#Adjustments to options needed for each run:
+#directory where vcf files are located
+#set name of output file, -iprefix
+#set output directory, --destination
+vcf_inputs=""
+for l in `dx ls "GIAB:/NA12878/Illumina/FreeBayes_output/*FB.vcf.gz"`; do vcf_inputs="-ivcfs=/NA12878/Illumina/FreeBayes_output/$l $vcf_inputs"; done
+dx run GIAB:/Workflow/vcf-combineallchrom $vcf_inputs -iprefix=HG001_ALLCHROM_hs37d5_novoalign_Ilmn150bp300X_FB  --destination=/NA12878/Illumina/FreeBayes_output/

@@ -1,0 +1,20 @@
+### 10X ###
+#Combine 10X callable bed files for chromosomes 1-X into single bed file
+bed_inputs=""
+for l in `dx ls "GIAB:/NA12878/10XGenomics/Integration_prepare_10X_output/*_callable.bed"`; do bed_inputs="-ibeds=/NA12878/10XGenomics/Integration_prepare_10X_output/$l $bed_inputs"; done
+dx run GIAB:/Workflow/bed-combineallchrom $bed_inputs -iprefix=HG001_CHROM1-Y_10X_GATKHCbyhaplo_callable --destination=/NA12878/10XGenomics/Integration_prepare_10X_output/
+
+#Combine 10X callable vcf files for chromosomes 1-X into single vcf file
+vcf_inputs=""
+for l in `dx ls "GIAB:/NA12878/10XGenomics/Integration_prepare_10X_output/*.vcf.gz"`; do vcf_inputs="-ivcfs=/NA12878/10XGenomics/Integration_prepare_10X_output/$l $vcf_inputs"; done
+dx run GIAB:/Workflow/vcf-combineallchrom $vcf_inputs -iprefix=HG001_CHROM1-Y_10X_GATKHCbyhaplo --destination=/NA12878/10XGenomics/Integration_prepare_10X_output/
+
+### Illumina ###
+#Combine Illumina 150x150 callable bed files for ALL chromosomes into single bed file, Illumina GATKCHC and FB vcfs previously combined
+bed_inputs=""
+for l in `dx ls "GIAB:/NA12878/Illumina/Integration_prepare_GATKHC_v.3.3/*_callable.bed"`; do bed_inputs="-ibeds=GIAB:/NA12878/Illumina/Integration_prepare_GATKHC_v.3.3/$l $bed_inputs"; done
+dx run GIAB:/Workflow/bed-combineallchrom $bed_inputs -iprefix=HG001_CHROM1-X_novoalign_Ilmn150bp300X_GATKHC_gvcf_callable --destination=GIAB:/NA12878/Illumina/Integration_prepare_GATKHC_v.3.3/
+
+### Run from GUI ###
+ION BED and VCF combine:  HG001_CHROM1-X_TSVC_variants_defaultlowsetting_callable --destination=GIAB:/NA12878/Ion_Torrent/Integration_prepare_ion_output
+CG BED and VCF combine: HG001_CHROM1-X_vcfBeta-GS000025639-ASM

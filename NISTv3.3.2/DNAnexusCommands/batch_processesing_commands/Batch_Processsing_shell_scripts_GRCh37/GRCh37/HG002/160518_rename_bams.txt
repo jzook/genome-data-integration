@@ -1,0 +1,17 @@
+#Rename bams and bai
+
+#ION
+GIAB:/HG002/IonExome/HG002_hs37d5_IonExome.1.bam
+GIAB:/HG002/IonExome/HG002_hs37d5_IonExome.1.bam.bai
+
+#SOLID
+GIAB:/HG002/SOLID/HGOO2_hg19_solid5500_SE75bp.1.bam
+GIAB:/HG002/SOLID/HGOO2_hg19_solid5500_SE75bp.1.bam.bai
+
+for file in `dx ls GIAB:/HG002/SOLID/*.txt`; do dx mv "${file}" "${file/5500W_HG002_merged.b37/HGOO2_hg19_solid5500_SE75bp}"; done
+5500W_HG002_merged.b37.Y.bam
+
+for file in `dx ls GIAB:/HG002/Ion_Exome/*.txt`; do dx mv "${file}" "${file/HG002_NA24385_SRR1767407_IonXpress_020_rawlib_24030/HG002_hs37d5_IonExome}"; done
+HG002_NA24385_SRR1767407_IonXpress_020_rawlib_24030.1.bam
+
+for file in `dx ls GIAB:/HG002/IonExome/test/*.bam`; do dx mv "${file}" "${file/HG002_NA24385_SRR1767407_IonXpress_020_rawlib_24030/HG002_hs37d5_IonExome}"; done

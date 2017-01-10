@@ -1,0 +1,5 @@
+#Combine Illumina bed files for all chromosomes into single bed file
+
+bed_inputs=""
+for l in `dx ls "GIAB:/NA12878/Illumina/CallableLoci_output/*.bed"`; do bed_inputs="-ibeds=/NA12878/Illumina/CallableLoci_output/$l $bed_inputs"; done
+dx run GIAB:/Workflow/bed-combineallchrom $bed_inputs -iprefix=HG001_ALLCHROM_hs37d5_novoalign_Ilmn150bp300X_callableloci --destination=/NA12878/Illumina/CallableLoci_output/
