@@ -1,0 +1,252 @@
+{
+  "name": "nist-integration-v3.3.2-anyref",
+  "title": "nist-integration-v3.3.2-anyref",
+  "dxapi": "1.0.0",
+  "inputSpec": [
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "VCFs",
+      "help": "Two or more gzipped VCFs for integration, which must be specified in Callset_Table txt file",
+      "name": "vcfs",
+      "class": "array:file"
+    },
+    {
+      "patterns": [
+        "*.bed"
+      ],
+      "label": "BEDs",
+      "help": "Two or more BED files describing not callable regions for integration, which must be specified in Callset_Table txt file",
+      "name": "beds",
+      "class": "array:file"
+    },
+    {
+      "patterns": [
+        "*.bed",
+        "*.bed.gz"
+      ],
+      "label": "BEDs",
+      "help": "One or more BED files describing regions to be excluded from one or more callset's callable regions, which must be specified as column names at the end of the Callset_Table txt file",
+      "name": "filtbeds",
+      "class": "array:file"
+    },
+    {
+      "patterns": [
+        "*.txt"
+      ],
+      "label": "Annotation Files",
+      "help": "Annotations to use from each callset for the one-class filtering model used for integration, which must be specified in Callset_Table txt file",
+      "name": "annotations",
+      "class": "array:file"
+    },
+    {
+      "patterns": [
+        "*.txt"
+      ],
+      "label": "Callset_Table",
+      "help": "Tab-delimited text file containing columns Platform, Dataset, Callset, vcfAll, callableBed, and annotationsFile.",
+      "name": "callsettable",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.tar.gz"
+      ],
+      "label": "Reference tar.gz with genome.fa,genome.fa.fai, and genome.dict",
+      "help": "Reference genome fasta, index, and dict in tar.gz",
+      "name": "ref",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.tar.gz"
+      ],
+      "label": "RTG Reference sdf tar.gz with rtgsdf subdir",
+      "help": "RTG Reference genome sdf in tar.gz with rtgsdf subdir",
+      "name": "rtgsdf",
+      "class": "file"
+    },
+    {
+      "label": "Chromosome (enter chromosome number for a specific chromosome, 'all' for all chromosomes, or 'allbutY' for all female chromosomes)",
+      "help": "The chromosome to output vcf and bed files for (enter chromosome number for a specific chromosome, 'all' for all chromosomes, or 'allbutY' for all female chromosomes).",
+      "name": "chrom",
+      "class": "string"
+    },
+    {
+      "label": "Reference N bed file",
+      "help": "Bed file describing regions with N in reference.",
+      "name": "refn",
+      "class": "file"
+    },
+    {
+      "label": "Output prefix",
+      "help": "The prefix to use when naming the output files (they will be called prefix_xxx.vcf.gz, prefix_xxx.vcf.gz.tbi, prefix_xxx.bed).",
+      "name": "prefix",
+      "class": "string"
+    }
+  ],
+  "outputSpec": [
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "All Integrated Variants before filtering arbitration",
+      "help": "All integrated variants before filtering arbitration, including uncertain variants as filtered rows.",
+      "name": "vcfallnofiltgz",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "All Integrated Variants before filtering arbitration index",
+      "help": "Index for All integrated variants before filtering arbitration, including uncertain variants as filtered rows",
+      "name": "vcfallnofilttbi",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "All Variants Annotated with beds",
+      "help": "All variants with genotypes from each callset and annotated with bed files.",
+      "name": "vcfanngz",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "All Integrated Annotated with beds index",
+      "help": "Index for All variants with genotypes from each callset and annotated with bed files",
+      "name": "vcfanntbi",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "All Integrated Variants",
+      "help": "All integrated variants, including uncertain variants as filtered rows.",
+      "name": "vcfallgz",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "All Integrated Variants index",
+      "help": "Index for All integrated variants, including uncertain variants as filtered rows",
+      "name": "vcfalltbi",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "High-confidence Integrated Variants",
+      "help": "High-confidence integrated variants.",
+      "name": "vcfhighconfgz",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "High-confidence Integrated Variants index",
+      "help": "Index for High-confidence integrated variants",
+      "name": "vcfhighconftbi",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "label": "High-confidence Integrated Variants in 2 technologies",
+      "help": "High-confidence integrated variants in 2 technologies.",
+      "name": "vcfhighconf2techgz",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "label": "High-confidence Integrated Variants in 2 technologies index",
+      "help": "Index for High-confidence integrated variants in 2 technologies",
+      "name": "vcfhighconf2techtbi",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bed"
+      ],
+      "label": "High-confidence BED 1 tech",
+      "help": "High-confidence BED file with at least 1 technology callable",
+      "name": "bed1",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bed"
+      ],
+      "label": "High-confidence BED 2 tech",
+      "help": "High-confidence BED file with at least 2 technologies callable",
+      "name": "bed2",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bed"
+      ],
+      "label": "BED Callable 1 tech",
+      "help": "BED file with at least 1 technology callable",
+      "name": "bedcallablegt0",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bed"
+      ],
+      "label": "BED callable",
+      "help": "BED file listing number of technologies callable",
+      "name": "bedcallableall",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.bed"
+      ],
+      "label": "Filtered sites BED",
+      "help": "BED file with 50bp regions around not-high-confidence sites",
+      "name": "bedfilteredsites",
+      "class": "file"
+    },
+    {
+      "patterns": [
+        "*.tar.gz"
+      ],
+      "label": "Individual callset Filtered sites BEDs",
+      "help": "All individual callsets' BED files with 50bp regions around not-high-confidence sites",
+      "name": "bedindivfilteredsites",
+      "class": "file"
+    }
+  ],
+  "runSpec": {
+    "execDepends": [
+      {
+        "name": "bedtools"
+      },
+      {
+        "name": "openjdk-7-jre-headless"
+      }
+    ],
+    "systemRequirements": {
+      "main": {
+        "instanceType": "mem2_hdd2_x1"
+      }
+    },
+    "file": "src/code.sh",
+    "interpreter": "bash"
+  }
+}
