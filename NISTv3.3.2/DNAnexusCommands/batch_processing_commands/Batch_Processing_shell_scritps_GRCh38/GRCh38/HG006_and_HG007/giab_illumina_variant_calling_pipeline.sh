@@ -44,7 +44,7 @@ while [ "$1" != "" ]; do
         # -h | --help )       usage
         #                     exit
         #                     ;;
-        * )                 OTHER=$1 #usage
+        * )                 echo "Check Parameters" #usage
                             exit 1
     esac
     shift
@@ -66,7 +66,7 @@ for i in 1 2 3;
       -iurlbam=${BAMURL} -iurlbai=${BAIURL} \
       -iprefix=${PREFIX} \
       -irgid=1 -irglb=all -irgpl=illumina -irgpu=all -irgsm=${HG} \
-      --destination=${OUTDIR} \
+      --destination=${ROOTDIR} \
       --instance-type=mem2_hdd2_x4)
       IMPORTJOBIDS+=([${i}]=${JOBID})
 done
@@ -76,11 +76,17 @@ done
 for i in {1..22} MT X Y;
   do
     CHROM=chr${i}
+
+    ### For chrom MT
+    if [[ ${i} =~ MT ]]; then
+      CHROM=chrM
+    fi
+
     PREFIX=${HG}_${i}_${REFID}_${MAPPER}_${DATASETID}
 
     ## define BAMJOBID by chromosome
     if [[ ${i} =~ [MTXY] ]]; then
-        BAMJOBID=${IMPORTJOBIDS[3]}
+      BAMJOBID=${IMPORTJOBIDS[3]}
     elif [ ${i} -le 5 ]; then
       BAMJOBID=${IMPORTJOBIDS[1]}
     elif [ ${i} -gt 5 ] && [ ${i} -le 12 ]; then
@@ -89,8 +95,7 @@ for i in {1..22} MT X Y;
       BAMJOBID=${IMPORTJOBIDS[3]}
     fi
 
-    echo ${CHROM}
-    echo ${BAMJOBID}
+
     ## Freebayes variant calling
     dx run -y --depends-on ${BAMJOBID} \
       freebayes \
@@ -100,7 +105,7 @@ for i in {1..22} MT X Y;
       -istandard_filters=FALSE \
       -iadvanced_options="-F 0.05 -m 0" \
       -igenome_fastagz=${GENOME} \
-      --destination=${OUTDIR}/FreeBayes_output/
+      --destination=${ROOTDIR}/FreeBayes_output/
 
     ## Callable Loci
     dx run -y --depends-on ${BAMJOBID} \
@@ -110,10 +115,10 @@ for i in {1..22} MT X Y;
       -ioutput_prefix=${PREFIX}_callableloci \
       -iref=${REF} \
       -iextra_options="-L ${CHROM} -minDepth 20 -mmq 20 -maxDepth 566" \
-      --destination=${OUTDIR}/CallableLoci_output/
+      --destination=${ROOTDIR}/CallableLoci_output/
 
     ## Sentieon
-    JOBID=$(dx run -y --brief --depends-on ${BAMJOBID} \
+    JOBIDSNT=$(dx run -y --brief --depends-on ${BAMJOBID} \
       GIAB:sentieon-haplotyper-gvcf-reheadunsorted \
       -isorted_bam=${BAMJOBID}:bam${i} \
       -isorted_bai=${BAMJOBID}:bai${i}\
@@ -123,28 +128,32 @@ for i in {1..22} MT X Y;
       -iextra_driver_options="--interval ${CHROM}" \
       -iextra_algo_options="--call_conf 2 --emit_conf 2" \
       -ilicense_server_file=/Workflow/sentieon_license_server.info \
-      --destination=${OUTDIR}/Sentieon_output/)
+      --destination=${ROOTDIR}/Sentieon_output/)
 
       ## Post processing Sentieon variant calls
-      VCF=${JOBID}:gvcfgz
-      VCFIDX=${JOBID}:tbi
+      VCF=${JOBIDSNT}:gvcfgz
+      VCFIDX=${JOBIDSNT}:tbi
 
       ## GATK genotype gcvf
-      dx run -y --depends-on ${JOBID} \
+      dx run -y --depends-on ${JOBIDSNT} \
         GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5-anyref \
         -ivcfs=${VCF} \
         -ivcfs=${VCFIDX} \
         -iprefix=${PREFIX}_sentieonHC \
         -iref=${REF} \
-        --destination=${OUTPUT}/Sentieon_output/
+        --destination=${ROOTDIR}/Sentieon_output/
 
 
       ## Integration prep
-      dx run -y --depends-on ${JOBID} \
+      dx run -y --depends-on ${JOBIDSNT} \
         GIAB:/Workflow/integration-prepare-gatkhc-v3.3.2-anyref \
         -igvcf=${VCF} \
         -igvcftbi=${VCFIDX} \
         -iref=${REF} \
         -ichrom=${CHROM} \
-        --destination=${OUTDIR}/Integration_prepare_sentieon_v.3.3.2/
+        --destination=${ROOTDIR}/Integration_prepare_sentieon_v.3.3.2/
+
+    ## Cleanup - remove chromosome bams after variant calling finishes
+    # dx wait ${JOBIDFB} ${JOBINCL} ${JOBIDSNT} && \
+    #   dx rm ${BAMJOBID}:bam${i} ${BAMJOBID}:bai${i}
 done
