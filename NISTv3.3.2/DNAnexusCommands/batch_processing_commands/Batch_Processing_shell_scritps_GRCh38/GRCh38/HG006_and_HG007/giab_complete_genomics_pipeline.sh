@@ -4,11 +4,7 @@
 ### Setting default parameter values
 PLATFORM="Complete_Genomics"
 REFID="GRCh37"
-
-## Reference genomes
-QUERYREF=NEEDTODEFINE #/Volumes/Boron/reference\ files/ucsc.hg19.fasta
-TARGETREF=NEEDTODEFINE #/Volumes/Boron/reference\ files/GCA_000001405.15_GRCh38_no_alt_plus_hs38d1_analysis_set.fna
-LIFEOVERCHAIN=NEEDTODEFINE #/Users/jmcdani/Documents/GiaB/GiAB_informatics_work/Liftover-GRCh37toGRCh38/hg19ToHg38.over.chain
+WORKDIR="."
 
 ## Command Line Arguments
 # usage()
@@ -21,9 +17,6 @@ while [ "$1" != "" ]; do
         --hg )              shift
                             HG=$1
                             ;;
-        --dataset )         shift
-                            DATASETID=$1
-                            ;;
         --vcfurl )          shift
                             VCFURL=$1
                             ;;
@@ -32,11 +25,17 @@ while [ "$1" != "" ]; do
         --refid )           shift
                             REFID=$1
                             ;;
-        --genome )          shift
-                            GENOME=$1
+        --liftover )        shift
+                            LIFEOVERCHAIN=$1
                             ;;
-        --ref )             shift
-                            REF=$1
+        --queryref )        shift
+                            QUERYREF=$1
+                            ;;
+        --targetref )       shift
+                            TARGETREF=$1
+                            ;;
+        --genomewarp )      shift
+                            GENOMEWARP=$1
                             ;;
         # -h | --help )       usage
         #                     exit
@@ -165,7 +164,7 @@ for i in {1..22} X Y;
 
 
     #liftover (note: fasta's cannot be zipped)
-    java -jar -Xmx10g verilylifesciences-genomewarp-1.0.0-runnable.jar \
+    java -jar -Xmx10g ${GENOMEWARP}/verilylifesciences-genomewarp-1.0.0-runnable.jar \
       --lift_over_chain_path ${LIFTOVERCHAIN} \
       --raw_query_vcf GRCh37_chr${i}.vcf \
       --raw_query_bed GRCh37_chr${i}.bed \
