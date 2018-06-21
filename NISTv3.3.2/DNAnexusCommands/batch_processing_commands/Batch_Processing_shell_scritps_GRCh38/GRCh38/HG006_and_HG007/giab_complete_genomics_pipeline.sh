@@ -50,14 +50,17 @@ done
 
 ## Defining parameters
 ROOTDIR=${HG}/${REFID}/${PLATFORM}
-INPUTVCF=${ROOTDIR}/${CGVCF}
+INPUTVCF=${ROOTDIR}/${CGVCF}.vcf.bz2
 
 ################################################################################
 ############## Upload data to DNAnexus
+dx mkdir -p ${ROOTDIR} 
 
-UPLOADJOBID=$(dx run -y url_fetcher -iurl=${VCFURL})
+UPLOADJOBID=$(dx run -y --brief url_fetcher -iurl=${VCFURL})
 
-MOVEJOBID=$(dx wait ${UPLOADJOBID} && dx mv ${UPLOADJOBID}:file ${INPUTVCF})
+
+dx wait ${UPLOADJOBID} && dx mv GIAB:/${CGVCF}.vcf.bz2 GIAB:/${INPUTVCF}
+
 ################################################################################
 ############## run integration prepare CG
 
@@ -65,8 +68,7 @@ MOVEJOBID=$(dx wait ${UPLOADJOBID} && dx mv ${UPLOADJOBID}:file ${INPUTVCF})
 declare -a PREPJOBIDS
 for i in {1..22} X Y;
   do
-    JOBID=$(dx wait ${UPLOADJOBID} && \
-      dx run -y \
+    JOBID=$(dx run -y --brief \
         GIAB:/Workflow/integration-prepare-cg \
         -ivcf_in=${INPUTVCF} \
         -ichrom=${i} \
@@ -85,52 +87,49 @@ for i in ${PREPJOBIDS[@]};
   do
     DEPENDIDS="${DEPENDIDS} --depends-on  ${i}"
     CHROMVCFS="${CHROMVCFS} -ivcfs=${i}:outvcfgz"
-    CHROMBEDS="${CHROMBEDS} -ibeds==${i}:outcallablebed"
+    CHROMBEDS="${CHROMBEDS} -ibeds=${i}:outcallablebed"
   done
 
-echo ${DEPENDIDS}
-echo ${CHROMVCFS}
-echo #{CHROMBEDS}
 ## Output prefix
 COMBINEDPREFIX=${HG}_GRCh37_CHROM1-Y_${CGVCF}
 
 ############## combine GCRh37 vcfs
 
-COMBINEDVCFJOBID=$(dx run -y ${DEPENDIDS} \
+COMBINEDVCFJOBID=$(dx run -y --brief ${DEPENDIDS} \
   Workflow/vcf-combineallchrom \
   ${CHROMVCFS} \
   -iprefix=${COMBINEDPREFIX})
 
 
 ############## combine GCRh37 beds
-COMBINDBEDJOBID=$(dx run -y ${DEPENDIDS} \
+COMBINDBEDJOBID=$(dx run -y --brief ${DEPENDIDS} \
   Workflow/bed-combineallchrom \
-  ${CHROMCALLABLEBEDS} \
+  ${CHROMBEDS} \
   -iprefix=${COMBINEDPREFIX})
 
 
 
-################################################################################
-############## Liftover uses verily genomewarp - Offline
+# ################################################################################
+# ############## Liftover uses verily genomewarp - Offline
 
-############## Liftover variables
-GRCh37ROOT=${HG}_GRCh37_${CGVCF}
+# ############## Liftover variables
+# GRCh37ROOT=${HG}_GRCh37_${CGVCF}
 
-# VCF
-GRCh37VCF=${GRCh37ROOT}.vcf
-GRCh37HEADER=${GRCh37ROOT}_header.vcf
-GRCh37NOHEADER=${GRCh37ROOT}_NOheader.vcf
-GRCh37NOHEADERCHROMFIX=${GRCh37ROOT}_NOheader_CHROMfixed.vcf
-GRCH37VCFCHROMFIX=${GRCh37ROOT}_CHROMfixed.vcf
+# # VCF
+# GRCh37VCF=${GRCh37ROOT}.vcf
+# GRCh37HEADER=${GRCh37ROOT}_header.vcf
+# GRCh37NOHEADER=${GRCh37ROOT}_NOheader.vcf
+# GRCh37NOHEADERCHROMFIX=${GRCh37ROOT}_NOheader_CHROMfixed.vcf
+# GRCH37VCFCHROMFIX=${GRCh37ROOT}_CHROMfixed.vcf
 
-# BED
-GRCh37BED=${GRCh37ROOT}_callable.bed
-GRCh37BEDCHROMFIX=${GRCh37ROOT}_callable_CHROMfixed.bed
+# # BED
+# GRCh37BED=${GRCh37ROOT}_callable.bed
+# GRCh37BEDCHROMFIX=${GRCh37ROOT}_callable_CHROMfixed.bed
 
 
-############## Download VCF
-dx wait ${COMBINEDVCFJOBID} && dx download -o ${GRCh37VCF} ${COMBINEDVCF}
-dx wait ${COMBINEDBEDJOBID} && dx download -o ${GRCh37BED} ${COMBINEDBED}
+# ############## Download VCF
+# dx wait ${COMBINEDVCFJOBID} && dx download -o ${GRCh37VCF} ${COMBINEDVCF}
+# dx wait ${COMBINEDBEDJOBID} && dx download -o ${GRCh37BED} ${COMBINEDBED}
 
 
 
