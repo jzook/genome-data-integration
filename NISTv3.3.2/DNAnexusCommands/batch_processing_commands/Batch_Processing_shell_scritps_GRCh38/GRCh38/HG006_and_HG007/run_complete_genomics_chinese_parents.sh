@@ -15,7 +15,7 @@ bash giab_complete_genomics_pipeline.sh \
     --liftover ${LIFTOVERCHAIN} \
     --queryref ${QUERYREF} \
     --targetref ${TARGETREF} \
-    --genomewarp ${GENOMEWAPR}
+    --genomewarp ${GENOMEWARP}
 
 ## HG007 Mother
 # bash giab_complete_genomics_pipeline.sh \
