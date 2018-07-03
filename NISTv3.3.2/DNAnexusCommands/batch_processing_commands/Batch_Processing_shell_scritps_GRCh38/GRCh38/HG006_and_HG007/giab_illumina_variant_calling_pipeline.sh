@@ -3,11 +3,8 @@
 
 ### Setting default parameter values
 PLATFORM="Illumina"
-REFID="GRCh38"
 MAPPER="novoalign"
-GENOME=/assets/GCA_000001405.15_GRCh38_no_alt_plus_hs38d1_analysis_set.fa.gz
-GENOMEIDX=/assets/GCA_000001405.15_GRCh38_no_alt_plus_hs38d1_analysis_set.fa.fai
-REF=/assets/GRCh38hs38d1noalt.fasta-index.tar.gz
+
 
 ## Command Line Arguments
 # usage()
@@ -38,13 +35,16 @@ while [ "$1" != "" ]; do
         --genome )          shift
                             GENOME=$1
                             ;;
+        --genomeidx )       shift
+                            GENOMEIDX=$1
+                            ;;
         --ref )             shift
                             REF=$1
                             ;;
         # -h | --help )       usage
         #                     exit
         #                     ;;
-        * )                 echo "Check Parameters" #usage
+        * )                 echo "Check Parameters: $1" #usage
                             exit 1
     esac
     shift
@@ -53,39 +53,82 @@ done
 ## Defining parameters
 ROOTDIR=${HG}/${REFID}/${PLATFORM}/${PLATFORM}_${REFID}_${DATASETID}
 
-## Download bam and split by chromosome
-CHROMSPLITS=([1]="1to5" [2]="6to12" [3]="13toMT")
+if [ ${REFID} = "GRCh37" ]; then
+  GENOME=/assets/hs37d5.fa.gz
+  GENOMEIDX=/assets/hs37d5.fa.fai
+  REF=/assets/hs37d5.fasta-index.tar.gz
+elif [ ${REFID} = "GRCh38" ]; then
+  GENOME=/assets/GCA_000001405.15_GRCh38_no_alt_plus_hs38d1_analysis_set.fa.gz
+  GENOMEIDX=/assets/GCA_000001405.15_GRCh38_no_alt_plus_hs38d1_analysis_set.fa.fai
+  REF=/assets/GRCh38hs38d1noalt.fasta-index.tar.gz
+else
+  echo "--refid must be GRCh37 or GRCh38"
+fi
 
-## Use array for saving jobids
-declare -a IMPORTJOBIDS
-for i in 1 2 3;
-  do
-    PREFIX=${HG}_${REFID}_${DATASETID}_${MAPPER}
-    JOBID=$(dx run -y --brief \
-      GIAB:/Workflow/samtools_import_splitchrom_addrg_${CHROMSPLITS[${i}]}_withchr \
-      -iurlbam=${BAMURL} -iurlbai=${BAIURL} \
-      -iprefix=${PREFIX} \
-      -irgid=1 -irglb=all -irgpl=illumina -irgpu=all -irgsm=${HG} \
-      --destination=${ROOTDIR} \
-      --instance-type=mem2_hdd2_x4)
-      IMPORTJOBIDS+=([${i}]=${JOBID})
-done
 
+## Output file prefix
+PREFIX=${HG}_${REFID}_${DATASETID}_${MAPPER}
+
+if [[ ${REFID} = "GRCh37" && ${DATASETID} = "6Kb_MatePair"  ]]; then
+
+  IMPORTJOBID=$(dx run -y --brief \
+    GIAB:/Workflow/samtools_import_reheader_splitchrom_addrg_reord \
+    -iurlbam=${BAMURL} \
+    -iurlbai=${BAIURL} \
+    -iprefix=${PREFIX} \
+    -irgid=1 -irglb=all -irgpl=illumina -irgpu=all -irgsm=${HG} \
+    --destination=${ROOTDIR})
+else
+  ## Download bam and split by chromosome
+  CHROMSPLITS=([1]="1to5" [2]="6to12" [3]="13toMT")
+
+  ## Use array for saving jobids
+  declare -a IMPORTJOBIDS
+  for i in 1; #2 3;
+    do
+      CHR="_withchr"
+      if [ ${REFID} = "GRCh37" ]; then
+        CHR=""
+      fi
+      echo ${CHR}
+
+      JOBID=$(dx run -y --brief \
+        GIAB:/Workflow/samtools_import_splitchrom_addrg_${CHROMSPLITS[${i}]}${CHR} \
+        -iurlbam=${BAMURL} -iurlbai=${BAIURL} \
+        -iprefix=${PREFIX} \
+        -irgid=1 -irglb=all -irgpl=illumina -irgpu=all -irgsm=${HG} \
+        --destination=${ROOTDIR} \
+        --instance-type=mem2_hdd2_x4)
+        IMPORTJOBIDS+=([${i}]=${JOBID})
+  done
+fi
 
 ## Variant calling run after split chrom finishes
-for i in {1..22} MT X Y;
+for i in {1..5}; # {1..22} MT X Y;
   do
-    CHROM=chr${i}
 
-    ### For chrom MT
-    if [[ ${i} =~ MT ]]; then
-      CHROM=chrM
+    if [ ${REFID} = "GRCh37" ]; then
+      CHROM=${i}
+    elif [ ${REFID} = "GRCh38" ]; then
+      CHROM=chr${i}
+
+      ### For chrom MT
+      if [[ ${i} =~ MT ]]; then
+        CHROM=chrM
+      fi
+
+    else
+      echo "--refid must be GRCh37 or GRCh38"
     fi
+
+
 
     PREFIX=${HG}_${i}_${REFID}_${MAPPER}_${DATASETID}
 
-    ## define BAMJOBID by chromosome
-    if [[ ${i} =~ [MTXY] ]]; then
+    ## define BAMJOBID by chromosome and dataset
+    if [[ ${REFID} = "GRCh37" && ${DATASETID} = "6Kb_MatePair"  ]]; then
+      BAMJOBID=${IMPORTJOBID}
+    elif [[ ${i} =~ [MTXY] ]]; then
       BAMJOBID=${IMPORTJOBIDS[3]}
     elif [ ${i} -le 5 ]; then
       BAMJOBID=${IMPORTJOBIDS[1]}
@@ -97,6 +140,7 @@ for i in {1..22} MT X Y;
 
 
     ## Freebayes variant calling
+    # Not sure if -itargets_bed is for 37 and 38
     dx run -y --depends-on ${BAMJOBID} \
       freebayes \
       -isorted_bams=${BAMJOBID}:bam${i} \
@@ -105,7 +149,9 @@ for i in {1..22} MT X Y;
       -istandard_filters=FALSE \
       -iadvanced_options="-F 0.05 -m 0" \
       -igenome_fastagz=${GENOME} \
+      -itargets_bed="GIAB:/Workflow/Chromosome_bed_files/${i}.bed" \
       --destination=${ROOTDIR}/FreeBayes_output/
+
 
     ## Callable Loci
     dx run -y --depends-on ${BAMJOBID} \
@@ -116,6 +162,7 @@ for i in {1..22} MT X Y;
       -iref=${REF} \
       -iextra_options="-L ${CHROM} -minDepth 20 -mmq 20 -maxDepth 566" \
       --destination=${ROOTDIR}/CallableLoci_output/
+
 
     ## Sentieon
     JOBIDSNT=$(dx run -y --brief --depends-on ${BAMJOBID} \
