@@ -1,13 +1,9 @@
 #!/usr/bin/bash
 ## Script for running GIAB variant calling pipeline on 10X data
-
+set -v
 
 ### Setting default parameter values
 PLATFORM=10XGenomics
-GENOME=/assets/GRCh38_10X_2.1.0.fa.gz
-GENOMEIDX=/assets/GRCh38_10X_2.1.0.fa.fai
-REF=/assets/GRCh38hs38d1noalt.fasta-index.tar.gz
-
 
 ## Command Line Arguments
 # usage()
@@ -38,6 +34,8 @@ while [ "$1" != "" ]; do
         --rmsg )            shift
                             RGSM=$1
                             ;;
+        --hasY )            HASY=TRUE
+                            ;;
         # -h | --help )       usage
         #                     exit
         #                     ;;
@@ -51,92 +49,126 @@ done
 ## Defining variables
 ROOTDIR=${HG}/${REFID}/${PLATFORM}/
 
+if [ ${REFID} = "GRCh37" ]; then
+  GENOME=/assets/hg19_10X_2.1.0.fa.gz
+  GENOMEIDX=/assets/hg19_10X_2.1.0.fa.fai
+  REF=/assets/hg19_10X_2.1.0.fasta-index.tar.gz
+elif [ ${REFID} = "GRCh38" ]; then
+  GENOME=/assets/GRCh38_10X_2.1.0.fa.gz
+  GENOMEIDX=/assets/GRCh38_10X_2.1.0.fa.fai
+  REF=/assets/GRCh38hs38d1noalt.fasta-index.tar.gz
+else
+  echo "--refid must be GRCh37 or GRCh38"
+fi
 
-## Download bam
-BAM=${HG}_${REFID}_10X.bam
-wget ${BAMURL} -o ${BAM}
 
-## split haplotypes (done locally)
-HP1BAM=${HG}_${REFID}_10X_HP1
-HP2BAM=${HG}_${REFID}_10X_HP2
-HP1BAI=${HG}_${REFID}_10X_HP1.bai
-HP2BAI=${HG}_${REFID}_10X_HP2.bai
 
-bamtools filter -in ${BAM} -out ${HP2BAM} -tag HP:1
-bamtools filter -in ${BAM} -out ${HP2BAM} -tag HP:2
+################################################################################
+############## Upload data to DNAnexus
+dx mkdir -p ${ROOTDIR}
+UPLOADJOBID=$(dx run -y --brief --destination ${ROOTDIR} url_fetcher -iurl=${BAMURL})
 
-## Upload HP1 and HP1
-UPLOADJOBID=$(dx upload --destination ${ROOTDIR} \
-                  ${HP1BAM} ${HP2BAM} ${HP1BAI} ${HP2BAI})
+
+################################################################################
+############## split haplotypes
+BAMPREFIX=${HG}_${REFID}_10X
+HAPSPLITJOBID=$(dx run -y --brief --depends-on ${UPLOADJOBID} \
+  /Workflow/split_bam_haplotype \
+  -ibam=${UPLOADJOBID}:file \
+  -iprefix=${BAMPREFIX} \
+  --destination=${ROOTDIR})
+
+
+################################################################################
+############## split by chromsome
 
 ## Use array for saving jobids
 declare -a SPLITJOBIDS
 for i in 1 2;
   do
+    ## Sort and index Haplotype bam
+    SORTID=$(dx run -y --brief --depends-on ${HAPSPLITJOBID} \
+      samtools_sort \
+      -imappings_bam=${HAPSPLITJOBID}:HP${i}\
+      --destination=${ROOTDIR})
 
+    IDXID=$(dx run -y --brief --depends-on ${SORTID} \
+      samtools_index \
+      -isorted_bam=${SORTID}:sorted_bam \
+      --destination=${ROOTDIR})
 
-    ## Split bam by chromosome
+    ## Split haplotype bam by chromosome - not working
     JOBID=$(dx run -y --brief \
-      GIAB:/Workflow/samtools_reheader_splitchrom_addrg_reord \
-      -isorted_bam=${ROOTDIR}/${BAMPREFIX}_${i}.bam \
-      -iindex_bai=${ROOTDIR}/${BAMPREFIX}_${i}.bam.bai \
-      -irgid=HP1 -irglb=10X -irgpl=illumina -irgpu=all -irgsm=${RGSM} \
+      --depends-on ${SORTID} --depends-on ${IDXID}\
+      GIAB:/Workflow/samtools_splitchrom_addrg_withchr \
+      -isorted_bam=${SORTID}:sorted_bam \
+      -iindex_bai=${IDXID}:index_bai \
+      -iprefix=${BAMPREFIX}_HP${i}_ \
+      -irgid=HP${i} -irglb=10X -irgpl=illumina -irgpu=all -irgsm=${RGSM} \
       --destination=${ROOTDIR} \
       --instance-type=mem2_hdd2_x1 )
-      SPLITJOBIDS+=([${i}]=${JOBID})
+    SPLITJOBIDS+=([${i}]=${JOBID})
+
 done
 
+################################################################################
+############## Variant calling and integration
 
-## Convert loop to loop over chroms then haplotypes
-## Use X Y chrom flag to prevent Y Chrom issues for mother
-## variant calling sentieon on individual chroms
-for i in {1..22} X Y;
+# Use X Y chrom flag to prevent Y Chrom issues for mother
+CHROMARRAY=( {1..22} X )
+if [[ ${HASY} = true ]]; then
+    CHROMARRAY+=(Y)
+fi
+
+
+for i in 20; # ${CHROMARRAY[@]};
   do
     declare -a JOBIDSSNT
     declare -a JOBIDSCL
     ## Variant calling for individual haplotypes
     for j in 1 2;
-    ## variables
-    PREFIX=${HG}_${j}_10X_HP${i}
+      do
+        ## variables
+        PREFIX=${HG}_${j}_10X_HP${i}
 
-    JOBID=$(dx run -y --brief --depends-on ${SPLITJOBID[${j}]} \
-      GIAB:sentieon-haplotyper-gvcf \
-      -isorted_bam=${SPLITJOBID[${j}]}:bam${i} \
-      -isorted_bai=${SPLITJOBID[${j}]}:bai${i}\
-      -ioutput_prefix=${PREFIX}_sentieonHC_gvcf  \
-      -igenome_fasta=${GENOME} \
-      -igenome_fastaindex=${GENOMEIDX} \
-      -iextra_driver_options="--interval chr${i}" \
-      -iextra_algo_options="--call_conf 2 --emit_conf 2" \
-      -ilicense_server_file=/Workflow/sentieon_license_server.info \
-      --destination=${ROOTDIR}/Sentieon_output/)
-      JOBIDSSNT+=([${j}]=${JOBID})
+        JOBID=$(dx run -y --brief --depends-on ${SPLITJOBIDS[${j}]} \
+          GIAB:sentieon-haplotyper-gvcf-reheadunsorted \
+          -isorted_bam=${SPLITJOBIDS[${j}]}:bam${i} \
+          -isorted_bai=${SPLITJOBIDS[${j}]}:bai${i}\
+          -ioutput_prefix=${PREFIX}_sentieonHC_gvcf  \
+          -igenome_fasta=${GENOME} \
+          -igenome_fastaindex=${GENOMEIDX} \
+          -iextra_driver_options="--interval chr${i}" \
+          -iextra_algo_options="--call_conf 2 --emit_conf 2" \
+          -ilicense_server_file=/Workflow/sentieon_license_server.info \
+          --destination ${ROOTDIR}/Sentieon_output/)
+          JOBIDSSNT+=([${j}]=${JOBID})
 
-      ## GATK callableLoci
-      JOBID=$(dx run -y --brief --depends-on ${SPLITJOBID[${j}]}  --brief \
-        GIAB:/Workflow/GATK_V3.5/gatk-callableloci-v3.5-anyref \
-          -iinput_bam=${SPLITJOBID[${j}]}:bam${i} \
-          -iinput_bai=${SPLITJOBID[${j}]}:bai${i} \
-          -ioutput_prefix=${PREFIX}_callableloci \
-          -iref=${REF} \
-          -iextra_options="-L chr${j} -minDepth 20 -mmq 20 -maxDepth 566" \
-          --destination=${ROOTDIR}/CallableLoci_output/)
-      JOBIDSCL+=([${j}]=${JOBID})
-  done
+          ## GATK callableLoci
+          JOBID=$(dx run -y --brief --depends-on ${SPLITJOBIDS[${j}]} \
+            GIAB:/Workflow/GATK_V3.5/gatk-callableloci-v3.5-anyref \
+              -iinput_bam=${SPLITJOBIDS[${j}]}:bam${i} \
+              -iinput_bai=${SPLITJOBIDS[${j}]}:bai${i} \
+              -ioutput_prefix=${PREFIX}_callableloci \
+              -iref=${REF} \
+              -iextra_options="-L chr${i} -minDepth 20 -mmq 20 -maxDepth 566" \
+              --destination ${ROOTDIR}/CallableLoci_output/)
+          JOBIDSCL+=([${j}]=${JOBID})
+      done
 
-  ## Integration Prepare
-  dx run -y \
-  --depends-on ${JOBIDSSNT[1]} --depdens-on ${JOBIDSSNT[2]} \
-  --depends-on ${JOBIDSCL[1]} --depdens-on ${JOBIDSCL[2]} \
-  GIAB:/Workflow/integration-prepare-10X-v3.3-anyref \
-    -igvcf1=${JOBIDSSNT[1]}:gcvf \
-    -igvcftbi1=${JOBIDSSNT[1]}:tbi \
-    -igvcf2=${JOBIDSSNT[2]}:gcvf \
-    -igvcftbi2=${JOBIDSSNT[2]}:tbi \
-    -ibed1=${JOBIDSCL[1]}:callablebed \
-    -ibed2=${JOBIDSCL[2]}:callablebed\
-    -iprefix=${HG}_${i}_${REFID}_10X_sentieonHCbyhaplo \
-    -iref=${REF} \
-    -ichrom=chr1 -imaxcov=20 \
-    --destination=${ROOTDIR}/Integration_prepare_10X_output_v3.3/
-done
+      ## Integration Prepare
+      dx run -y \
+        --depends-on ${JOBIDSSNT[1]} --depends-on ${JOBIDSSNT[2]} \
+        --depends-on ${JOBIDSCL[1]}  --depends-on ${JOBIDSCL[2]}  \
+        GIAB:/Workflow/integration-prepare-10X-v3.3-anyref \
+        -igvcf1=${JOBIDSSNT[1]}:gvcfgz \
+        -igvcftbi1=${JOBIDSSNT[1]}:tbi \
+        -igvcf2=${JOBIDSSNT[2]}:gvcfgz \
+        -igvcftbi2=${JOBIDSSNT[2]}:tbi \
+        -ibed1=${JOBIDSCL[1]}:bed_file \
+        -ibed2=${JOBIDSCL[2]}:bed_file \
+        -iprefix=${HG}_${i}_${REFID}_10X_sentieonHCbyhaplo \
+        -iref=${REF} \
+        -ichrom=chr${i} -imaxcov=20 \
+        --destination ${ROOTDIR}/Integration_prepare_10X_output_v3.3/
+    done
