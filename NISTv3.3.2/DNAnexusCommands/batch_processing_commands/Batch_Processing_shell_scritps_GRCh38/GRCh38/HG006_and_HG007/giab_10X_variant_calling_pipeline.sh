@@ -6,11 +6,6 @@ set -v
 PLATFORM=10XGenomics
 
 ## Command Line Arguments
-# usage()
-# {
-#     echo "usage: giab_complete_genomics_pipeline.sh PARAMETERS"
-# }
-
 while [ "$1" != "" ]; do
     case $1 in
         --hg )              shift
@@ -79,6 +74,9 @@ HAPSPLITJOBID=$(dx run -y --brief --depends-on ${UPLOADJOBID} \
   --destination=${ROOTDIR})
 
 
+## Haplotye split job id for HG007 GRCh37
+# HAPSPLITJOBID=job-FJ4vvFj0pB36qgJvGg9fzG1Z
+
 ################################################################################
 ############## split by chromsome
 
@@ -108,29 +106,43 @@ for i in 1 2;
       --destination=${ROOTDIR} \
       --instance-type=mem2_hdd2_x1 )
     SPLITJOBIDS+=([${i}]=${JOBID})
-
 done
 
 ################################################################################
 ############## Variant calling and integration
 
-# Use X Y chrom flag to prevent Y Chrom issues for mother
+## Running just variant calling - for HG006 GRCh37
+# SPLITJOBIDS=([1]=job-FJ20FBQ0pB30p1xk0XPqPFyX [2]=job-FJ20FBj0pB3PV50612qvv7GX)
+
+## Running just variant calling - for HG006 GRCh38
+# SPLITJOBIDS=([1]=job-FJ3p8Qj0pB37Ggxv6ZPjypBq [2]=job-FJ3p8VQ0pB30ZX568Z0XpG1k)
+
+
+## Running just variant calling - for HG007 GRCh38
+# SPLITJOBIDS=([1]=job-FJ5XfV80pB339gXz2Qgp7gPg [2]=job-FJ5XfVj0pB3JZb051GFKXxz0)
+
+
+## Use X Y chrom flag to prevent Y Chrom issues for mother
 CHROMARRAY=( {1..22} X )
 if [[ ${HASY} = true ]]; then
     CHROMARRAY+=(Y)
 fi
 
+## Setting max coverage based on median coverage for HP1 Chr1
+MAXCOV=26
 
-for i in 20; # ${CHROMARRAY[@]};
+for i in ${CHROMARRAY[@]};
   do
-    declare -a JOBIDSSNT
-    declare -a JOBIDSCL
+
     ## Variant calling for individual haplotypes
+    JOBIDSSNT=([1]="" [2]="")
+    JOBIDSCL=([1]="" [2]="")
+
     for j in 1 2;
       do
-        ## variables
-        PREFIX=${HG}_${j}_10X_HP${i}
+        PREFIX=${HG}_chr${i}_10X_HP${j}
 
+        ## Sentieon Variant Caller
         JOBID=$(dx run -y --brief --depends-on ${SPLITJOBIDS[${j}]} \
           GIAB:sentieon-haplotyper-gvcf-reheadunsorted \
           -isorted_bam=${SPLITJOBIDS[${j}]}:bam${i} \
@@ -151,7 +163,7 @@ for i in 20; # ${CHROMARRAY[@]};
               -iinput_bai=${SPLITJOBIDS[${j}]}:bai${i} \
               -ioutput_prefix=${PREFIX}_callableloci \
               -iref=${REF} \
-              -iextra_options="-L chr${i} -minDepth 20 -mmq 20 -maxDepth 566" \
+              -iextra_options="-L chr${i} -minDepth 6 -mmq 20 -maxDepth ${MAXCOV}" \
               --destination ${ROOTDIR}/CallableLoci_output/)
           JOBIDSCL+=([${j}]=${JOBID})
       done
@@ -169,6 +181,6 @@ for i in 20; # ${CHROMARRAY[@]};
         -ibed2=${JOBIDSCL[2]}:bed_file \
         -iprefix=${HG}_${i}_${REFID}_10X_sentieonHCbyhaplo \
         -iref=${REF} \
-        -ichrom=chr${i} -imaxcov=20 \
+        -ichrom=chr${i} -imaxcov=${MAXCOV} \
         --destination ${ROOTDIR}/Integration_prepare_10X_output_v3.3/
     done
