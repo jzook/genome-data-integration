@@ -56,7 +56,7 @@ INPUTVCF=${ROOTDIR}/${CGVCF}.vcf.bz2
 
 ################################################################################
 ############## Upload data to DNAnexus
-# dx mkdir -p ${ROOTDIR} 
+# dx mkdir -p ${ROOTDIR}
 
 # UPLOADJOBID=$(dx run -y --brief url_fetcher -iurl=${VCFURL})
 
@@ -68,53 +68,53 @@ INPUTVCF=${ROOTDIR}/${CGVCF}.vcf.bz2
 
 ## Use array for saving jobids
 declare -a PREPJOBIDS
-CHROMARRAY=( {1..22} X ) 
+CHROMARRAY=( {1..22} X )
 if [[ ${HASY} = true ]]; then
     CHROMARRAY+=(Y)
 fi
 
-# for i in ${CHROMARRAY[@]};
-#   do
-#     JOBID=$(dx run -y --brief \
-#         GIAB:/Workflow/integration-prepare-cg \
-#         -ivcf_in=${INPUTVCF} \
-#         -ichrom=${i} \
-#         --destination=${ROOTDIR}/Integration_prepare_cg_output/)
-#     PREPJOBIDS+=(${JOBID})
-# done
+for i in ${CHROMARRAY[@]};
+  do
+    JOBID=$(dx run -y --brief \
+        GIAB:/Workflow/integration-prepare-cg \
+        -ivcf_in=${INPUTVCF} \
+        -ichrom=${i} \
+        --destination=${ROOTDIR}/Integration_prepare_cg_output/)
+    PREPJOBIDS+=(${JOBID})
+done
 
 
 ################################################################################
 ############## combine GCRh37 vcfs
 ## Combining input values
-# DEPENDIDS=""
-# CHROMVCFS=""
-# CHROMBEDS=""
-# for i in ${PREPJOBIDS[@]};
-#   do
-#     DEPENDIDS="${DEPENDIDS} --depends-on  ${i}"
-#     CHROMVCFS="${CHROMVCFS} -ivcfs=${i}:outvcfgz"
-#     CHROMBEDS="${CHROMBEDS} -ibeds=${i}:outcallablebed"
-#   done
+DEPENDIDS=""
+CHROMVCFS=""
+CHROMBEDS=""
+for i in ${PREPJOBIDS[@]};
+  do
+    DEPENDIDS="${DEPENDIDS} --depends-on  ${i}"
+    CHROMVCFS="${CHROMVCFS} -ivcfs=${i}:outvcfgz"
+    CHROMBEDS="${CHROMBEDS} -ibeds=${i}:outcallablebed"
+  done
 
 ## Output prefix
 COMBINEDPREFIX=${HG}_GRCh37_CHROM1-Y_${CGVCF}
 
 ############## combine GCRh37 vcfs
 
-# COMBINEDVCFJOBID=$(dx run -y --brief ${DEPENDIDS} \
-#   Workflow/vcf-combineallchrom \
-#   ${CHROMVCFS} \
-#   --destination=${ROOTDIR}/Integration_prepare_cg_output/ \
-#   -iprefix=${COMBINEDPREFIX})
+COMBINEDVCFJOBID=$(dx run -y --brief ${DEPENDIDS} \
+  Workflow/vcf-combineallchrom \
+  ${CHROMVCFS} \
+  --destination=${ROOTDIR}/Integration_prepare_cg_output/ \
+  -iprefix=${COMBINEDPREFIX})
 
 
-# ############## combine GCRh37 beds
-# COMBINDBEDJOBID=$(dx run -y --brief ${DEPENDIDS} \
-#   Workflow/bed-combineallchrom \
-#   ${CHROMBEDS} \
-#   --destination=${ROOTDIR}/Integration_prepare_cg_output/ \
-#   -iprefix=${COMBINEDPREFIX})
+############## combine GCRh37 beds
+COMBINDBEDJOBID=$(dx run -y --brief ${DEPENDIDS} \
+  Workflow/bed-combineallchrom \
+  ${CHROMBEDS} \
+  --destination=${ROOTDIR}/Integration_prepare_cg_output/ \
+  -iprefix=${COMBINEDPREFIX})
 
 ################################################################################
 ############## Liftover uses verily genomewarp - Offline
@@ -169,7 +169,7 @@ for i in ${CHROMARRAY[@]};
   do
 
     # # Separate out each autosome and the X
-    
+
     egrep "^(#|(chr)?${i}[[:space:]])" ${GRCh37VCFCHROMFIX} > GRCh37_chr${i}.vcf
     egrep "^(chr)?${i}[[:space:]]" ${GRCh37BEDCHROMFIX} > GRCh37_chr${i}.bed
 

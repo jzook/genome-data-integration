@@ -11,38 +11,38 @@ REF38=/assets/GRCh38hs38d1noalt.fasta-index.tar.gz
 
 
 ## HG006 #######################################################################
-# ######### GRCh37
-# bash giab_10X_variant_calling_pipeline.sh \
-#     --hg HG006 \
-#     --bamurl ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/ChineseTrio/analysis/10XGenomics_ChromiumGenome_LongRanger2.1_06202017/GM24694_ChineseTrioFather_hg19/GM24694_ChineseTrioFather_hg19_phased_possorted_bam.bam \
-#     --refid GRCh37 \
-#     --genome ${GENOME37} \
-#     --genomeidx ${GENOME37IDX} \
-#     --ref ${REF37} \
-#     --rmsg NA24694 \
-#     --hasY
-#
-# ######### GRCh38
-# bash giab_10X_variant_calling_pipeline.sh \
-#     --hg HG006 \
-#     --bamurl ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/ChineseTrio/analysis/10XGenomics_ChromiumGenome_LongRanger2.1_06202017/GM24631_ChineseTrioFather_GRCh38/GM24631_ChineseTrioFather_GRCh38_phased_possorted_bam.bam \
-#     --refid GRCh38 \
-#     --genome ${GENOME38} \
-#     --genomeidx ${GENOME38IDX} \
-#     --ref ${REF38} \
-#     --rmsg NA24694 \
-#     --hasY
+######### GRCh37
+bash giab_10X_variant_calling_pipeline.sh \
+    --hg HG006 \
+    --bamurl ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/ChineseTrio/analysis/10XGenomics_ChromiumGenome_LongRanger2.1_06202017/GM24694_ChineseTrioFather_hg19/GM24694_ChineseTrioFather_hg19_phased_possorted_bam.bam \
+    --refid GRCh37 \
+    --genome ${GENOME37} \
+    --genomeidx ${GENOME37IDX} \
+    --ref ${REF37} \
+    --rmsg NA24694 \
+    --hasY
+
+######### GRCh38
+bash giab_10X_variant_calling_pipeline.sh \
+    --hg HG006 \
+    --bamurl ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/ChineseTrio/analysis/10XGenomics_ChromiumGenome_LongRanger2.1_06202017/GM24631_ChineseTrioFather_GRCh38/GM24631_ChineseTrioFather_GRCh38_phased_possorted_bam.bam \
+    --refid GRCh38 \
+    --genome ${GENOME38} \
+    --genomeidx ${GENOME38IDX} \
+    --ref ${REF38} \
+    --rmsg NA24694 \
+    --hasY
 
 ## HG007 #######################################################################
 ######### GRCh37
-# bash giab_10X_variant_calling_pipeline.sh \
-#     --hg HG007 \
-#     --bamurl ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/ChineseTrio/analysis/10XGenomics_ChromiumGenome_LongRanger2.1_06202017/GM24695_ChineseTrioMother_hg19/GM24695_ChineseTrioMother_hg19_phased_possorted_bam.bam \
-#     --refid GRCh37 \
-#     --genome ${GENOME37} \
-#     --genomeidx ${GENOME37IDX} \
-#     --ref ${REF37} \
-#     --rmsg NA24695
+bash giab_10X_variant_calling_pipeline.sh \
+    --hg HG007 \
+    --bamurl ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/ChineseTrio/analysis/10XGenomics_ChromiumGenome_LongRanger2.1_06202017/GM24695_ChineseTrioMother_hg19/GM24695_ChineseTrioMother_hg19_phased_possorted_bam.bam \
+    --refid GRCh37 \
+    --genome ${GENOME37} \
+    --genomeidx ${GENOME37IDX} \
+    --ref ${REF37} \
+    --rmsg NA24695
 
 ######### GRCh38
 bash giab_10X_variant_calling_pipeline.sh \
