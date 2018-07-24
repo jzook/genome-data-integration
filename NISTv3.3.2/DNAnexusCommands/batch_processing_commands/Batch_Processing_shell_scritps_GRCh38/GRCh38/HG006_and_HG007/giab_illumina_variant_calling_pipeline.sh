@@ -41,6 +41,9 @@ while [ "$1" != "" ]; do
         --ref )             shift
                             REF=$1
                             ;;
+        --maxdepth )        shift
+                            MAXDEPTH=$1
+                            ;;
         # -h | --help )       usage
         #                     exit
         #                     ;;
@@ -84,7 +87,7 @@ else
 
   ## Use array for saving jobids
   declare -a IMPORTJOBIDS
-  for i in 1; #2 3;
+  for i in 1 2 3;
     do
       CHR="_withchr"
       if [ ${REFID} = "GRCh37" ]; then
@@ -104,7 +107,7 @@ else
 fi
 
 ## Variant calling run after split chrom finishes
-for i in {1..5}; # {1..22} MT X Y;
+for i in {1..22} MT X Y;
   do
 
     if [ ${REFID} = "GRCh37" ]; then
@@ -141,16 +144,16 @@ for i in {1..5}; # {1..22} MT X Y;
 
     ## Freebayes variant calling
     # Not sure if -itargets_bed is for 37 and 38
-    dx run -y --depends-on ${BAMJOBID} \
-      freebayes \
-      -isorted_bams=${BAMJOBID}:bam${i} \
-      -ioutput_prefix=${PREFIX}_FB \
-      -igenotype_qualities=TRUE \
-      -istandard_filters=FALSE \
-      -iadvanced_options="-F 0.05 -m 0" \
-      -igenome_fastagz=${GENOME} \
-      -itargets_bed="GIAB:/Workflow/Chromosome_bed_files/${i}.bed" \
-      --destination=${ROOTDIR}/FreeBayes_output/
+    # dx run -y --depends-on ${BAMJOBID} \
+    #   freebayes \
+    #   -isorted_bams=${BAMJOBID}:bam${i} \
+    #   -ioutput_prefix=${PREFIX}_FB \
+    #   -igenotype_qualities=TRUE \
+    #   -istandard_filters=FALSE \
+    #   -iadvanced_options="-F 0.05 -m 0" \
+    #   -igenome_fastagz=${GENOME} \
+    #   -itargets_bed="GIAB:/Workflow/Chromosome_bed_files/${i}.bed" \
+    #   --destination=${ROOTDIR}/FreeBayes_output/
 
 
     ## Callable Loci
@@ -160,45 +163,45 @@ for i in {1..5}; # {1..22} MT X Y;
       -iinput_bai=${BAMJOBID}:bai${i} \
       -ioutput_prefix=${PREFIX}_callableloci \
       -iref=${REF} \
-      -iextra_options="-L ${CHROM} -minDepth 20 -mmq 20 -maxDepth 566" \
+      -iextra_options="-L ${CHROM} -minDepth 20 -mmq 20 -maxDepth ${MAXDEPTH}" \
       --destination=${ROOTDIR}/CallableLoci_output/
 
 
-    ## Sentieon
-    JOBIDSNT=$(dx run -y --brief --depends-on ${BAMJOBID} \
-      GIAB:sentieon-haplotyper-gvcf-reheadunsorted \
-      -isorted_bam=${BAMJOBID}:bam${i} \
-      -isorted_bai=${BAMJOBID}:bai${i}\
-      -ioutput_prefix=${PREFIX}_sentieonHC_gvcf  \
-      -igenome_fasta=${GENOME} \
-      -igenome_fastaindex=${GENOMEIDX} \
-      -iextra_driver_options="--interval ${CHROM}" \
-      -iextra_algo_options="--call_conf 2 --emit_conf 2" \
-      -ilicense_server_file=/Workflow/sentieon_license_server.info \
-      --destination=${ROOTDIR}/Sentieon_output/)
-
-      ## Post processing Sentieon variant calls
-      VCF=${JOBIDSNT}:gvcfgz
-      VCFIDX=${JOBIDSNT}:tbi
-
-      ## GATK genotype gcvf
-      dx run -y --depends-on ${JOBIDSNT} \
-        GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5-anyref \
-        -ivcfs=${VCF} \
-        -ivcfs=${VCFIDX} \
-        -iprefix=${PREFIX}_sentieonHC \
-        -iref=${REF} \
-        --destination=${ROOTDIR}/Sentieon_output/
-
-
-      ## Integration prep
-      dx run -y --depends-on ${JOBIDSNT} \
-        GIAB:/Workflow/integration-prepare-gatkhc-v3.3.2-anyref \
-        -igvcf=${VCF} \
-        -igvcftbi=${VCFIDX} \
-        -iref=${REF} \
-        -ichrom=${CHROM} \
-        --destination=${ROOTDIR}/Integration_prepare_sentieon_v.3.3.2/
+    # ## Sentieon
+    # JOBIDSNT=$(dx run -y --brief --depends-on ${BAMJOBID} \
+    #   GIAB:sentieon-haplotyper-gvcf-reheadunsorted \
+    #   -isorted_bam=${BAMJOBID}:bam${i} \
+    #   -isorted_bai=${BAMJOBID}:bai${i}\
+    #   -ioutput_prefix=${PREFIX}_sentieonHC_gvcf  \
+    #   -igenome_fasta=${GENOME} \
+    #   -igenome_fastaindex=${GENOMEIDX} \
+    #   -iextra_driver_options="--interval ${CHROM}" \
+    #   -iextra_algo_options="--call_conf 2 --emit_conf 2" \
+    #   -ilicense_server_file=/Workflow/sentieon_license_server.info \
+    #   --destination=${ROOTDIR}/Sentieon_output/)
+    #
+    #   ## Post processing Sentieon variant calls
+    #   VCF=${JOBIDSNT}:gvcfgz
+    #   VCFIDX=${JOBIDSNT}:tbi
+    #
+    #   ## GATK genotype gcvf
+    #   dx run -y --depends-on ${JOBIDSNT} \
+    #     GIAB:/Workflow/GATK_V3.5/gatk-genotype-gvcfs-v3.5-anyref \
+    #     -ivcfs=${VCF} \
+    #     -ivcfs=${VCFIDX} \
+    #     -iprefix=${PREFIX}_sentieonHC \
+    #     -iref=${REF} \
+    #     --destination=${ROOTDIR}/Sentieon_output/
+    #
+    #
+    #   ## Integration prep
+    #   dx run -y --depends-on ${JOBIDSNT} \
+    #     GIAB:/Workflow/integration-prepare-gatkhc-v3.3.2-anyref \
+    #     -igvcf=${VCF} \
+    #     -igvcftbi=${VCFIDX} \
+    #     -iref=${REF} \
+    #     -ichrom=${CHROM} \
+    #     --destination=${ROOTDIR}/Integration_prepare_sentieon_v.3.3.2/
 
     ## Cleanup - remove chromosome bams after variant calling finishes
     # dx wait ${JOBIDFB} ${JOBINCL} ${JOBIDSNT} && \
