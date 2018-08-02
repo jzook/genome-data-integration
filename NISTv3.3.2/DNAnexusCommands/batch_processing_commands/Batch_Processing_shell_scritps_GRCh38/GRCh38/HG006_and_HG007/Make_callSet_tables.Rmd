@@ -1,0 +1,194 @@
+---
+title: "Generating Callset tables"
+author: "Nate Olson"
+date: "7/23/2018"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+```
+
+## Callsets 
+10X - Sentieon
+
+```{r}
+tenx <- data_frame(Platform = "10X",
+                   Dataset = "10XChromium",
+                   Callset = "10XSentieonhaplo",
+                   vcfAll = "HG006_1_GRCh37_10X_sentieonHCbyhaplo.vcf.gz",
+                   callableBed = "HG006_1_GRCh37_10X_sentieonHCbyhaplo_callable.bed",
+                  annotationsFile = "GATK_Annotations_160509.txt")
+```
+
+Complete_Genomics 
+```{r}
+cg <- data_frame( Platform = "CG",
+                  Dataset = "CGnormal",
+                  Callset = "CGnormal",
+                  vcfAll = "vcfBeta-GS000037476-ASM_1.vcf.gz",
+                  callableBed = "vcfBeta-GS000037476-ASM_callable_1.bed",
+                 annotationsFile = "CG_Annotations_160408.txt")
+```
+
+Illumina MatePair Sentieon
+```{r}
+ill_mp_snt <- data_frame( Platform = "Illumina", 
+                         Dataset = "HiSeqMatePair",
+                         Callset = "HiSeqMatePairSentieon",
+                         vcfAll = "HG006_1_GRCh37_novoalign_6Kb_MatePair_sentieonHC.vcf.gz",
+                         callableBed = "HG006_1_GRCh37_novoalign_6Kb_MatePair_sentieonHC_gvcf_callable.bed",
+                        annotationsFile = "GATK_Annotations_160509.txt")
+```
+
+Illumina MatePair FreeBayes
+```{r}
+ill_mp_fb <- data_frame( Platform = "Illumina",
+                         Dataset = "HiSeqMatePair",
+                         Callset = "HiSeqMatePairfreebayes",
+                         vcfAll = "HG006_1_GRCh37_novoalign_6Kb_MatePair_FB.vcf.gz",
+                         callableBed = "HG006_1_GRCh37_novoalign_6Kb_MatePair_callableloci.bed",
+                        annotationsFile = "Freebayes_Annotations_160408.txt")
+```
+
+
+Illumina Hiseq100X Sentieon
+```{r}
+ill_pe_snt <- data_frame( Platform = "Illumina",
+                          Dataset = "HiSeq250x250",
+                          Callset = "HiSeq250x250Sentieon",
+                          vcfAll = "HG006_1_GRCh37_novoalign_Hiseq100X_sentieonHC.vcf.gz",
+                          callableBed = "HG006_1_GRCh37_novoalign_Hiseq100X_sentieonHC_gvcf_callable.bed",
+                         annotationsFile = "GATK_Annotations_160509.txt")
+```
+
+Illumina Hiseq100X FreeBayes
+```{r}
+ill_pe_fb <- data_frame( Platform = "Illumina",
+                         Dataset = "HiSeq250x250",
+                         Callset = "HiSeq250x250freebayes",
+                         vcfAll = "HG006_1_GRCh37_novoalign_Hiseq100X_FB.vcf.gz", 
+                         callableBed = "HG006_1_GRCh37_novoalign_Hiseq100X_callableloci.bed",
+                        annotationsFile = "Freebayes_Annotations_160408.txt")
+```
+
+
+```{r}
+callset_df <- bind_rows(tenx, cg, ill_mp_fb, ill_mp_snt, ill_pe_fb, ill_pe_snt) %>% 
+    rename(`#Platform` = Platform)
+```
+
+```{r}
+filter_files_df <- read_tsv("filt_tbl_Asian_Trio_GRCh37.tsv") 
+```
+
+```{r}
+callset_tbl <- left_join(callset_df, filter_files_df)
+write_tsv(callset_tbl, "~/Desktop/HG006_GRCh37_chrom1.txt")
+```
+
+Next steps 
+modify code to generate tables for other chromosomes
+
+## Variant Callsets and Annotation file names
+```{r}
+variant_callsets <- read_tsv("variant_callsets.tsv")
+```
+
+Add vcfAll callableBed for individual HG and REFID
+```{r}
+hg_ref_df <- data_frame(hg = rep(c("HG006","HG007"), each = 2), 
+                        refid = rep(c("GRCh37", "GRCh38"), 2)) %>% 
+    mutate(chrom = list(1:22)) %>% 
+    unnest() %>% 
+    mutate(variant_callsets = list(variant_callsets)) %>% 
+    unnest()
+
+callset_df <-  hg_ref_df %>% 
+    mutate(file_root = case_when( Callset == "10XSentieonhaplo" ~  
+                                      paste(hg, chrom,refid, "10X_sentieonHCbyhaplo",sep = "_"),
+                                  Callset == "CGnormal" & hg == "HG006" ~ "vcfBeta-GS000037476-ASM",
+                                  Callset == "CGnormal" & hg == "HG007" ~ "vcfBeta-GS000037477-ASM",
+                                  Callset == "HiSeqMatePairfreebayes" ~ 
+                                      paste(hg, chrom, refid, "novoalign_6Kb_MatePair_FB", sep = "_"),
+                                  Callset == "HiSeqMatePairSentieon" ~ 
+                                      paste(hg, chrom, refid, "novoalign_6Kb_MatePair_sentieonHC", sep = "_"),
+                                  Callset == "HiSeq250x250freebayes" ~ 
+                                      paste(hg, chrom, refid, "novoalign_Hiseq100X_FB", sep = "_"),
+                                  Callset == "HiSeq250x250Sentieon" ~ 
+                                      paste(hg, chrom ,refid, "novoalign_Hiseq100X_sentieonHC", sep = "_"))) %>% 
+    mutate(file_root = if_else(Callset == "CGnormal" & refid == "GRCh38",
+                               paste(hg, chrom, "convGRCh38_CG", file_root, sep = "_"),
+                               file_root)) %>% 
+    mutate(vcfAll = case_when(Callset != "CGnormal" ~ paste0(file_root, ".vcf.gz"),
+                              Callset == "CGnormal" & refid == "GRCh37" ~ paste0(file_root, "_", chrom, ".vcf.gz"),
+                              Callset == "CGnormal" & refid == "GRCh38" ~  paste0(file_root, "_sorted.vcf.gz"))) %>% 
+    mutate(callableBed = case_when(Callset == "10XSentieonhaplo" ~ paste0(file_root, "_callable.bed"),
+                                   Callset == "CGnormal" & refid == "GRCh37" ~ paste0(file_root, "_callable_", chrom, ".bed"),
+                                   Callset == "CGnormal" & refid == "GRCh38" ~ paste0(file_root, ".bed"),
+                                   grepl("Freebayes", annotationsFile) ~ str_replace(file_root,"FB", "callableloci.bed"),
+                                   grepl("GATK", annotationsFile) ~ paste0(file_root, "_gvcf_callable.bed")))
+```
+
+```{r}
+callset_df
+```
+
+
+```{r}
+for( grch in c("GRCh37","GRCh38")) {
+    if(grch == "GRCh37"){
+        filter_files_df <- read_tsv("filt_tbl_Asian_Trio_GRCh37.tsv") 
+    } else {
+        filter_files_df <- read_tsv("filt_tbl_Asian_Trio_GRCh38.tsv") 
+    }
+
+    for ( i in c("HG006", "HG007")) {
+       for (j in 1:22){
+           hg_chrom_callset <- callset_df %>% 
+               filter(refid == grch, hg == i, chrom == j) %>% 
+               select(Platform, Dataset, Callset, vcfAll, 
+                      callableBed, annotationsFile) %>% 
+               rename(`#Platform` = Platform) %>% 
+               left_join(filter_files_df)
+           
+           call_datasets <- paste0("_Datasets_CG-Illfb-IllsentieonHC",
+                                   "-Ion-10XsentieonHC-SOLIDgatkHC_")
+           write_tsv(hg_chrom_callset, 
+                     paste0("callset_tables/",i, call_datasets, grch,"_", j, ".txt"))
+       }
+    }
+}
+
+   
+```
+
+
+```{r}
+dir_tbl <- hg_ref_df %>% 
+    filter(chrom == 1) %>% 
+    select(-annotationsFile) %>% 
+    mutate(ds_dir = case_when(Dataset == "10XChromium" ~ "10XGenomics",
+                              Dataset == "CGnormal" ~ "Complete_Genomics",
+                              Dataset == "HiSeqMatePair" ~ paste("Illumina", refid, "6Kb_MatePair", sep = "_"),
+                              Dataset == "HiSeq250x250" ~ paste("Illumina", refid, "Hiseq100X", sep = "_"))) %>% 
+    mutate(dataset_path = paste0("GIAB:/",hg, "/",refid, "/", ds_dir)) %>% 
+    mutate(vcf_dir = case_when(grepl("freebayes", Callset) ~ 
+                                   paste0(dataset_path, "/FreeBayes_output"),
+                               grepl("Sentieon$", Callset,perl = TRUE)  & Platform == "Illumina" ~ 
+                                   paste0(dataset_path, "/Sentieon_output"),
+                               Dataset == "10XChromium" ~ paste0(dataset_path, "/Integration_prepare_10X_output_V3.3"),
+                               Dataset == "CGnormal" ~ paste0(dataset_path, "/Integration_prepare_cg_output"))) %>% 
+    mutate(bed_dir = case_when(grepl("freebayes", Callset) ~ 
+                                   paste0(dataset_path, "/CallableLoci_output"),
+                               grepl("Sentieon$", Callset,perl = TRUE)  & Platform == "Illumina" ~ 
+                                   paste0(dataset_path, "/Integration_prepare_sentieon_v.3.3.2"),
+                               Dataset == "10XChromium" ~ paste0(dataset_path, "/Integration_prepare_10X_output_V3.3"),
+                               Dataset == "CGnormal" ~ paste0(dataset_path, "/Integration_prepare_cg_output"))) %>% 
+    mutate(chrom2 = "end")
+```
+
+```{r}
+dir_tbl
+```
+
