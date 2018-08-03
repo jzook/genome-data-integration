@@ -9,86 +9,6 @@ output: html_document
 library(tidyverse)
 ```
 
-## Callsets 
-10X - Sentieon
-
-```{r}
-tenx <- data_frame(Platform = "10X",
-                   Dataset = "10XChromium",
-                   Callset = "10XSentieonhaplo",
-                   vcfAll = "HG006_1_GRCh37_10X_sentieonHCbyhaplo.vcf.gz",
-                   callableBed = "HG006_1_GRCh37_10X_sentieonHCbyhaplo_callable.bed",
-                  annotationsFile = "GATK_Annotations_160509.txt")
-```
-
-Complete_Genomics 
-```{r}
-cg <- data_frame( Platform = "CG",
-                  Dataset = "CGnormal",
-                  Callset = "CGnormal",
-                  vcfAll = "vcfBeta-GS000037476-ASM_1.vcf.gz",
-                  callableBed = "vcfBeta-GS000037476-ASM_callable_1.bed",
-                 annotationsFile = "CG_Annotations_160408.txt")
-```
-
-Illumina MatePair Sentieon
-```{r}
-ill_mp_snt <- data_frame( Platform = "Illumina", 
-                         Dataset = "HiSeqMatePair",
-                         Callset = "HiSeqMatePairSentieon",
-                         vcfAll = "HG006_1_GRCh37_novoalign_6Kb_MatePair_sentieonHC.vcf.gz",
-                         callableBed = "HG006_1_GRCh37_novoalign_6Kb_MatePair_sentieonHC_gvcf_callable.bed",
-                        annotationsFile = "GATK_Annotations_160509.txt")
-```
-
-Illumina MatePair FreeBayes
-```{r}
-ill_mp_fb <- data_frame( Platform = "Illumina",
-                         Dataset = "HiSeqMatePair",
-                         Callset = "HiSeqMatePairfreebayes",
-                         vcfAll = "HG006_1_GRCh37_novoalign_6Kb_MatePair_FB.vcf.gz",
-                         callableBed = "HG006_1_GRCh37_novoalign_6Kb_MatePair_callableloci.bed",
-                        annotationsFile = "Freebayes_Annotations_160408.txt")
-```
-
-
-Illumina Hiseq100X Sentieon
-```{r}
-ill_pe_snt <- data_frame( Platform = "Illumina",
-                          Dataset = "HiSeq250x250",
-                          Callset = "HiSeq250x250Sentieon",
-                          vcfAll = "HG006_1_GRCh37_novoalign_Hiseq100X_sentieonHC.vcf.gz",
-                          callableBed = "HG006_1_GRCh37_novoalign_Hiseq100X_sentieonHC_gvcf_callable.bed",
-                         annotationsFile = "GATK_Annotations_160509.txt")
-```
-
-Illumina Hiseq100X FreeBayes
-```{r}
-ill_pe_fb <- data_frame( Platform = "Illumina",
-                         Dataset = "HiSeq250x250",
-                         Callset = "HiSeq250x250freebayes",
-                         vcfAll = "HG006_1_GRCh37_novoalign_Hiseq100X_FB.vcf.gz", 
-                         callableBed = "HG006_1_GRCh37_novoalign_Hiseq100X_callableloci.bed",
-                        annotationsFile = "Freebayes_Annotations_160408.txt")
-```
-
-
-```{r}
-callset_df <- bind_rows(tenx, cg, ill_mp_fb, ill_mp_snt, ill_pe_fb, ill_pe_snt) %>% 
-    rename(`#Platform` = Platform)
-```
-
-```{r}
-filter_files_df <- read_tsv("filt_tbl_Asian_Trio_GRCh37.tsv") 
-```
-
-```{r}
-callset_tbl <- left_join(callset_df, filter_files_df)
-write_tsv(callset_tbl, "~/Desktop/HG006_GRCh37_chrom1.txt")
-```
-
-Next steps 
-modify code to generate tables for other chromosomes
 
 ## Variant Callsets and Annotation file names
 ```{r}
@@ -131,11 +51,6 @@ callset_df <-  hg_ref_df %>%
 ```
 
 ```{r}
-callset_df
-```
-
-
-```{r}
 for( grch in c("GRCh37","GRCh38")) {
     if(grch == "GRCh37"){
         filter_files_df <- read_tsv("filt_tbl_Asian_Trio_GRCh37.tsv") 
@@ -163,7 +78,11 @@ for( grch in c("GRCh37","GRCh38")) {
    
 ```
 
+## Upload Callset to DNAnexus
+__HG006__: `dx upload --destination callset_tables/180730_HG006_callset_tables HG006_Datasets*txt` 
+__HG007__: `dx upload --destination callset_tables/180730_HG007_callset_tables HG007_Datasets*txt`
 
+## Data Frame with File Paths
 ```{r}
 dir_tbl <- hg_ref_df %>% 
     filter(chrom == 1) %>% 
@@ -188,7 +107,4 @@ dir_tbl <- hg_ref_df %>%
     mutate(chrom2 = "end")
 ```
 
-```{r}
-dir_tbl
-```
 

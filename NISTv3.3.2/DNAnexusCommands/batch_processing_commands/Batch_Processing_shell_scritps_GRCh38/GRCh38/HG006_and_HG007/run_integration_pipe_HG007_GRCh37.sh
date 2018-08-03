@@ -26,7 +26,7 @@ for i in {1..22}; do
         -iannotations=/Annotation_files/Freebayes_Annotations_160408.txt \
         -iannotations=/Annotation_files/CG_Annotations_160408.txt \
         -icallsettable=callset_tables/180730_HG007_callset_tables/HG007_Datasets_CG-Illfb-IllsentieonHC-Ion-10XsentieonHC-SOLIDgatkHC_GRCh37_${i}.txt \
-        -ifiltbeds=/HG005/GRCh37/HG005_FB_GATKHC_CG_allsvs_merged.bed \
+        -ifiltbeds=/HG005/GRCh37/HG005_HG006_HG007_FB_GATKHC_CG_MetaSV_allsvs_merged.bed \
         -ifiltbeds=/filtbeds/GRCh37/AllRepeats_lt51bp_gt95identity_merged_slop5.bed.gz \
         -ifiltbeds=/filtbeds/GRCh37/AllRepeats_51to200bp_gt95identity_merged_slop5.bed.gz \
         -ifiltbeds=/filtbeds/GRCh37/AllRepeats_gt200bp_gt95identity_merged_sort.bed \
