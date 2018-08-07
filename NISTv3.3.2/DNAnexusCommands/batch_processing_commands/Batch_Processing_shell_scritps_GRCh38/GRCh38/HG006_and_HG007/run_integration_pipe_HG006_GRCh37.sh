@@ -9,7 +9,7 @@ for i in {1..22}; do
       INSTANCE=mem2_hdd2_x2
     fi
 
-    dx run -y GIAB:/Workflow/nist-integration-v3.3 \
+    dx run -y GIAB:/Workflow/nist-integration-v3.3.2-anyref \
         -ivcfs=GIAB:/HG006/GRCh37/10XGenomics/Integration_prepare_10X_output_v3.3/HG006_${i}_GRCh37_10X_sentieonHCbyhaplo.vcf.gz \
         -ivcfs=GIAB:/HG006/GRCh37/Complete_Genomics/Integration_prepare_cg_output/vcfBeta-GS000037476-ASM_${i}.vcf.gz \
         -ivcfs=GIAB:/HG006/GRCh37/Illumina/Illumina_GRCh37_Hiseq100X/FreeBayes_output/HG006_${i}_GRCh37_novoalign_Hiseq100X_FB.vcf.gz \
@@ -34,6 +34,9 @@ for i in {1..22}; do
         -ifiltbeds=/filtbeds/GRCh37/SimpleRepeat_imperfecthomopolgt10_slop5.bed.gz \
         -ifiltbeds=/filtbeds/GRCh37/superdupsmerged_all_sort.bed \
         -ifiltbeds=/filtbeds/GRCh37/mm-2-merged.bed \
+        -iref=/assets/hs37d5.fasta-index.tar.gz \
+        -irtgsdf=/assets/rtgsdf37.tar.gz \
+        -irefn=/filtbeds/GRCh37/example_of_no_ref_regions_input_file_b37.bed \
         -ichrom=${i} \
         -iprefix=HG006_GIAB_GRCh37_highconf_CG-IllFB-IllSNT-10X_${i}_v3.3 \
         --destination=GIAB:/HG006/GRCh37/Integration_v3.3_output/180723_CG-IllFB-IllSNT-10X_v3.3/ \
