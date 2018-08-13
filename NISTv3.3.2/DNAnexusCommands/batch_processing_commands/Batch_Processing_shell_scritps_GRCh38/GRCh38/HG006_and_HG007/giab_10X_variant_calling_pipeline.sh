@@ -80,6 +80,11 @@ HAPSPLITJOBID=$(dx run -y --brief --depends-on ${UPLOADJOBID} \
 ################################################################################
 ############## split by chromsome
 
+## Using Need to remove chr for GRCh37
+CHROMSPLITAPP=/Workflow/samtools_splitchrom_addrg_withchr
+
+
+
 ## Use array for saving jobids
 declare -a SPLITJOBIDS
 for i in 1 2;
@@ -95,16 +100,28 @@ for i in 1 2;
       -isorted_bam=${SORTID}:sorted_bam \
       --destination=${ROOTDIR})
 
-    ## Split haplotype bam by chromosome - not working
-    JOBID=$(dx run -y --brief \
-      --depends-on ${SORTID} --depends-on ${IDXID}\
-      GIAB:/Workflow/samtools_splitchrom_addrg_withchr \
-      -isorted_bam=${SORTID}:sorted_bam \
-      -iindex_bai=${IDXID}:index_bai \
-      -iprefix=${BAMPREFIX}_HP${i}_ \
-      -irgid=HP${i} -irglb=10X -irgpl=illumina -irgpu=all -irgsm=${RGSM} \
-      --destination=${ROOTDIR} \
-      --instance-type=mem2_hdd2_x1 )
+    ## Split haplotype bam by chromosome
+    if [ ${REFID} = "GRCh37" ]; then
+      CHROMSPLITAPP=/Workflow/samtools_reheader_splitchrom_addrg_reord
+      JOBID=$(dx run -y --brief \
+        --depends-on ${SORTID} --depends-on ${IDXID}\
+        GIAB:/Workflow/samtools_reheader_splitchrom_addrg_reord \
+        -isorted_bam=${SORTID}:sorted_bam \
+        -iindex_bai=${IDXID}:index_bai \
+        -irgid=HP${i} -irglb=10X -irgpl=illumina -irgpu=all -irgsm=${RGSM} \
+        --destination=${ROOTDIR} \
+        --instance-type=mem2_hdd2_x1 )
+    else
+      JOBID=$(dx run -y --brief \
+        --depends-on ${SORTID} --depends-on ${IDXID}\
+        GIAB:/Workflow/samtools_splitchrom_addrg_withchr \
+        -isorted_bam=${SORTID}:sorted_bam \
+        -iindex_bai=${IDXID}:index_bai \
+        -iprefix=${BAMPREFIX}_HP${i}_ \
+        -irgid=HP${i} -irglb=10X -irgpl=illumina -irgpu=all -irgsm=${RGSM} \
+        --destination=${ROOTDIR} \
+        --instance-type=mem2_hdd2_x1 )
+    fi
     SPLITJOBIDS+=([${i}]=${JOBID})
 done
 
