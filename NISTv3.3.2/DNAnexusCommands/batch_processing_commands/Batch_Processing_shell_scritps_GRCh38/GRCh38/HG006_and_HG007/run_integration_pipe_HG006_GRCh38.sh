@@ -11,13 +11,13 @@ for i in {1..22}; do
 
     dx run -y GIAB:/Workflow/nist-integration-v3.3.2-anyref \
         -ivcfs=GIAB:/HG006/GRCh38/10XGenomics/Integration_prepare_10X_output_v3.3/HG006_${i}_GRCh38_10X_sentieonHCbyhaplo.vcf.gz \
-        -ivcfs=GIAB:/HG006/GRCh38/Complete_Genomics/vcfBeta-GS000037476-ASM_${i}.vcf.gz \
+        -ivcfs=GIAB:/HG006/GRCh38/Complete_Genomics/HG006_${i}_convGRCh38_CG_vcfBeta-GS000037476-ASM_sorted.vcf.gz \
         -ivcfs=GIAB:/HG006/GRCh38/Illumina/Illumina_GRCh38_Hiseq100X/FreeBayes_output/HG006_${i}_GRCh38_novoalign_Hiseq100X_FB.vcf.gz \
         -ivcfs=GIAB:/HG006/GRCh38/Illumina/Illumina_GRCh38_Hiseq100X/Sentieon_output/HG006_${i}_GRCh38_novoalign_Hiseq100X_sentieonHC.vcf.gz \
         -ivcfs=GIAB:/HG006/GRCh38/Illumina/Illumina_GRCh38_6Kb_MatePair/FreeBayes_output/HG006_${i}_GRCh38_novoalign_6Kb_MatePair_FB.vcf.gz \
         -ivcfs=GIAB:/HG006/GRCh38/Illumina/Illumina_GRCh38_6Kb_MatePair/Sentieon_output/HG006_${i}_GRCh38_novoalign_6Kb_MatePair_sentieonHC.vcf.gz \
         -ibeds=GIAB:/HG006/GRCh38/10XGenomics/Integration_prepare_10X_output_v3.3/HG006_${i}_GRCh38_10X_sentieonHCbyhaplo_callable.bed \
-        -ibeds=GIAB:/HG006/GRCh38/Complete_Genomics/vcfBeta-GS000037476-ASM_callable_${i}.bed \
+        -ibeds=GIAB:/HG006/GRCh38/Complete_Genomics/HG006_${i}_convGRCh38_CG_vcfBeta-GS000037476-ASM.bed \
         -ibeds=GIAB:/HG006/GRCh38/Illumina/Illumina_GRCh38_Hiseq100X/Integration_prepare_sentieon_v.3.3.2/HG006_${i}_GRCh38_novoalign_Hiseq100X_sentieonHC_gvcf_callable.bed \
         -ibeds=GIAB:/HG006/GRCh38/Illumina/Illumina_GRCh38_Hiseq100X/CallableLoci_output/HG006_${i}_GRCh38_novoalign_Hiseq100X_callableloci.bed \
         -ibeds=GIAB:/HG006/GRCh38/Illumina/Illumina_GRCh38_6Kb_MatePair/Integration_prepare_sentieon_v.3.3.2/HG006_${i}_GRCh38_novoalign_6Kb_MatePair_sentieonHC_gvcf_callable.bed \

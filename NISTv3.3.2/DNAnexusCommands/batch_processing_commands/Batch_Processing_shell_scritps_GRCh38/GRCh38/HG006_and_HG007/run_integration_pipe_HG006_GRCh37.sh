@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 ## Running Integration Pipeline GRCh37 HG006
 
-for i in {1..22}; do
+for i in 19; do # {1..22}; do
 
     ## Defining instance size - first 15 chroms need more memory
     INSTANCE=mem3_hdd2_x2
@@ -9,7 +9,7 @@ for i in {1..22}; do
       INSTANCE=mem2_hdd2_x2
     fi
 
-    dx run -y GIAB:/Workflow/nist-integration-v3.3.2-anyref \
+    dx run -y --debug-on All GIAB:/Workflow/nist-integration-v3.3.2-anyref \
         -ivcfs=GIAB:/HG006/GRCh37/10XGenomics/Integration_prepare_10X_output_v3.3/HG006_${i}_GRCh37_10X_sentieonHCbyhaplo.vcf.gz \
         -ivcfs=GIAB:/HG006/GRCh37/Complete_Genomics/Integration_prepare_cg_output/vcfBeta-GS000037476-ASM_${i}.vcf.gz \
         -ivcfs=GIAB:/HG006/GRCh37/Illumina/Illumina_GRCh37_Hiseq100X/FreeBayes_output/HG006_${i}_GRCh37_novoalign_Hiseq100X_FB.vcf.gz \
