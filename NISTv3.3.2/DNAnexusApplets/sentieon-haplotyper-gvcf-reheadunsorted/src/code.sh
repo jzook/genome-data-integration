@@ -29,16 +29,26 @@ fi
 #
 # Set up options
 #
-release_dir=/usr/local/sentieon-genomics-201611.rc1 #TODO: make version configurable
 release_dir=$(echo /usr/local/sentieon-genomics-*|awk '{print $1}')
 sentieon_procs=$(nproc)
  #set the DNAnexus license env
  dx download "$license_server_file" -o license_server.info
+ if grep -Fq "license_mechanism" license_server.info ; then
+  license_mech=$(grep license_mechanism license_server.info|awk -F"license_mechanism=" '{print $2}')
+ else
+  license_mech=DX
+ fi
  license_server=$(grep license_server_location license_server.info|awk -F"license_server_location=" '{print $2}')
  auth_token=$(grep auth_token license_server.info|awk -F"auth_token=" '{print $2}')
- export SENTIEON_AUTH_MECH=DX
+ export SENTIEON_AUTH_MECH="$license_mech"
  export SENTIEON_AUTH_DATA="{\"auth_token_type\": \"Bearer\", \"auth_token\": \"$auth_token\"}"
  export SENTIEON_LICENSE="$license_server"
+ if grep -Fq "license_token" license_server.info; then
+  license_token=$(grep license_token license_server.info|awk -F"license_token=" '{print $2}')
+  export SENTIEON_JOB_TAG=$license_token
+ fi
+ export LD_PRELOAD=$release_dir/lib/libjemalloc.so.1
+ export MALLOC_CONF=lg_dirty_mult:-1
 
 # Move BAI to same folder as BAM
 mv ~/in/sorted_bai/* ~/in/sorted_bam/
