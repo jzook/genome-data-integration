@@ -1,0 +1,45 @@
+---
+title: "VCF Coverage Stats"
+author: "Nate Olson"
+date: "7/24/2018"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+Calculating median depth for callableLoci maxcov filter using FreeBayes vcf files. 
+Downloaded vcf files from DNAnexus. 
+Generated *.ldepth files using `vcftools` and bash script `get_depth.sh`. 
+
+```{r message = FALSE, warning=FALSE}
+library(tidyverse); packageVersion("tidyverse")
+```
+
+```{r}
+depth_files <- list.files(path = ".", pattern = "ldepth")
+names(depth_files) <- depth_files %>% str_remove(".vcf.gz.ldepth")
+```
+
+```{r}
+depth_df <- depth_files %>% 
+    map_dfr(read_tsv, col_types = "ciic", .id = "dataset")
+```
+
+```{r}
+summary_df <- depth_df  %>% group_by(dataset) %>% 
+    summarise(med_depth = median(SUM_DEPTH),
+              min_depth = min(SUM_DEPTH),
+              max_depth = max(SUM_DEPTH),
+              mean_depth = mean(SUM_DEPTH)) %>% 
+    mutate(maxcov = 2*med_depth)
+```
+
+```{r}
+summary_df %>% 
+    mutate(dataset = str_remove(dataset, "_novoalign"))
+```
+
+```{r}
+write_tsv(summary_df, "chrom1_variant_depth.tsv")
+```
+
