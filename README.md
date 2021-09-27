@@ -1,9 +1,14 @@
 genome-data-integration
 =======================
 
-This repository contains scripts used to integrate data from multiple genome sequencing datasets and form high-confidence SNP, indel, and homozygous reference calls for Genome in a Bottle.  
+This repository contains scripts used to integrate data from multiple genome sequencing datasets and form high-confidence SNV, indel, and homozygous reference calls for Genome in a Bottle described in the preprint https://doi.org/10.1101/2020.07.24.212712.
 
-For NISTv3.3.2, most analyses were performed using apps or applets on DNAnexus, except for mapping of all datasets and variant calling for Complete Genomics and Ion exome, since these steps were performed by others.  The apps and applets used in this work are included as directories under NISTv3.3.2.   They use an Ubuntu 12.04 machine on Amazon Web Services EC2.  The apps and applets are structured as:
+For the NISTv4.2.1, we used the results for v3.3.2 plus new callsets for PacBio HiFi and 10x Genomics, in addition to better excluding structural variant and copy number variant regions. Most analyses were performed using apps or applets on DNAnexus The apps and applets are structured as:
+dxapp.json specifies the input files and options, output files, and any dependencies that can be installed via apt.
+src/code.sh contains the commands that are run
+resources/ contains compiled binary files, scripts, and other files that are used in the applet
+
+For the deprecated NISTv3.3.2, most analyses were performed using apps or applets on DNAnexus, except for mapping of all datasets and variant calling for Complete Genomics and Ion exome, since these steps were performed by others.  The apps and applets used in this work are included as directories under NISTv3.3.2.   They use an Ubuntu 12.04 machine on Amazon Web Services EC2.  The apps and applets are structured as:
 dxapp.json specifies the input files and options, output files, and any dependencies that can be installed via apt.
 src/code.sh contains the commands that are run
 resources/ contains compiled binary files, scripts, and other files that are used in the applet
